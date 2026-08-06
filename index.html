@@ -2011,15 +2011,16 @@
       const selectedIds = Array.from(document.querySelectorAll('.ev-chk:checked')).map(c => c.getAttribute('data-id'));
       currentUser.attendedIds = selectedIds;
 
-      fetch(GAS_API_URL, {
-        method: 'POST',
-        body: JSON.stringify({
-          action: 'saveUserData',
-          userId: currentUser.userId,
-          attendedEvents: selectedIds.join(','),
-          nickname: currentUser.nickname || ''
-        })
-      })
+     fetch(GAS_API_URL, {
+  method: 'POST',
+  headers: { 'Content-Type': 'text/plain' }, // 👈 必須加上這行以避開預檢
+  body: JSON.stringify({
+    action: 'saveUserData',
+    userId: currentUser.userId,
+    attendedEvents: selectedIds.join(','),
+    nickname: currentUser.nickname || ''
+  })
+})
       .then(res => res.json())
       .then(res => {
         btn.innerText = '💾 儲存場次紀錄';
