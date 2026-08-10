@@ -1628,55 +1628,22 @@
       if (id === 'view-report') loadPendingEvents();
     }
 
-   // 🚀 結合 LocalStorage 快取與 Fetch 背景更新
+    // 🚀 改用 Fetch 向 GAS 請求資料
     document.addEventListener('DOMContentLoaded', () => {
-      const CACHE_KEY = 'mangojump_app_data';
-      const cachedData = localStorage.getItem(CACHE_KEY);
-
-      // 1. 如果有暫存資料，瞬間載入畫面 (秒開體驗)
-      if (cachedData) {
-        try {
-          appData = JSON.parse(cachedData);
-          initApp(); 
-        } catch (e) {
-          console.error('暫存讀取失敗', e);
-        }
-      }
-
-      // 2. 無論有沒有暫存，都在背景向 GAS 請求最新資料
       fetch(GAS_API_URL + '?action=getSetlistData')
         .then(res => res.json())
         .then(data => {
           if (data && data.success) {
-            // 將最新資料轉為字串
-            const newDataString = JSON.stringify(data);
-            
-            // 如果原本沒有暫存，或是資料有更新，才重新渲染
-            if (!cachedData) {
-              appData = data;
-              localStorage.setItem(CACHE_KEY, newDataString);
-              initApp();
-            } else if (cachedData !== newDataString) {
-              // 背景更新資料
-              appData = data;
-              localStorage.setItem(CACHE_KEY, newDataString);
-              // 重新渲染畫面中需要更新的部分 (不觸發全螢幕 loading)
-              renderUpcomingEvents();
-              renderEventsList();
-              renderHome(4);
-              // 偷偷跳個提示讓使用者知道資料已是最新
-              showToast('🔄 資料已在背景同步至最新！'); 
-            }
-          } else if (!cachedData) {
+            appData = data;
+            initApp();
+          } else {
             document.getElementById('global-loader').style.display = 'none';
             alert('載入失敗: ' + (data ? data.error : '未知錯誤'));
           }
         })
         .catch(err => {
-          if (!cachedData) {
-            document.getElementById('global-loader').style.display = 'none';
-            alert('伺服器連線錯誤: ' + err);
-          }
+          document.getElementById('global-loader').style.display = 'none';
+          alert('伺服器連線錯誤: ' + err);
         });
     });
 
