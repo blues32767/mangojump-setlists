@@ -1635,7 +1635,7 @@
       if (id === 'view-report') loadPendingEvents();
     }
 
-    // 🚀 改用 Fetch 向 GAS 請求資料
+// 🚀 改用 Fetch 向 GAS 請求資料
     document.addEventListener('DOMContentLoaded', () => {
       fetch(GAS_API_URL + '?action=getSetlistData')
         .then(res => res.json())
@@ -1644,28 +1644,31 @@
             appData = data;
             initApp();
           } else {
-           const loader = document.getElementById('local-loader');
+            const loader = document.getElementById('local-loader');
+            if (loader) loader.style.display = 'none';
             alert('載入失敗: ' + (data ? data.error : '未知錯誤'));
           }
         })
         .catch(err => {
-         const loader = document.getElementById('local-loader');
+          const loader = document.getElementById('local-loader');
+          if (loader) loader.style.display = 'none';
           alert('伺服器連線錯誤: ' + err);
         });
     });
 
     function initApp() {
-      const loader = document.getElementById('local-loader');
-      globalSongStats = null;
-      setupHomeSearch();
-      setupReportSongSearch();
-      renderUpcomingEvents();
-      renderEventsList();
-      renderHome(4);
-      loadLoginHistory();
-      tryAutoLogin();
-    }
-
+          const loader = document.getElementById('local-loader');
+          if (loader) loader.style.display = 'none';
+    
+          globalSongStats = null;
+          setupHomeSearch();
+          setupReportSongSearch();
+          renderUpcomingEvents();
+          renderEventsList();
+          renderHome(4);
+          loadLoginHistory();
+          tryAutoLogin();
+        }
     function renderUpcomingEvents() {
       const widget = document.getElementById('upcoming-widget');
       const listEl = document.getElementById('upcoming-list');
