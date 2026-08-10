@@ -1115,11 +1115,11 @@
 </head>
 
 <body>
-
+<!-- 原本的 global-loader 
   <div id="global-loader">
     <div class="spinner"></div>
     <div style="color:var(--text-secondary);font-weight:500;margin-top:.5rem;">正在準備您的音樂宇宙... ✨</div>
-  </div>
+  </div>已經隱藏 -->
   <div id="toast"></div>
 
   <!-- ===== SONG MODAL ===== -->
@@ -1180,7 +1180,14 @@
         <button class="btn btn-ghost btn-sm" id="btn-more-upcoming"
           style="width:100%; margin-top:1rem; display:none;">查看更多場次 ▼</button>
       </div>
-
+      
+        <!-- 👇 專屬的置頂 Loading 區塊 -->
+      <div id="local-loader" style="text-align: center; padding: 2rem 0;">
+        <div class="spinner" style="margin: 0 auto;"></div>
+        <div style="color: var(--accent-dark); font-weight: 600; margin-top: 1rem;">連線至芒果醬宇宙中... 🚀</div>
+        <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">GAS 伺服器啟動約需 2~3 秒，請稍候 ✨</div>
+      </div>
+      
       <h2>🎉 2026 芒果醬宇宙：公開活動歌單大解密 🥭</h2>
 
       <div class="card">
@@ -1637,18 +1644,18 @@
             appData = data;
             initApp();
           } else {
-            document.getElementById('global-loader').style.display = 'none';
+           const loader = document.getElementById('local-loader');
             alert('載入失敗: ' + (data ? data.error : '未知錯誤'));
           }
         })
         .catch(err => {
-          document.getElementById('global-loader').style.display = 'none';
+         const loader = document.getElementById('local-loader');
           alert('伺服器連線錯誤: ' + err);
         });
     });
 
     function initApp() {
-      document.getElementById('global-loader').style.display = 'none';
+      const loader = document.getElementById('local-loader');
       globalSongStats = null;
       setupHomeSearch();
       setupReportSongSearch();
