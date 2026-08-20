@@ -1,6 +1,6 @@
 <!-- ======================================================== -->
-<!-- 網站設定與版本資訊 -->
-<!-- 改版時間：20260820 -->
+<!-- 網站設定與版本資訊 (GitHub Pages 專用版) -->
+<!-- 改版時間：20260806 -->
 <!-- 開發者：blues (Threads: https://www.threads.com/@blues_.g) -->
 <!-- ======================================================== -->
 <!DOCTYPE html>
@@ -226,7 +226,7 @@
 
   <div class="container">
     <div style="background: var(--accent-light); border-left: 4px solid var(--accent); border-radius: 8px; padding: 0.6rem 1rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-main); line-height: 1.6;">
-      🚀 為了提供更良好的體驗，<a href="https://blues32767.github.io/mangojump-setlists/" target="_blank" style="color: var(--accent-dark); font-weight: 700; text-decoration: none; border-bottom: 1px dashed var(--accent);">正式版網站</a>已經上線囉！本 GAS 測試站同時也會繼續使用 ✨
+      🚀 歡迎來到芒果醬粉絲應援站！
     </div>
 
     <!-- ===== HOME ===== -->
@@ -483,6 +483,9 @@
   </footer>
 
   <script>
+    // 🔗 您的 GAS 對外公開 API 網址
+    const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbxy9TmlJK7YydDApuJYfbIgOT7QkuwRhoMQAO5UqLxS_6fY6wgEs3OytJ2Tk5P6c1Jf/exec';
+
     let appData = { songs: [], events: [], upcoming: [], totalEvents: 0 };
     let currentUser = null;
     let currentSearchSong = '';
@@ -592,14 +595,25 @@
       if (id === 'view-report') loadPendingEvents();
     }
 
+    // 🚀 關鍵修復：改用 Fetch 向 GAS 請求資料（適用於 GitHub Pages 外部站台）
     document.addEventListener('DOMContentLoaded', () => {
-      google.script.run
-        .withSuccessHandler(data => {
-          if (data.success) { appData = data; initApp(); }
-          else alert('載入失敗: ' + data.error);
+      fetch(GAS_API_URL + '?action=getSetlistData')
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.success) {
+            appData = data;
+            initApp();
+          } else {
+            const loader = document.getElementById('local-loader');
+            if (loader) loader.style.display = 'none';
+            alert('載入失敗: ' + (data ? data.error : '未知錯誤'));
+          }
         })
-        .withFailureHandler(err => alert('伺服器錯誤: ' + err))
-        .getSetlistData();
+        .catch(err => {
+          const loader = document.getElementById('local-loader');
+          if (loader) loader.style.display = 'none';
+          alert('伺服器連線錯誤: ' + err);
+        });
     });
 
     function initApp() {
@@ -872,7 +886,7 @@
       appData.events.forEach(ev => {
         const card = document.createElement('div');
         card.className = 'card event-card';
-        // 💡 修正：使用 isEventAttended 支援新舊 ID 勾選狀態判斷
+        // 💡 支援新舊 ID 向下相容勾選狀態
         const checked = currentUser && isEventAttended(ev, currentUser.attendedIds) ? 'checked' : '';
 
         let bodyHtml = !ev.setlist.length ? `<div style="text-align:center;padding:1rem 0;color:var(--text-secondary);">期待小果子熱心回報歌單</div>` : ev.setlist.map(s => `
@@ -902,6 +916,7 @@
       });
     }
 
+    // 💾 儲存場次紀錄（Fetch POST）
     document.getElementById('btn-save-events').addEventListener('click', () => {
       if (!currentUser) {
         document.getElementById('events-msg').innerText = '提示：請先建立或輸入專屬 ID 來保存您的精彩足跡！✨';
@@ -912,10 +927,27 @@
       btn.innerText = '💾 儲存中...';
       const selectedIds = Array.from(document.querySelectorAll('.ev-chk:checked')).map(c => c.getAttribute('data-id'));
       currentUser.attendedIds = selectedIds;
-      google.script.run
-        .withSuccessHandler(() => { btn.innerText = '💾 儲存場次紀錄'; showToast('✨ 太棒了！您的場次紀錄已完美儲存！'); updateDashboard(); })
-        .withFailureHandler(() => { btn.innerText = '💾 儲存場次紀錄'; showToast('儲存遇到一點小狀況，請再試一次喔！'); })
-        .saveUserData(currentUser.userId, selectedIds.join(','), currentUser.nickname || '');
+
+      fetch(GAS_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({
+          action: 'saveUserData',
+          userId: currentUser.userId,
+          attendedEvents: selectedIds.join(','),
+          nickname: currentUser.nickname || ''
+        })
+      })
+      .then(res => res.json())
+      .then(() => {
+        btn.innerText = '💾 儲存場次紀錄';
+        showToast('✨ 太棒了！您的場次紀錄已完美儲存！');
+        updateDashboard();
+      })
+      .catch(() => {
+        btn.innerText = '💾 儲存場次紀錄';
+        showToast('儲存遇到一點小狀況，請再試一次喔！');
+      });
     });
 
     function initTechView() {
@@ -944,8 +976,8 @@
     function togglePortfolio() {
       const el = document.getElementById('portfolio-detail-list');
       const chevron = document.getElementById('portfolio-chevron');
-      if (el.style.display === 'none') { el.style.display = 'block'; if (chevron) chevron.classList.add('open'); }
-      else { el.style.display = 'none'; if (chevron) chevron.classList.remove('open'); }
+      if (el.style.display === 'none') { el.style.display = 'block'; chevron.classList.add('open'); }
+      else { el.style.display = 'none'; chevron.classList.remove('open'); }
     }
 
     function renderPortfolioCard() {
@@ -955,7 +987,6 @@
 
       if (currentUser) {
         let songCounts = {};
-        // 💡 修正：計算持股時使用相容函式篩選參與活動
         const attendedEvs = appData.events.filter(e => isEventAttended(e, currentUser.attendedIds));
         attendedEvs.forEach(ev => { ev.setlist.forEach(s => { songCounts[s.songName] = (songCounts[s.songName] || 0) + 1; }); });
 
@@ -1125,55 +1156,71 @@
       document.getElementById('login-history-chips').innerHTML = hist.map(id => `<div class="id-chip-btn" onclick="document.getElementById('login-id').value = '${id}'; document.getElementById('btn-login').click();">${id}</div>`).join('');
     }
 
+    // 🔑 自動登入（Fetch GET）
     function tryAutoLogin() {
       const saved = localStorage.getItem(LS_AUTO);
       if (!saved) return;
-      google.script.run
-        .withSuccessHandler(res => {
+      fetch(`${GAS_API_URL}?action=getUserData&userId=${saved}`)
+        .then(res => res.json())
+        .then(res => {
           if (res.success) {
             currentUser = { userId: res.userId, attendedIds: res.attendedEvents ? res.attendedEvents.split(',').filter(Boolean) : [], nickname: res.nickname || '' };
             onLoginSuccess(true);
           }
         })
-        .getUserData(saved);
+        .catch(() => {});
     }
 
+    // 🔓 登入（Fetch GET）
     document.getElementById('btn-login').addEventListener('click', () => {
       const id = document.getElementById('login-id').value.trim().toUpperCase();
       if (!id) return;
-      google.script.run
-        .withSuccessHandler(res => {
+      fetch(`${GAS_API_URL}?action=getUserData&userId=${id}`)
+        .then(res => res.json())
+        .then(res => {
           if (res.success) {
             currentUser = { userId: res.userId, attendedIds: res.attendedEvents ? res.attendedEvents.split(',').filter(Boolean) : [], nickname: res.nickname || '' };
             saveLoginHistory(res.userId);
             onLoginSuccess(false);
           } else alert('登入失敗: ' + res.error);
         })
-        .getUserData(id);
+        .catch(err => alert('連線失敗: ' + err));
     });
 
+    // ✨ 建立新 ID（Fetch POST）
     document.getElementById('btn-start-create').addEventListener('click', () => {
       const selected = Array.from(document.querySelectorAll('.ev-chk:checked')).map(c => c.getAttribute('data-id'));
-      google.script.run
-        .withSuccessHandler(res => {
-          if (res.success) {
-            currentUser = { userId: res.userId, attendedIds: selected, nickname: '' };
-            saveLoginHistory(res.userId);
-            onLoginSuccess(false);
-            showToast('✨ 專屬 ID 建立成功！');
-          }
-        })
-        .saveUserData('', selected.join(','), '');
+      fetch(GAS_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ action: 'saveUserData', userId: '', attendedEvents: selected.join(','), nickname: '' })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          currentUser = { userId: res.userId, attendedIds: selected, nickname: '' };
+          saveLoginHistory(res.userId);
+          onLoginSuccess(false);
+          showToast('✨ 專屬 ID 建立成功！');
+        }
+      })
+      .catch(err => alert('建立失敗: ' + err));
     });
 
+    // 🏷️ 儲存暱稱（Fetch POST）
     document.getElementById('btn-save-nickname').addEventListener('click', () => {
       if (!currentUser) return;
       const newNick = document.getElementById('user-nickname-input').value.trim();
-      google.script.run
-        .withSuccessHandler(res => {
-          if (res.success) { currentUser.nickname = res.nickname; updateNavProfileDisplay(); showToast('✨ 暱稱儲存成功！'); }
-        })
-        .saveUserData(currentUser.userId, currentUser.attendedIds.join(','), newNick);
+      fetch(GAS_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ action: 'saveUserData', userId: currentUser.userId, attendedEvents: currentUser.attendedIds.join(','), nickname: newNick })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) { currentUser.nickname = res.nickname; updateNavProfileDisplay(); showToast('✨ 暱稱儲存成功！'); }
+      })
+      .catch(err => showToast('儲存失敗: ' + err));
     });
 
     function updateNavProfileDisplay() {
@@ -1226,7 +1273,6 @@
 
     function updateDashboard() {
       if (!currentUser) return;
-      // 💡 修正：動態篩選出使用者真正參與過的活動物件（支援新舊 ID 向下相容）
       const attendedEvs = appData.events.filter(e => isEventAttended(e, currentUser.attendedIds));
       const totalEvts = appData.events.length;
       const validN = getValidEvents().length;
@@ -1318,6 +1364,7 @@
       reportSetlist = []; renderSetlistChips();
     }
 
+    // 📤 提交回報（Fetch POST）
     function submitReport() {
       const date = document.getElementById('rpt-date').value.trim();
       const name = document.getElementById('rpt-name').value.trim();
@@ -1325,24 +1372,32 @@
       if (!name) { showToast('⚠️ 請填寫活動名稱'); return; }
       if (!reportSetlist.length) { showToast('⚠️ 請至少加入一首表演歌曲'); return; }
 
-      google.script.run
-        .withSuccessHandler(res => {
-          if (res.success) {
-            showToast(res.isDuplicate ? '✨ 回報已成功送出！(已標記日期重複)' : '✨ 回報已成功送出！');
-            clearReportForm(); loadPendingEvents();
-          } else showToast('提交失敗：' + res.error);
-        })
-        .submitEventReport({
+      fetch(GAS_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({
+          action: 'submitEventReport',
           date, name, time: document.getElementById('rpt-time').value.trim(),
           setlist: reportSetlist, note: document.getElementById('rpt-note').value.trim(),
           submitter: document.getElementById('rpt-submitter').value.trim()
-        });
+        })
+      })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          showToast(res.isDuplicate ? '✨ 回報已成功送出！(已標記日期重複)' : '✨ 回報已成功送出！');
+          clearReportForm(); loadPendingEvents();
+        } else showToast('提交失敗：' + res.error);
+      })
+      .catch(err => showToast('提交失敗：' + err));
     }
 
+    // ⏳ 讀取待審核場次（Fetch GET）
     function loadPendingEvents() {
       const el = document.getElementById('pending-list');
-      google.script.run
-        .withSuccessHandler(res => {
+      fetch(`${GAS_API_URL}?action=getPendingEvents`)
+        .then(res => res.json())
+        .then(res => {
           if (!res.success || !res.events.length) { el.innerHTML = '<div style="color:var(--text-secondary);text-align:center;padding:2rem 0;">目前沒有待審核的場次 🎉</div>'; return; }
           el.innerHTML = res.events.map(ev => `
             <div class="card pending-card">
@@ -1350,7 +1405,7 @@
               <div style="font-size:.85rem;color:var(--text-secondary);">共 ${ev.count} 首歌曲</div>
             </div>`).join('');
         })
-        .getPendingEvents();
+        .catch(() => { el.innerHTML = '<div style="color:var(--dn);">讀取失敗</div>'; });
     }
   </script>
 </body>
