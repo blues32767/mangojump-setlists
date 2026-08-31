@@ -893,6 +893,18 @@
           <div class="song-line">
             <div>${s.orderStr}. <span style="cursor:pointer;font-weight:500;" onclick="openSongModal('${esc(s.songName)}')">${s.songName}</span></div>
             ${s.isEncore ? '<div class="encore-tag">安可</div>' : ''}
+          </div>`).join('');function renderEventsList() {
+      const container = document.getElementById('events-list');
+      container.innerHTML = '';
+      appData.events.forEach(ev => {
+        const card = document.createElement('div');
+        card.className = 'card event-card';
+        const checked = currentUser && isEventAttended(ev, currentUser.attendedIds) ? 'checked' : '';
+
+        let bodyHtml = !ev.setlist.length ? `<div style="text-align:center;padding:1rem 0;color:var(--text-secondary);">期待小果子熱心回報歌單</div>` : ev.setlist.map(s => `
+          <div class="song-line">
+            <div>${s.orderStr}. <span style="cursor:pointer;font-weight:500;" onclick="openSongModal('${esc(s.songName)}')">${s.songName}</span></div>
+            ${s.isEncore ? '<div class="encore-tag">安可</div>' : ''}
           </div>`).join('');
 
         const formattedNote = formatNoteWithLinks(ev.note);
@@ -904,6 +916,7 @@
                 <div class="ev-date">${formatEventDate(ev.date)}</div>
                 <div class="ev-title">${ev.name}</div>
                 ${ev.timeStr ? `<div style="font-size:0.8rem; font-weight:600; color:var(--sr-color); margin-top:3px;">🕒 ${ev.timeStr}</div>` : ''}
+                ${ev.location ? `<div style="font-size:0.85rem; color:var(--text-secondary); margin-top:3px;">📍 ${ev.location} ${ev.mapLink ? `<a href="${ev.mapLink}" target="_blank" class="upc-map-link" style="margin-left:6px;" onclick="event.stopPropagation()">🗺️ Map</a>` : ''}</div>` : ''}
                 ${formattedNote ? `<div class="ev-note">備註：${formattedNote}</div>` : ''}
               </div>
               <div style="color:var(--accent);font-weight:600;font-size:.9rem;text-align:right;"><div>${ev.setlist.length ? `共 ${ev.setlist.length} 首` : '期待解鎖'}</div></div>
