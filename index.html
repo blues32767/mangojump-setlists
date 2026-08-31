@@ -886,19 +886,6 @@
       appData.events.forEach(ev => {
         const card = document.createElement('div');
         card.className = 'card event-card';
-        // 💡 支援新舊 ID 向下相容勾選狀態
-        const checked = currentUser && isEventAttended(ev, currentUser.attendedIds) ? 'checked' : '';
-
-        let bodyHtml = !ev.setlist.length ? `<div style="text-align:center;padding:1rem 0;color:var(--text-secondary);">期待小果子熱心回報歌單</div>` : ev.setlist.map(s => `
-          <div class="song-line">
-            <div>${s.orderStr}. <span style="cursor:pointer;font-weight:500;" onclick="openSongModal('${esc(s.songName)}')">${s.songName}</span></div>
-            ${s.isEncore ? '<div class="encore-tag">安可</div>' : ''}
-          </div>`).join('');function renderEventsList() {
-      const container = document.getElementById('events-list');
-      container.innerHTML = '';
-      appData.events.forEach(ev => {
-        const card = document.createElement('div');
-        card.className = 'card event-card';
         const checked = currentUser && isEventAttended(ev, currentUser.attendedIds) ? 'checked' : '';
 
         let bodyHtml = !ev.setlist.length ? `<div style="text-align:center;padding:1rem 0;color:var(--text-secondary);">期待小果子熱心回報歌單</div>` : ev.setlist.map(s => `
