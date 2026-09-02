@@ -556,13 +556,25 @@
       return `${y}/${m.toString().padStart(2, '0')}/${d.toString().padStart(2, '0')} (${weekdays[dateObj.getDay()]})`;
     }
 
-    // 💡 向下相容檢查：支援新版穩定 ID 與舊版 row 結尾 ID
+// 💡 修正：超強向下相容檢查，支援各種時期的 ID 格式
     function isEventAttended(ev, attendedIds) {
       if (!attendedIds) return false;
       return attendedIds.some(id => {
+        // 1. 完全符合 (最標準的情況)
         if (id === ev.id) return true;
-        if (/^\d{8}-\d+$/.test(id)) {
-          return id.split('-')[0] === ev.date;
+        
+        // 2. 切割字串進行舊版紀錄相容比對
+        const parts = id.split('-');
+        if (parts.length >= 2) {
+          const datePart = parts[0];
+          if (datePart === ev.date) {
+            // 取出破折號後面的所有字元
+            const rest = id.substring(datePart.length + 1);
+            // 情況 A：前幾天短暫用過純數字 (row index) 結尾的紀錄
+            if (/^\d+$/.test(rest)) return true;
+            // 情況 B：舊版用活動名稱結尾的紀錄 (包含名稱微調的容錯)
+            if (rest === ev.name || ev.name.includes(rest) || rest.includes(ev.name)) return true;
+          }
         }
         return false;
       });
