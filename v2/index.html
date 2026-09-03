@@ -390,6 +390,16 @@
       border: none;
     }
 
+    /* 🌟 抽籤轉場動畫樣式 (修復括號漏掉的 CSS 錯誤) */
+    @keyframes slotRolling {
+      0% { transform: translateY(0); opacity: 0.5; }
+      50% { transform: translateY(-4px) scale(1.02); opacity: 0.8; color: var(--accent); }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    .rolling-anim {
+      animation: slotRolling 0.15s infinite ease-in-out;
+    }
+
     .upc-row { display: flex; gap: 1.25rem; padding: 1rem 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
     .upc-row:last-child { border-bottom: none; }
     .upc-date-box { background: var(--accent); color: #ffffff; border: 2px solid var(--text-main); padding: 0.4rem; text-align: center; min-width: 64px; display: flex; flex-direction: column; justify-content: center; box-shadow: 2px 2px 0px var(--text-main); }
@@ -545,7 +555,7 @@
       </div>
     </div>
 
-    <!-- 頁籤連結 (已移除隨機聆聽的常駐底色) -->
+    <!-- 頁籤連結 -->
     <div class="nav-links">
       <div class="nav-item active" data-target="view-home">首頁</div>
       <div class="nav-item" data-target="view-events">詳細場次</div>
@@ -648,7 +658,7 @@
       <div id="analysis-content"></div>
     </div>
 
-    <!-- ===== 4. RANDOM 隨機聆聽 ===== -->
+    <!-- ===== 4. RANDOM 隨機聆聽 (點擊後 1 秒動畫抽籤播放) ===== -->
     <div id="view-random" class="view">
       <div style="margin-bottom: 1.5rem;">
         <h2>🎲 隨機聆聽</h2>
@@ -670,8 +680,8 @@
 
           <!-- 抽歌按鈕 -->
           <div>
-            <button class="btn" id="btn-draw-song" onclick="drawRandomSong()" style="padding: 0.85rem 2rem; font-size: 1rem; box-shadow: 4px 4px 0px var(--text-main);">
-              🎲 抽一首金曲
+            <button class="btn" id="btn-draw-song" onclick="triggerRandomDraw(true)" style="padding: 0.85rem 2rem; font-size: 1rem; box-shadow: 4px 4px 0px var(--text-main);">
+              🎲 重新抽一首金曲
             </button>
           </div>
 
@@ -682,7 +692,6 @@
               <span id="random-yt-song-tag" style="color: var(--accent); font-weight: 900; font-size: 0.8rem;"></span>
             </div>
 
-            <!-- 🌟 解決 YouTube 錯誤 153 關鍵 2：加上 referrerpolicy="strict-origin-when-cross-origin" -->
             <div class="yt-player-wrap" id="random-yt-player-box">
               <iframe id="random-yt-iframe" src="" 
                 referrerpolicy="strict-origin-when-cross-origin"
@@ -827,7 +836,7 @@
         </div>
       </div>
       <h3 style="margin-bottom:0.85rem;font-size:0.95rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);">待審核場次</h3>
-      <div id="pending-list"><div style="color:var(--text-secondary);text-align:center;padding:2rem 0;font-size:0.9rem;font-weight:700;">載入中…</div></div>
+      <div id="pending-list"><div style="color:var(--text-secondary);text-align:center;padding:2rem 0;font-size:0.9rem;font-weight:700;">目前沒有待審核的場次</div></div>
     </div>
   </div>
 
@@ -838,8 +847,61 @@
   </footer>
 
   <script>
-    // ⚠️ 替換網址時，務必確認「單引號 (')」保留著！
+    // 🔗 您的 GAS API 網址 (在 GitHub Pages 執行時使用)
     const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbxy9TmlJK7YydDApuJYfbIgOT7QkuwRhoMQAO5UqLxS_6fY6wgEs3OytJ2Tk5P6c1Jf/exec';
+
+    // ============================================================
+    // 🌟 雙棲自適應 API 轉接器 (相容 GAS 與 GitHub Pages)
+    // ============================================================
+    const isGAS = typeof google !== 'undefined' && Boolean(google.script) && Boolean(google.script.run);
+
+    function apiCall(action, payload) {
+      payload = payload || {};
+      return new Promise(function(resolve, reject) {
+        if (isGAS) {
+          var runner = google.script.run
+            .withSuccessHandler(function(res) { resolve(res); })
+            .withFailureHandler(function(err) { reject(new Error(err.message || err)); });
+
+          if (action === 'getSetlistData') {
+            runner.getSetlistData();
+          } else if (action === 'getUserData') {
+            runner.getUserData(payload.userId);
+          } else if (action === 'getPendingEvents') {
+            runner.getPendingEvents();
+          } else if (action === 'saveUserData') {
+            runner.saveUserData(payload.userId || '', payload.attendedEvents || '', payload.nickname || '');
+          } else if (action === 'submitEventReport') {
+            runner.submitEventReport(payload);
+          } else {
+            reject(new Error('未知操作: ' + action));
+          }
+        } else {
+          if (action === 'saveUserData' || action === 'submitEventReport') {
+            var bodyObj = Object.assign({ action: action }, payload);
+            fetch(GAS_API_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'text/plain' },
+              body: JSON.stringify(bodyObj)
+            })
+            .then(function(res) { return res.json(); })
+            .then(resolve)
+            .catch(reject);
+          } else {
+            var q = '?action=' + encodeURIComponent(action);
+            for (var key in payload) {
+              if (payload.hasOwnProperty(key)) {
+                q += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(payload[key]);
+              }
+            }
+            fetch(GAS_API_URL + q)
+              .then(function(res) { return res.json(); })
+              .then(resolve)
+              .catch(reject);
+          }
+        }
+      });
+    }
 
     let appData = { songs: [], events: [], upcoming: [], songLinks: {}, totalEvents: 0 };
     let currentUser = null;
@@ -857,7 +919,6 @@
     const LS_THEME = 'mango_theme_mode';
     let showAllUpcoming = false;
 
-    // 頁面捲動監聽
     window.addEventListener('scroll', () => {
       const nav = document.getElementById('main-nav');
       const dropdown = document.getElementById('mobile-menu-dropdown');
@@ -879,7 +940,6 @@
       document.getElementById('mobile-menu-dropdown').classList.remove('show');
     }
 
-    // 黑白風格切換
     function initTheme() {
       const savedTheme = localStorage.getItem(LS_THEME);
       if (savedTheme === 'dark') {
@@ -906,50 +966,40 @@
       t.classList.add('show');
       setTimeout(() => t.classList.remove('show'), 3000);
     }
+
     function getRarity(pct) {
       if (pct >= 71) return 'R';
       if (pct >= 41) return 'SR';
       if (pct >= 11) return 'SSR';
       return 'SSSR';
     }
+
     function esc(str) { return str.replace(/'/g, "\\'"); }
 
-    // 解析 YouTube 影片 11 碼 ID
     function extractYouTubeId(url) {
       if (!url) return null;
       const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|v\/|shorts\/))([\w-]{11})/);
       return (match && match[1]) ? match[1] : null;
     }
 
-    // 動態建構 5 大串流平台按鈕
     function buildPlatformButtonsHtml(songName) {
       const links = (appData.songLinks && appData.songLinks[songName]) || {};
+      const q = encodeURIComponent('芒果醬 ' + songName);
 
-      const sUrl  = links.spotify    || `https://open.spotify.com/search/${encodeURIComponent('芒果醬 ' + songName)}`;
-      const kUrl  = links.kkbox      || `https://www.kkbox.com/tw/tc/search.php?word=${encodeURIComponent('芒果醬 ' + songName)}`;
-      const aUrl  = links.appleMusic || `https://music.apple.com/tw/search?term=${encodeURIComponent('芒果醬 ' + songName)}`;
-      const ymUrl = links.ytMusic    || `https://music.youtube.com/search?q=${encodeURIComponent('芒果醬 ' + songName)}`;
-      const yMv   = links.ytMv       || `https://www.youtube.com/results?search_query=${encodeURIComponent('芒果醬 ' + songName)}`;
+      const sUrl  = links.spotify    || ('https://open.spotify.com/search/' + q);
+      const kUrl  = links.kkbox      || ('https://www.kkbox.com/tw/tc/search.php?word=' + q);
+      const aUrl  = links.appleMusic || ('https://music.apple.com/tw/search?term=' + q);
+      const ymUrl = links.ytMusic    || ('https://music.youtube.com/search?q=' + q);
+      const yMv   = links.ytMv       || ('https://www.youtube.com/results?search_query=' + q);
 
-      return `
-        <a href="${sUrl}" target="_blank" class="platform-btn spotify" title="在 Spotify 上聆聽">
-          <svg style="width:13px;height:13px;fill:currentColor;" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-          Spotify
-        </a>
-        <a href="${kUrl}" target="_blank" class="platform-btn kkbox" title="在 KKBOX 上聆聽">
-          <span style="background:#00bcd4;color:#fff;font-size:0.65rem;font-weight:900;padding:0 3px;border-radius:2px;">K</span>
-          KKBOX
-        </a>
-        <a href="${aUrl}" target="_blank" class="platform-btn apple" title="在 Apple Music 上聆聽">
-           Apple Music
-        </a>
-        <a href="${ymUrl}" target="_blank" class="platform-btn ytmusic" title="在 YouTube Music 上聆聽">
-          ▶ YT Music
-        </a>
-        <a href="${yMv}" target="_blank" class="platform-btn youtube" title="在 YouTube 觀看 MV">
-          🎬 YouTube MV
-        </a>
-      `;
+      return '<a href="' + sUrl + '" target="_blank" class="platform-btn spotify" title="在 Spotify 上聆聽">' +
+             '<svg style="width:13px;height:13px;fill:currentColor;" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>' +
+             ' Spotify</a>' +
+             '<a href="' + kUrl + '" target="_blank" class="platform-btn kkbox" title="在 KKBOX 上聆聽">' +
+             '<span style="background:#00bcd4;color:#fff;font-size:0.65rem;font-weight:900;padding:0 3px;border-radius:2px;">K</span> KKBOX</a>' +
+             '<a href="' + aUrl + '" target="_blank" class="platform-btn apple" title="In Apple Music"> Apple Music</a>' +
+             '<a href="' + ymUrl + '" target="_blank" class="platform-btn ytmusic" title="In YouTube Music">▶ YT Music</a>' +
+             '<a href="' + yMv + '" target="_blank" class="platform-btn youtube" title="Watch on YouTube">🎬 YouTube MV</a>';
     }
 
     function formatNoteWithLinks(noteStr) {
@@ -1030,28 +1080,23 @@
       window.scrollTo(0, 0);
 
       if (id === 'view-report') loadPendingEvents();
-      if (id === 'view-random' && !currentRandomSong && appData.songs.length) {
-        drawRandomSong();
-      }
       
-      // 切換離開隨機聆聽時，自動暫停 YouTube 播放
-      if (id !== 'view-random') {
+      // 🌟 當切換到「隨機聆聽」頁面時，自動觸發 1 秒抽籤動畫與播放
+      if (id === 'view-random') {
+        triggerRandomDraw(false);
+      } else {
         const iframe = document.getElementById('random-yt-iframe');
         if (iframe && iframe.src) iframe.src = '';
       }
     }
 
-    // 點擊外圍灰色背景自動關閉彈窗
     document.getElementById('song-modal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeSongModal();
-      }
+      if (e.target === this) closeSongModal();
     });
 
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
-      fetch(GAS_API_URL + '?action=getSetlistData')
-        .then(res => res.json())
+      apiCall('getSetlistData')
         .then(data => {
           if (data && data.success) {
             appData = data;
@@ -1065,7 +1110,7 @@
         .catch(err => {
           const loader = document.getElementById('local-loader');
           if (loader) loader.style.display = 'none';
-          alert('伺服器連線錯誤: ' + err);
+          alert('伺服器連線錯誤: ' + (err.message || err));
         });
     });
 
@@ -1081,11 +1126,7 @@
       renderAnalysis(4);
       loadLoginHistory();
       tryAutoLogin();
-
-      // 預設隨機推薦一首歌
-      if (appData.songs && appData.songs.length) {
-        drawRandomSong();
-      }
+      // 移除原先初始化就自動抽歌的程式碼，改由切換頁面時觸發
     }
 
     function renderUpcomingEvents() {
@@ -1299,56 +1340,87 @@
       });
     }
 
-    // 🌟 3. 隨機聆聽抽卡與內嵌 YouTube 播放器邏輯（已徹底修復錯誤 153）
-    function drawRandomSong() {
+    // 🌟 帶有 1 秒鐘抽籤轉場動畫的隨機抽歌與播放機制
+    function triggerRandomDraw(isUserClick) {
       if (!appData.songs || !appData.songs.length) return;
 
-      const randomIndex = Math.floor(Math.random() * appData.songs.length);
-      const songName = appData.songs[randomIndex];
-      currentRandomSong = songName;
-      const st = getSongStats(songName);
-
-      document.getElementById('random-song-name').innerText = songName;
+      const nameEl = document.getElementById('random-song-name');
       const badgeEl = document.getElementById('random-song-badge');
-      badgeEl.className = `badge ${st.rarity}`;
-      badgeEl.innerText = st.rarity;
-      document.getElementById('random-song-stats').innerText = `總場次機率 ${st.total}% (共 ${st.count} 次)`;
-
-      // 渲染五大音樂平台按鈕
-      document.getElementById('random-platform-links').innerHTML = buildPlatformButtonsHtml(songName);
-
-      // 驅動 YouTube 播放器
-      const songLinks = (appData.songLinks && appData.songLinks[songName]) || {};
-      const ytMvUrl = songLinks.ytMv || '';
-      const videoId = extractYouTubeId(ytMvUrl);
-
+      const statsEl = document.getElementById('random-song-stats');
+      const platformLinks = document.getElementById('random-platform-links');
       const ytContainer = document.getElementById('random-yt-container');
-      const playerBox = document.getElementById('random-yt-player-box');
       const iframe = document.getElementById('random-yt-iframe');
-      const notice = document.getElementById('random-yt-notice');
-      const songTag = document.getElementById('random-yt-song-tag');
 
-      ytContainer.style.display = 'block';
-      songTag.innerText = songName;
+      // 抽籤開始時先清空舊播放器，避免切換時還聽得到上首歌聲音
+      if (iframe) iframe.src = '';
+      if (ytContainer) ytContainer.style.display = 'none';
 
-      if (videoId) {
-        playerBox.style.display = 'block';
-        notice.style.display = 'none';
-        
-        // 🌟 關鍵 3：提供 origin 參數，並使用官方標準 embed 網域
-        const origin = (window.location.origin && window.location.origin !== 'null') ? window.location.origin : 'https://script.google.com';
-        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0&origin=${encodeURIComponent(origin)}`;
-      } else {
-        iframe.src = '';
-        playerBox.style.display = 'none';
-        notice.style.display = 'block';
+      // 增加滾動抽籤視覺特效樣式
+      nameEl.classList.add('rolling-anim');
+      badgeEl.className = 'badge N';
+      badgeEl.innerText = '抽獎中...';
+      statsEl.innerText = '正在從 2026 芒果醬金曲庫隨機抽選中...';
+      platformLinks.innerHTML = '';
 
-        if (ytMvUrl) {
-          notice.innerHTML = `⚠️ 此歌曲在試算表設定為「搜尋連結」，YouTube 官方限制無法直接內嵌播放。<br>👉 請點擊上方「🎬 YouTube MV」按鈕前往觀看；如需直接於此播放，請在試算表「歌曲連結」工作表中將其更新為正式影片網址（如 <code>https://www.youtube.com/watch?v=...</code>）。`;
+      // 模擬快速滾動洗牌動畫（持續 1 秒）
+      let counter = 0;
+      const rollInterval = setInterval(() => {
+        const randIdx = Math.floor(Math.random() * appData.songs.length);
+        nameEl.innerText = '🎲 ' + appData.songs[randIdx];
+        counter++;
+      }, 80);
+
+      setTimeout(() => {
+        clearInterval(rollInterval);
+        nameEl.classList.remove('rolling-anim');
+
+        // 最終定格抽選結果
+        const finalIdx = Math.floor(Math.random() * appData.songs.length);
+        const songName = appData.songs[finalIdx];
+        currentRandomSong = songName;
+        const st = getSongStats(songName);
+
+        nameEl.innerText = songName;
+        badgeEl.className = 'badge ' + st.rarity;
+        badgeEl.innerText = st.rarity;
+        statsEl.innerText = '總場次機率 ' + st.total + '% (共 ' + st.count + ' 次)';
+
+        // 渲染串流平台按鈕
+        platformLinks.innerHTML = buildPlatformButtonsHtml(songName);
+
+        // 驅動 YouTube 播放器
+        const songLinks = (appData.songLinks && appData.songLinks[songName]) || {};
+        const ytMvUrl = songLinks.ytMv || '';
+        const videoId = extractYouTubeId(ytMvUrl);
+
+        const playerBox = document.getElementById('random-yt-player-box');
+        const notice = document.getElementById('random-yt-notice');
+        const songTag = document.getElementById('random-yt-song-tag');
+
+        ytContainer.style.display = 'block';
+        songTag.innerText = songName;
+
+        if (videoId) {
+          playerBox.style.display = 'block';
+          notice.style.display = 'none';
+          
+          let originParam = '';
+          if (window.location.origin && window.location.origin !== 'null' && !window.location.origin.includes('googleusercontent.com')) {
+            originParam = '&origin=' + encodeURIComponent(window.location.origin);
+          }
+          iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&enablejsapi=1&rel=0' + originParam;
         } else {
-          notice.innerHTML = `尚未設定此歌曲的 YouTube 播放連結。`;
+          iframe.src = '';
+          playerBox.style.display = 'none';
+          notice.style.display = 'block';
+
+          if (ytMvUrl) {
+            notice.innerHTML = '⚠️ 此歌曲在試算表設定為「搜尋連結」，YouTube 官方限制無法直接內嵌播放。<br>👉 請點擊上方「🎬 YouTube MV」按鈕前往觀看。';
+          } else {
+            notice.innerHTML = '尚未設定此歌曲的 YouTube 播放連結。';
+          }
         }
-      }
+      }, 1000); // 1 秒抽籤動畫時間
     }
 
     function renderAnalysis(n) {
