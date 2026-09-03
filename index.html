@@ -1242,31 +1242,49 @@
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
 
-      // 第一階段：秒開首頁與近期活動
-      apiCall('getInitialData')
+      const loader = document.getElementById('local-loader');
+
+      // 🌟 方案二：優先極速讀取 GitHub CDN 靜態 JSON (加上時間戳記防止快取延遲)
+      fetch('./upcoming.json?t=' + Date.now())
+        .then(res => {
+          if (!res.ok) throw new Error('靜態快照尚未建立');
+          return res.json();
+        })
         .then(data => {
-          if (data && data.success) {
-            appData.upcoming = data.upcoming || [];
-            appData.songLinks = data.songLinks || {};
-            appData.songs = data.songs || [];
+          // 0.05 秒內瞬間完成初始化與渲染
+          appData.upcoming = data.upcoming || [];
+          appData.songLinks = data.songLinks || {};
+          appData.songs = data.songs || [];
 
-            // 立即解除首頁加載狀態並顯示
-            const loader = document.getElementById('local-loader');
-            if (loader) loader.style.display = 'none';
+          if (loader) loader.style.display = 'none';
 
-            renderUpcomingEvents();
-            setupAnalysisSearch();
-            setupReportSongSearch();
-            loadLoginHistory();
+          renderUpcomingEvents();
+          setupAnalysisSearch();
+          setupReportSongSearch();
+          loadLoginHistory();
 
-            // 第二階段：在背景靜默加載詳細演出與完整數據
-            loadBackgroundEvents();
-          } else {
-            fallbackFullLoad();
-          }
+          // 第一階段秒開完成後，背景默默去連 GAS 抓取歷年完整場次
+          loadBackgroundEvents();
         })
         .catch(() => {
-          fallbackFullLoad();
+          // 備援方案：若 upcoming.json 尚未推送，自動退回直接向 GAS 取資料
+          apiCall('getInitialData')
+            .then(data => {
+              if (data && data.success) {
+                appData.upcoming = data.upcoming || [];
+                appData.songLinks = data.songLinks || {};
+                appData.songs = data.songs || [];
+                if (loader) loader.style.display = 'none';
+                renderUpcomingEvents();
+                setupAnalysisSearch();
+                setupReportSongSearch();
+                loadLoginHistory();
+                loadBackgroundEvents();
+              } else {
+                fallbackFullLoad();
+              }
+            })
+            .catch(() => fallbackFullLoad());
         });
     });
 
