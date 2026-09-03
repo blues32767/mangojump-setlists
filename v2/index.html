@@ -1,5 +1,5 @@
 <!-- ======================================================== -->
-<!-- 芒果醬 Mango Jump 活動應援站 - 現代編輯風 / 支援黑白切換 -->
+<!-- 芒果醬 Mango Jump 活動應援站 - 現代編輯風 / 支援日、夜、芒果色三切換 -->
 <!-- 開發者：blues (Threads: https://www.threads.com/@blues_.g) -->
 <!-- ======================================================== -->
 <!DOCTYPE html>
@@ -10,12 +10,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- 🌟 解決 YouTube 錯誤 153 關鍵 1：宣告全域 Referrer-Policy -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>2026 芒果醬 Mango Jump 活動應援站</title>
+  <title>2026 芒果醬 Mango Jump 活動資訊站</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
     rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
   <style>
-    /* 預設為白色 (Light) 風格 */
+    /* 1. 預設為白色 (Light) 風格 */
     :root {
       --bg-main: #f5f5f3;
       --bg-card: #ffffff;
@@ -36,7 +36,7 @@
       --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* 黑色 (Dark) 風格 */
+    /* 2. 黑色 (Dark) 風格 */
     html.dark {
       --bg-main: #0c0c0e;
       --bg-card: #141417;
@@ -53,6 +53,25 @@
       --dn: #ef4444;
       --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
       --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    /* 3. 🥭 芒果色 (Mango Vibe) 風格：採用Logo暖橙與乳白卡片，清晰且柔和 */
+    html.mango {
+      --bg-main: #fff5ee;
+      --bg-card: #ffffff;
+      --bg-subtle: #ffe8d6;
+      --text-main: #2b1400;
+      --text-secondary: #8c5836;
+      --accent: #ff6600;
+      --accent-hover: #e55c00;
+      --accent-light: #ffe5d4;
+      --border: #f3cbb3;
+      --ring: rgba(255, 102, 0, 0.25);
+      --blur-bg: rgba(255, 245, 238, 0.95);
+      --up: #15803d;
+      --dn: #b91c1c;
+      --shadow: 0 4px 20px rgba(255, 102, 0, 0.08);
+      --shadow-lg: 0 12px 40px rgba(255, 102, 0, 0.15);
     }
 
     * {
@@ -181,7 +200,7 @@
       box-shadow: 2px 2px 0px var(--text-main);
     }
 
-    /* 右下角懸浮黑白切換按鈕 */
+    /* 右下角懸浮三段式風格切換按鈕 */
     .theme-fab-btn {
       position: fixed;
       bottom: 24px;
@@ -369,7 +388,7 @@
 
       .nav-links {
         display: grid;
-        grid-template-columns: repeat(4, 1fr); /* 移除場次補充後變為4欄 */
+        grid-template-columns: repeat(4, 1fr);
         gap: 3px;
         width: 100%;
         padding-top: 0.4rem;
@@ -495,12 +514,13 @@
       box-shadow: 6px 6px 0px var(--text-main);
     }
 
-    /* 🌟 3. 桌機版詳細場次改成便當盒（網格 2 欄）排版 */
+    /* 🌟 桌機版詳細場次改成便當盒（網格 2 欄）排版 */
     #events-list {
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.5rem;
     }
+
     @media (min-width: 769px) {
       #events-list {
         grid-template-columns: repeat(2, 1fr);
@@ -986,7 +1006,7 @@
       cursor: pointer;
       display: flex;
       transition: var(--transition);
-      margin-bottom: 0 !important; /* 配合 grid 調整間距 */
+      margin-bottom: 0 !important;
     }
 
     .event-card:hover {
@@ -1436,8 +1456,8 @@
   <div class="hero-grid"></div>
   <div id="toast"></div>
 
-  <!-- ===== 右下角懸浮黑白風格切換按鈕 ===== -->
-  <button class="theme-fab-btn" id="theme-toggle-btn" title="切換黑白風格" onclick="toggleTheme()">☀️</button>
+  <!-- ===== 右下角懸浮三段式風格切換按鈕 (☀️ ➔ 🌙 ➔ 🥭) ===== -->
+  <button class="theme-fab-btn" id="theme-toggle-btn" title="切換風格 (日間 / 夜間 / 芒果色)" onclick="toggleTheme()">☀️</button>
 
   <!-- ===== SONG MODAL (歌曲詳細資訊彈窗) ===== -->
   <div id="song-modal">
@@ -1465,7 +1485,7 @@
     </div>
   </div>
 
-  <!-- ===== NAV 導覽列 (已移除選單中的場次補充) ===== -->
+  <!-- ===== NAV 導覽列 ===== -->
   <nav id="main-nav">
     <div class="nav-left">
       <div class="brand-container">
@@ -1500,8 +1520,10 @@
       </div>
       <div class="mobile-menu-item active" data-target="view-home" onclick="handleMobileMenuClick('view-home')">首頁</div>
       <div class="mobile-menu-item" data-target="view-events" onclick="handleMobileMenuClick('view-events')">詳細場次</div>
-      <div class="mobile-menu-item" data-target="view-analysis" onclick="handleMobileMenuClick('view-analysis')">歌單分析</div>
-      <div class="mobile-menu-item" data-target="view-random" onclick="handleMobileMenuClick('view-random')">隨機聆聽 🎲</div>
+      <div class="mobile-menu-item" data-target="view-analysis" onclick="handleMobileMenuClick('view-analysis')">歌單分析
+      </div>
+      <div class="mobile-menu-item" data-target="view-random" onclick="handleMobileMenuClick('view-random')">隨機聆聽 🎲
+      </div>
     </div>
   </nav>
 
@@ -1529,7 +1551,7 @@
       </div>
 
       <div class="card" style="text-align: center; padding: 3rem 2rem; margin-top: 1rem;">
-        <h2>歡迎來到 2026 芒果醬活動應援站</h2>
+        <h2>歡迎來到 2026 芒果醬活動資訊站</h2>
         <p style="color: var(--text-secondary); font-size: 1rem; font-weight: 600; margin-top: 0.75rem;">
           即時掌握最新演出行程、參與場次足跡與各項金曲歌單分析！</p>
         <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
@@ -1540,7 +1562,7 @@
       </div>
     </div>
 
-    <!-- ===== 2. EVENTS 詳細場次 (新增「場次補充」按鈕於標題區) ===== -->
+    <!-- ===== 2. EVENTS 詳細場次 (內含場次補充按鈕) ===== -->
     <div id="view-events" class="view">
       <div
         style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
@@ -1549,7 +1571,6 @@
           <p style="color:var(--text-secondary);font-size:0.9rem;font-weight:600;">勾選參與過的精彩演出，記錄專屬音樂足跡</p>
         </div>
         <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
-          <!-- 🌟 1. 新增「場次補充」按鈕連結 -->
           <button class="btn btn-outline btn-sm" onclick="openReportView()">📝 場次補充</button>
           <div id="events-login-status"
             style="font-size:0.85rem;font-weight:800;color:var(--accent);text-transform:uppercase;">未登入</div>
@@ -1715,7 +1736,8 @@
             <div style="font-size:0.85rem;color:var(--text-secondary);font-weight:800;text-transform:uppercase;">現場解鎖進度
             </div>
             <div style="font-weight:900;color:var(--text-main);font-size:0.9rem;"><span id="dash-prog-cnt">0</span> /
-              <span id="dash-total-cnt">0</span> 場</div>
+              <span id="dash-total-cnt">0</span> 場
+            </div>
           </div>
           <div class="progress-wrap">
             <div class="progress-bar" id="dash-prog-bar" style="width:0%;"></div>
@@ -1794,7 +1816,8 @@
 
     <!-- ===== 6. REPORT 場次補充 (從主導覽列移除，改由詳細場次內按鈕開啟) ===== -->
     <div id="view-report" class="view">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom: 1.5rem;flex-wrap:wrap;gap:1rem;">
+      <div
+        style="display:flex;justify-content:space-between;align-items:center;margin-bottom: 1.5rem;flex-wrap:wrap;gap:1rem;">
         <div>
           <h2>場次補充回報</h2>
           <p style="color:var(--text-secondary);font-size:0.9rem;font-weight:600;">協助回報或補全芒果醬的演出歌單資料</p>
@@ -1948,22 +1971,38 @@
       document.getElementById('mobile-menu-dropdown').classList.remove('show');
     }
 
+    // 🌟 支援三段式風格循環切換：☀️ 日間 ➔ 🌙 夜間 ➔ 🥭 芒果色
     function initTheme() {
       const savedTheme = localStorage.getItem(LS_THEME);
-      if (savedTheme === 'dark') {
-        document.documentElement.classList.add('dark');
-        document.getElementById('theme-toggle-btn').innerText = '🌙';
+      applyTheme(savedTheme || 'light');
+    }
+
+    function applyTheme(mode) {
+      const doc = document.documentElement;
+      doc.classList.remove('dark', 'mango');
+      const btn = document.getElementById('theme-toggle-btn');
+
+      if (mode === 'dark') {
+        doc.classList.add('dark');
+        if (btn) btn.innerText = '🌙';
+      } else if (mode === 'mango') {
+        doc.classList.add('mango');
+        if (btn) btn.innerText = '🥭';
       } else {
-        document.documentElement.classList.remove('dark');
-        document.getElementById('theme-toggle-btn').innerText = '☀️';
+        if (btn) btn.innerText = '☀️';
       }
+      localStorage.setItem(LS_THEME, mode);
     }
 
     function toggleTheme() {
-      const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.setItem(LS_THEME, isDark ? 'dark' : 'light');
-      document.getElementById('theme-toggle-btn').innerText = isDark ? '🌙' : '☀️';
-      showToast(isDark ? '已切換至夜間風格' : '已切換至日間風格');
+      const current = localStorage.getItem(LS_THEME) || 'light';
+      let next = 'light';
+      if (current === 'light') next = 'dark';
+      else if (current === 'dark') next = 'mango';
+      else next = 'light';
+
+      applyTheme(next);
+      showToast(next === 'light' ? '已切換至日間風格' : next === 'dark' ? '已切換至夜間風格' : '已切換至芒果色風格 🥭');
 
       if (modalChartInst && currentSearchSong) drawModalChart(currentSearchSong);
     }
@@ -2097,7 +2136,6 @@
       }
     }
 
-    // 🌟 2. 開啟場次補充頁面，並將日期預設為系統當日日期 (YYYYMMDD)
     function openReportView() {
       switchTab('view-report');
       const dateInput = document.getElementById('rpt-date');
