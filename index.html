@@ -1,6 +1,6 @@
 <!-- ======================================================== -->
-<!-- 芒果醬 Mango Jump 資訊戰 - 現代編輯風 / 支援日、夜、芒果色三切換 -->
-<!-- 開發者：blues (Threads: https://www.threads.com/@blues_.g)20260903 -->
+<!-- 芒果醬 Mango Jump 活動應援站 - 現代編輯風 / 支援日、夜、芒果色三切換 -->
+<!-- 開發者：blues (Threads: https://www.threads.com/@blues_.g) -->
 <!-- ======================================================== -->
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -8,6 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- 🌟 宣告全域 Referrer-Policy 解決 YouTube 播放政策 -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>2026 芒果醬 Mango Jump 活動資訊站</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
@@ -399,6 +400,7 @@
     .card { background: var(--bg-card); border: 2px solid var(--text-main); padding: 1.75rem; box-shadow: 4px 4px 0px var(--text-main); margin-bottom: 1.5rem; transition: transform 0.2s ease, box-shadow 0.2s ease; position: relative; }
     .card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px var(--text-main); }
 
+    /* 🌟 桌機版詳細場次便當盒（網格 2 欄）排版 */
     #events-list {
       display: grid;
       grid-template-columns: 1fr;
@@ -444,7 +446,6 @@
     .platform-btn.ytmusic:hover { background: #ff0000; color: #fff; border-color: #b30000; }
     .platform-btn.youtube:hover { background: #ff0000; color: #fff; border-color: #b30000; }
     
-    /* 🌟 歌詞按鈕與歌詞面板樣式 */
     .platform-btn.lyrics-btn:hover { background: var(--accent); color: #fff; border-color: var(--text-main); }
     
     .lyrics-panel {
@@ -574,8 +575,7 @@
     #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--text-main); color: var(--bg-main); border: 2px solid var(--text-main); padding: 0.75rem 1.75rem; font-size: 0.875rem; font-weight: 800; opacity: 0; pointer-events: none; transition: var(--transition); z-index: 9999; box-shadow: 4px 4px 0px var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
     #toast.show { opacity: 1; transform: translate(-50%, -8px); }
 
-    #global-loader { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-main); display: flex; justify-content: center; align-items: center; z-index: 3000; flex-direction: column; }
-    .spinner { width: 44px; height: 44px; border: 4px solid var(--border); border-top-color: var(--accent); animation: spin 0.8s linear infinite; margin-bottom: 1rem; }
+    .spinner { width: 38px; height: 38px; border: 4px solid var(--border); border-top-color: var(--accent); animation: spin 0.8s linear infinite; margin-bottom: 0.5rem; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
   </style>
 </head>
@@ -601,7 +601,7 @@
       <!-- 5 大平台按鈕區域 + 歌詞按鈕 -->
       <div id="modal-platform-links" class="platform-links-container"></div>
 
-      <!-- 🌟 歌曲詳細資訊內的歌詞展開面板 -->
+      <!-- 歌曲詳細資訊內的歌詞展開面板 -->
       <div id="modal-lyrics-panel" class="lyrics-panel"></div>
 
       <div id="modal-chart-wrap" style="margin-top:1.25rem; margin-bottom:1.25rem;display:none;">
@@ -654,7 +654,7 @@
   </nav>
 
   <div class="container">
-    <!-- ===== 1. HOME 首頁 ===== -->
+    <!-- ===== 1. HOME 首頁 (第一階段秒開) ===== -->
     <div id="view-home" class="view active">
       <div class="card" id="upcoming-widget" style="display:none; background: var(--bg-subtle);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
@@ -665,9 +665,9 @@
         <button class="btn btn-outline btn-sm" id="btn-more-upcoming" style="width:100%; margin-top:1rem; display:none;">查看更多場次 ▼</button>
       </div>
 
-      <div id="local-loader" style="text-align: center; padding: 4rem 0;">
+      <div id="local-loader" style="text-align: center; padding: 2.5rem 0;">
         <div class="spinner" style="margin: 0 auto;"></div>
-        <div style="color: var(--text-secondary); font-weight: 700; margin-top: 1rem; font-size: 0.95rem; text-transform: uppercase;">同步音樂數據中...</div>
+        <div style="color: var(--text-secondary); font-weight: 700; margin-top: 0.75rem; font-size: 0.9rem; text-transform: uppercase;">即時同步音樂數據中...</div>
       </div>
 
       <div class="card" style="text-align: center; padding: 3rem 2rem; margin-top: 1rem;">
@@ -681,7 +681,7 @@
       </div>
     </div>
 
-    <!-- ===== 2. EVENTS 詳細場次 ===== -->
+    <!-- ===== 2. EVENTS 詳細場次 (便當盒 2 欄排版 + 支援背景分段載入) ===== -->
     <div id="view-events" class="view">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
         <div>
@@ -695,7 +695,12 @@
         </div>
       </div>
       <div id="events-msg" style="color:var(--dn);font-weight:700;font-size:0.875rem;margin-bottom:1rem;min-height:1.25rem;"></div>
-      <div id="events-list"></div>
+      <div id="events-list">
+        <div id="events-loading-box" style="text-align:center;padding:3rem 0;color:var(--text-secondary);font-weight:700;grid-column: 1 / -1;">
+          <div class="spinner" style="margin:0 auto 0.75rem auto;"></div>
+          詳細演出場次同步中...
+        </div>
+      </div>
     </div>
 
     <!-- ===== 3. ANALYSIS 歌單分析 ===== -->
@@ -731,10 +736,15 @@
           <input type="number" id="custom-n" class="custom-input" min="1" placeholder="N場">
         </div>
       </div>
-      <div id="analysis-content"></div>
+      <div id="analysis-content">
+        <div id="analysis-loading-box" style="text-align:center;padding:3rem 0;color:var(--text-secondary);font-weight:700;">
+          <div class="spinner" style="margin:0 auto 0.75rem auto;"></div>
+          計算金曲機率數據中...
+        </div>
+      </div>
     </div>
 
-    <!-- ===== 4. RANDOM 隨機聆聽 (下方自動呈現歌詞區塊) ===== -->
+    <!-- ===== 4. RANDOM 隨機聆聽 ===== -->
     <div id="view-random" class="view">
       <div style="margin-bottom: 1.5rem;">
         <h2>🎲 隨機聆聽</h2>
@@ -776,7 +786,7 @@
             <div id="random-yt-notice" style="display: none; padding: 1rem; background: var(--bg-subtle); border: 2px dashed var(--border); margin-top: 0.75rem; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); text-align: center; line-height: 1.6;"></div>
           </div>
 
-          <!-- 🌟 隨機聆聽頁面專屬的「下方歌詞播放區塊」 -->
+          <!-- 隨機聆聽頁面專屬的「下方歌詞播放區塊」 -->
           <div id="random-lyrics-section" style="display: none; margin-top: 2rem; text-align: left;">
             <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 0.5rem;">
               📜 歌曲歌詞
@@ -816,7 +826,7 @@
           <div class="title-badge" id="journey-title">初階果汁機</div>
           <h2 style="margin-bottom:0.4rem;font-size:1.4rem;">專屬 ID: <span id="display-user-id" style="color:var(--accent);"></span></h2>
         </div>
-        
+
         <div class="card" style="margin-bottom:1.25rem;padding:1.25rem 1.5rem;">
           <h3 style="font-size:0.9rem;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-secondary);">設定個人暱稱</h3>
           <div style="display:flex;gap:0.75rem;">
@@ -945,7 +955,11 @@
             .withSuccessHandler(function (res) { resolve(res); })
             .withFailureHandler(function (err) { reject(new Error(err.message || err)); });
 
-          if (action === 'getSetlistData') {
+          if (action === 'getInitialData') {
+            runner.getInitialData();
+          } else if (action === 'getEventsData') {
+            runner.getEventsData();
+          } else if (action === 'getSetlistData') {
             runner.getSetlistData();
           } else if (action === 'getUserData') {
             runner.getUserData(payload.userId);
@@ -993,6 +1007,7 @@
     let heardSortDir = -1;
     let heardSongs = [];
     let globalSongStats = null;
+    let isEventsLoaded = false; // 記錄第二階段數據是否載入完畢
 
     let modalChartInst = null;
     let reportSetlist = [];
@@ -1022,7 +1037,6 @@
       document.getElementById('mobile-menu-dropdown').classList.remove('show');
     }
 
-    // 🌟 三段式風格循環切換：☀️ 日間 ➔ 🌙 夜間 ➔ 🥭 芒果色
     function initTheme() {
       const savedTheme = localStorage.getItem(LS_THEME);
       applyTheme(savedTheme || 'light');
@@ -1080,27 +1094,25 @@
       return (match && match[1]) ? match[1] : null;
     }
 
-    // 🌟 串流平台按鈕建構 (含「📜 歌詞」按鈕)
     function buildPlatformButtonsHtml(songName, isModal = false) {
       const links = (appData.songLinks && appData.songLinks[songName]) || {};
       const q = encodeURIComponent('芒果醬 ' + songName);
 
-      const sUrl  = links.spotify    || ('https://open.spotify.com/search/' + q);
-      const kUrl  = links.kkbox      || ('https://www.kkbox.com/tw/tc/search.php?word=' + q);
-      const aUrl  = links.appleMusic || ('https://music.apple.com/tw/search?term=' + q);
-      const ymUrl = links.ytMusic    || ('https://music.youtube.com/search?q=' + q);
-      const yMv   = links.ytMv       || ('https://www.youtube.com/results?search_query=' + q);
+      const sUrl = links.spotify || ('https://open.spotify.com/search/' + q);
+      const kUrl = links.kkbox || ('https://www.kkbox.com/tw/tc/search.php?word=' + q);
+      const aUrl = links.appleMusic || ('https://music.apple.com/tw/search?term=' + q);
+      const ymUrl = links.ytMusic || ('https://music.youtube.com/search?q=' + q);
+      const yMv = links.ytMv || ('https://www.youtube.com/results?search_query=' + q);
 
       let html = '<a href="' + sUrl + '" target="_blank" class="platform-btn spotify" title="在 Spotify 上聆聽">' +
-                 '<svg style="width:13px;height:13px;fill:currentColor;" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>' +
-                 ' Spotify</a>' +
-                 '<a href="' + kUrl + '" target="_blank" class="platform-btn kkbox" title="在 KKBOX 上聆聽">' +
-                 '<span style="background:#00bcd4;color:#fff;font-size:0.65rem;font-weight:900;padding:0 3px;border-radius:2px;">K</span> KKBOX</a>' +
-                 '<a href="' + aUrl + '" target="_blank" class="platform-btn apple" title="In Apple Music"> Apple Music</a>' +
-                 '<a href="' + ymUrl + '" target="_blank" class="platform-btn ytmusic" title="In YouTube Music">▶ YT Music</a>' +
-                 '<a href="' + yMv + '" target="_blank" class="platform-btn youtube" title="Watch on YouTube">🎬 YouTube MV</a>';
+        '<svg style="width:13px;height:13px;fill:currentColor;" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>' +
+        ' Spotify</a>' +
+        '<a href="' + kUrl + '" target="_blank" class="platform-btn kkbox" title="在 KKBOX 上聆聽">' +
+        '<span style="background:#00bcd4;color:#fff;font-size:0.65rem;font-weight:900;padding:0 3px;border-radius:2px;">K</span> KKBOX</a>' +
+        '<a href="' + aUrl + '" target="_blank" class="platform-btn apple" title="In Apple Music"> Apple Music</a>' +
+        '<a href="' + ymUrl + '" target="_blank" class="platform-btn ytmusic" title="In YouTube Music">▶ YT Music</a>' +
+        '<a href="' + yMv + '" target="_blank" class="platform-btn youtube" title="Watch on YouTube">🎬 YouTube MV</a>';
 
-      // 如果是在歌曲詳細資訊視窗中，額外加上「歌詞」按鈕
       if (isModal) {
         html += '<button onclick="toggleModalLyrics(\'' + esc(songName) + '\')" class="platform-btn lyrics-btn">📜 歌詞</button>';
       }
@@ -1108,7 +1120,6 @@
       return html;
     }
 
-    // 🌟 點擊詳細資訊內的「歌詞」按鈕時切換展開/收合
     function toggleModalLyrics(songName) {
       const panel = document.getElementById('modal-lyrics-panel');
       if (!panel) return;
@@ -1227,17 +1238,72 @@
       if (e.target === this) closeSongModal();
     });
 
+    // 🌟 兩階段分段載入生命週期
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
-      apiCall('getSetlistData')
+
+      // 第一階段：秒開首頁與近期活動
+      apiCall('getInitialData')
         .then(data => {
           if (data && data.success) {
-            appData = data;
-            initApp();
-          } else {
+            appData.upcoming = data.upcoming || [];
+            appData.songLinks = data.songLinks || {};
+            appData.songs = data.songs || [];
+
+            // 立即解除首頁加載狀態並顯示
             const loader = document.getElementById('local-loader');
             if (loader) loader.style.display = 'none';
-            alert('載入失敗: ' + (data ? data.error : '未知錯誤'));
+
+            renderUpcomingEvents();
+            setupAnalysisSearch();
+            setupReportSongSearch();
+            loadLoginHistory();
+
+            // 第二階段：在背景靜默加載詳細演出與完整數據
+            loadBackgroundEvents();
+          } else {
+            fallbackFullLoad();
+          }
+        })
+        .catch(() => {
+          fallbackFullLoad();
+        });
+    });
+
+    // 背景靜默加載詳細場次
+    function loadBackgroundEvents() {
+      apiCall('getEventsData')
+        .then(data => {
+          if (data && data.success) {
+            appData.events = data.events || [];
+            appData.totalEvents = data.totalEvents || 0;
+            if (data.songs && data.songs.length) appData.songs = data.songs;
+            isEventsLoaded = true;
+
+            renderEventsList();
+            renderAnalysis(4);
+            tryAutoLogin();
+          }
+        })
+        .catch(() => {});
+    }
+
+    // 備援全量載入 (容錯機制)
+    function fallbackFullLoad() {
+      apiCall('getSetlistData')
+        .then(data => {
+          const loader = document.getElementById('local-loader');
+          if (loader) loader.style.display = 'none';
+          if (data && data.success) {
+            appData = data;
+            isEventsLoaded = true;
+            renderUpcomingEvents();
+            setupAnalysisSearch();
+            setupReportSongSearch();
+            renderEventsList();
+            renderAnalysis(4);
+            loadLoginHistory();
+            tryAutoLogin();
           }
         })
         .catch(err => {
@@ -1245,20 +1311,6 @@
           if (loader) loader.style.display = 'none';
           alert('伺服器連線錯誤: ' + (err.message || err));
         });
-    });
-
-    function initApp() {
-      const loader = document.getElementById('local-loader');
-      if (loader) loader.style.display = 'none';
-
-      globalSongStats = null;
-      setupAnalysisSearch();
-      setupReportSongSearch();
-      renderUpcomingEvents();
-      renderEventsList();
-      renderAnalysis(4);
-      loadLoginHistory();
-      tryAutoLogin();
     }
 
     function renderUpcomingEvents() {
@@ -1417,7 +1469,6 @@
     function openSongModalFromSearch() { if (currentSearchSong) openSongModal(currentSearchSong); }
     function openSongModalFromRandom() { if (currentRandomSong) openSongModal(currentRandomSong); }
 
-    // 打開歌曲詳細彈窗
     function openSongModal(songName) {
       songName = songName.trim();
       const st = getSongStats(songName);
@@ -1427,14 +1478,12 @@
       document.getElementById('modal-prob').innerText = `總場次機率 ${st.total}%`;
       document.getElementById('modal-cnt').innerText = `(共出現 ${st.count} 次)`;
 
-      // 重置歌詞面板狀態
       const lyricsPanel = document.getElementById('modal-lyrics-panel');
       if (lyricsPanel) {
         lyricsPanel.classList.remove('show');
         lyricsPanel.innerText = '';
       }
 
-      // 渲染五大平台按鈕 (帶入 isModal = true 以顯示「歌詞」按鈕)
       document.getElementById('modal-platform-links').innerHTML = buildPlatformButtonsHtml(songName, true);
 
       let html = '';
@@ -1479,7 +1528,6 @@
       });
     }
 
-    // 🌟 帶有 1 秒鐘抽籤轉場動畫的隨機抽歌與播放機制 (隨機聆聽下方自動顯示歌詞)
     function triggerRandomDraw(isUserClick) {
       if (!appData.songs || !appData.songs.length) return;
 
@@ -1525,7 +1573,6 @@
 
         platformLinks.innerHTML = buildPlatformButtonsHtml(songName, false);
 
-        // 🌟 隨機聆聽頁面下方自動填入並顯示該歌曲歌詞
         const songLinks = (appData.songLinks && appData.songLinks[songName]) || {};
         if (randomLyricsSection && randomLyricsContent) {
           randomLyricsContent.innerText = songLinks.lyrics || '這首歌目前還沒有登錄歌詞喔！';
@@ -1566,6 +1613,7 @@
     }
 
     function renderAnalysis(n) {
+      if (!isEventsLoaded) return;
       const probsN = calcProbs(n);
       const probsAll = calcProbs(getValidEvents().length);
       const rankMapN = {};
@@ -1606,6 +1654,7 @@
     });
 
     function renderEventsList() {
+      if (!isEventsLoaded) return;
       const container = document.getElementById('events-list');
       container.innerHTML = '';
       appData.events.forEach(ev => {
@@ -1652,17 +1701,11 @@
       const selectedIds = Array.from(document.querySelectorAll('.ev-chk:checked')).map(c => c.getAttribute('data-id'));
       currentUser.attendedIds = selectedIds;
 
-      fetch(GAS_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify({
-          action: 'saveUserData',
-          userId: currentUser.userId,
-          attendedEvents: selectedIds.join(','),
-          nickname: currentUser.nickname || ''
-        })
+      apiCall('saveUserData', {
+        userId: currentUser.userId,
+        attendedEvents: selectedIds.join(','),
+        nickname: currentUser.nickname || ''
       })
-        .then(res => res.json())
         .then(() => {
           btn.innerText = '儲存場次紀錄';
           showToast('場次紀錄已成功儲存！');
@@ -1691,8 +1734,7 @@
     function tryAutoLogin() {
       const saved = localStorage.getItem(LS_AUTO);
       if (!saved) return;
-      fetch(`${GAS_API_URL}?action=getUserData&userId=${saved}`)
-        .then(res => res.json())
+      apiCall('getUserData', { userId: saved })
         .then(res => {
           if (res.success) {
             currentUser = { userId: res.userId, attendedIds: res.attendedEvents ? res.attendedEvents.split(',').filter(Boolean) : [], nickname: res.nickname || '' };
@@ -1705,8 +1747,7 @@
     document.getElementById('btn-login').addEventListener('click', () => {
       const id = document.getElementById('login-id').value.trim().toUpperCase();
       if (!id) return;
-      fetch(`${GAS_API_URL}?action=getUserData&userId=${id}`)
-        .then(res => res.json())
+      apiCall('getUserData', { userId: id })
         .then(res => {
           if (res.success) {
             currentUser = { userId: res.userId, attendedIds: res.attendedEvents ? res.attendedEvents.split(',').filter(Boolean) : [], nickname: res.nickname || '' };
@@ -1714,41 +1755,31 @@
             onLoginSuccess(false);
           } else alert('登入失敗: ' + res.error);
         })
-        .catch(err => alert('連線失敗: ' + err));
+        .catch(err => alert('連線失敗: ' + (err.message || err)));
     });
 
     document.getElementById('btn-start-create').addEventListener('click', () => {
       const selected = Array.from(document.querySelectorAll('.ev-chk:checked')).map(c => c.getAttribute('data-id'));
-      fetch(GAS_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify({ action: 'saveUserData', userId: '', attendedEvents: selected.join(','), nickname: '' })
+      apiCall('saveUserData', { userId: '', attendedEvents: selected.join(','), nickname: '' })
+      .then(res => {
+        if (res.success) {
+          currentUser = { userId: res.userId, attendedIds: selected, nickname: '' };
+          saveLoginHistory(res.userId);
+          onLoginSuccess(false);
+          showToast('專屬 ID 建立成功！');
+        }
       })
-        .then(res => res.json())
-        .then(res => {
-          if (res.success) {
-            currentUser = { userId: res.userId, attendedIds: selected, nickname: '' };
-            saveLoginHistory(res.userId);
-            onLoginSuccess(false);
-            showToast('專屬 ID 建立成功！');
-          }
-        })
-        .catch(err => alert('建立失敗: ' + err));
+      .catch(err => alert('建立失敗: ' + (err.message || err)));
     });
 
     document.getElementById('btn-save-nickname').addEventListener('click', () => {
       if (!currentUser) return;
       const newNick = document.getElementById('user-nickname-input').value.trim();
-      fetch(GAS_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify({ action: 'saveUserData', userId: currentUser.userId, attendedEvents: currentUser.attendedIds.join(','), nickname: newNick })
+      apiCall('saveUserData', { userId: currentUser.userId, attendedEvents: currentUser.attendedIds.join(','), nickname: newNick })
+      .then(res => {
+        if (res.success) { currentUser.nickname = res.nickname; updateNavProfileDisplay(); showToast('暱稱儲存成功！'); }
       })
-        .then(res => res.json())
-        .then(res => {
-          if (res.success) { currentUser.nickname = res.nickname; updateNavProfileDisplay(); showToast('暱稱儲存成功！'); }
-        })
-        .catch(err => showToast('儲存失敗: ' + err));
+      .catch(err => showToast('儲存失敗: ' + (err.message || err)));
     });
 
     function updateNavProfileDisplay() {
@@ -1800,7 +1831,7 @@
     }
 
     function updateDashboard() {
-      if (!currentUser) return;
+      if (!currentUser || !isEventsLoaded) return;
       const attendedEvs = appData.events.filter(e => isEventAttended(e, currentUser.attendedIds));
       const totalEvts = appData.events.length;
       const validN = getValidEvents().length;
@@ -1809,7 +1840,7 @@
       document.getElementById('display-user-id').innerText = currentUser.nickname ? `${currentUser.nickname} (${currentUser.userId})` : currentUser.userId;
       document.getElementById('dash-prog-cnt').innerText = attendedEvs.length;
       document.getElementById('dash-total-cnt').innerText = totalEvts;
-      document.getElementById('dash-prog-bar').style.width = Math.min(100, attendedEvs.length / totalEvts * 100) + '%';
+      document.getElementById('dash-prog-bar').style.width = Math.min(100, attendedEvs.length / (totalEvts || 1) * 100) + '%';
       document.getElementById('dash-events').innerText = attendedEvs.length;
 
       let songCounts = {};
@@ -1860,6 +1891,7 @@
     function setupReportSongSearch() {
       const input = document.getElementById('rpt-song-search');
       const results = document.getElementById('rpt-song-results');
+      if (!input) return;
       input.addEventListener('input', () => {
         renderDropdown(results, appData.songs.filter(s => s.toLowerCase().includes(input.value.trim().toLowerCase())), song => {
           input.value = ''; results.style.display = 'none'; reportSetlist.push({ songName: song, isEncore: false }); renderSetlistChips();
@@ -1903,30 +1935,23 @@
       if (!name) { showToast('請填寫活動名稱'); return; }
       if (!reportSetlist.length) { showToast('請至少加入一首表演歌曲'); return; }
 
-      fetch(GAS_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify({
-          action: 'submitEventReport',
-          date, name, time: document.getElementById('rpt-time').value.trim(),
-          setlist: reportSetlist, note: document.getElementById('rpt-note').value.trim(),
-          submitter: document.getElementById('rpt-submitter').value.trim()
-        })
+      apiCall('submitEventReport', {
+        date, name, time: document.getElementById('rpt-time').value.trim(),
+        setlist: reportSetlist, note: document.getElementById('rpt-note').value.trim(),
+        submitter: document.getElementById('rpt-submitter').value.trim()
       })
-        .then(res => res.json())
         .then(res => {
           if (res.success) {
             showToast(res.isDuplicate ? '回報已成功送出！(已標記日期重複)' : '回報已成功送出！');
             clearReportForm(); loadPendingEvents();
           } else showToast('提交失敗：' + res.error);
         })
-        .catch(err => showToast('提交失敗：' + err));
+        .catch(err => showToast('提交失敗：' + (err.message || err)));
     }
 
     function loadPendingEvents() {
       const el = document.getElementById('pending-list');
-      fetch(`${GAS_API_URL}?action=getPendingEvents`)
-        .then(res => res.json())
+      apiCall('getPendingEvents')
         .then(res => {
           if (!res.success || !res.events.length) { el.innerHTML = '<div style="color:var(--text-secondary);text-align:center;padding:2rem 0;font-size:0.9rem;font-weight:700;">目前沒有待審核的場次</div>'; return; }
           el.innerHTML = res.events.map(ev => `
