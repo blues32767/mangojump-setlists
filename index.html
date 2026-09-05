@@ -2449,7 +2449,7 @@
                 btn.classList.add('active');
                 btn.innerHTML = '🟢 連續隨機播放：開啟中';
                 if (statusTag) statusTag.style.display = 'inline-block';
-                showToast('🔁 已啟動連續隨機播放！歌曲播完將自動洗牌換歌 🎶');
+                showToast('🔁 已啟動連續隨機播放！歌曲播完將自動換歌 🎶');
                 
                 // 若當前播放器已暫停或已播完，直接播放下一首
                 if (ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
