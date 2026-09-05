@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T15:13:24.708Z",
+  "updatedAt": "2026-09-05T15:25:09.510Z",
   "upcoming": [
     {
       "date": "20260919",
@@ -16,54 +16,6 @@
       "location": "一中商圈水利大樓前廣場",
       "mapLink": "https://maps.app.goo.gl/UhgrBzVdAaCtKZs37",
       "note": "16:00－19:10\n活動貼文：https://www.threads.com/share/FsH8F_7ut/"
-    },
-    {
-      "date": "20261010",
-      "time": "未公布",
-      "name": "高雄 Takao Rock 打狗祭",
-      "location": "高雄流行音樂中心 海風舞台",
-      "mapLink": "https://maps.app.goo.gl/nj5jTtevQ2fZWRB67",
-      "note": "免費 10/10 (六)  - 10/11 (日) \n*芒果醬日期未公布\n*芒果醬、蛋堡、傻子與白痴、鶴、ABAO阿爆feat.那屋瓦...\n活動文章：https://www.takaorock.tw/action/14\n活動海報：https://www.takaorock.tw/upload/attachments/9039469968.jpg\n活動官方ＦＢ：https://www.facebook.com/TAKAOfest"
-    },
-    {
-      "date": "20261017",
-      "time": "未公布",
-      "name": "未公布",
-      "location": "",
-      "mapLink": "",
-      "note": ""
-    },
-    {
-      "date": "20261031",
-      "time": "未公布",
-      "name": "台中 搖滾台中",
-      "location": "臺中文心森林公園",
-      "mapLink": "https://maps.app.goo.gl/pd3hmGdwuMrB9eheA",
-      "note": "免費\n活動貼文：https://www.facebook.com/share/p/199KqWTAu1/\n活動粉專：https://www.facebook.com/RockInTaichungMusicFestival/"
-    },
-    {
-      "date": "20261105",
-      "time": "未公布",
-      "name": "20261105-1108 溫哥華 Jade Music Fest",
-      "location": "",
-      "mapLink": "",
-      "note": "有免費場、售票場。\n20261105-1108\n芒果醬表演日期場地尚未公布。"
-    },
-    {
-      "date": "20261205",
-      "time": "未公布",
-      "name": "未公布",
-      "location": "",
-      "mapLink": "",
-      "note": ""
-    },
-    {
-      "date": "20261212",
-      "time": "未公布",
-      "name": "未公布",
-      "location": "",
-      "mapLink": "",
-      "note": ""
     },
     {
       "date": "20261003",
@@ -90,7 +42,15 @@
       "note": ""
     },
     {
-      "date": "20261101",
+      "date": "20261010",
+      "time": "未公布",
+      "name": "高雄 Takao Rock 打狗祭",
+      "location": "高雄流行音樂中心 海風舞台",
+      "mapLink": "https://maps.app.goo.gl/nj5jTtevQ2fZWRB67",
+      "note": "免費 10/10 (六)  - 10/11 (日) \n*芒果醬日期未公布\n*芒果醬、蛋堡、傻子與白痴、鶴、ABAO阿爆feat.那屋瓦...\n活動文章：https://www.takaorock.tw/action/14\n活動海報：https://www.takaorock.tw/upload/attachments/9039469968.jpg\n活動官方ＦＢ：https://www.facebook.com/TAKAOfest"
+    },
+    {
+      "date": "20261017",
       "time": "未公布",
       "name": "未公布",
       "location": "",
@@ -100,10 +60,34 @@
     {
       "date": "20261031",
       "time": "未公布",
+      "name": "台中 搖滾台中",
+      "location": "臺中文心森林公園",
+      "mapLink": "https://maps.app.goo.gl/pd3hmGdwuMrB9eheA",
+      "note": "免費\n活動貼文：https://www.facebook.com/share/p/199KqWTAu1/\n活動粉專：https://www.facebook.com/RockInTaichungMusicFestival/"
+    },
+    {
+      "date": "20261031",
+      "time": "未公布",
       "name": "未公布",
       "location": "",
       "mapLink": "",
       "note": ""
+    },
+    {
+      "date": "20261101",
+      "time": "未公布",
+      "name": "未公布",
+      "location": "",
+      "mapLink": "",
+      "note": ""
+    },
+    {
+      "date": "20261105",
+      "time": "未公布",
+      "name": "20261105-1108 溫哥華 Jade Music Fest",
+      "location": "",
+      "mapLink": "",
+      "note": "有免費場、售票場。\n20261105-1108\n芒果醬表演日期場地尚未公布。"
     },
     {
       "date": "20261114",
@@ -130,7 +114,23 @@
       "note": ""
     },
     {
+      "date": "20261205",
+      "time": "未公布",
+      "name": "未公布",
+      "location": "",
+      "mapLink": "",
+      "note": ""
+    },
+    {
       "date": "20261211",
+      "time": "未公布",
+      "name": "未公布",
+      "location": "",
+      "mapLink": "",
+      "note": ""
+    },
+    {
+      "date": "20261212",
       "time": "未公布",
       "name": "未公布",
       "location": "",
