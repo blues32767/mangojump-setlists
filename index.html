@@ -1,5 +1,6 @@
 <!-- ======================================================== -->
 <!-- 芒果醬 Mango Jump 活動應援站 - 訪客公開端 (index.html) -->
+<!-- 改版重點：手機端隨機聆聽緊湊優化 + 芒果 Favicon + 無感洗牌連播 -->
 <!-- 開發者：blues (Threads: https://www.threads.com/@blues_.g) -->
 <!-- ======================================================== -->
 <!DOCTYPE html>
@@ -10,12 +11,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>2026 芒果醬 Mango Jump 活動資訊站</title>
-    <!-- 設定頁籤為芒果 Emoji Favicon -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥭</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <!-- 🥭 芒果 Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥭</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-    <!-- 引入 YouTube IFrame Player API -->
     <script src="https://www.youtube.com/iframe_api"></script>
     <style>
         :root {
@@ -313,10 +312,7 @@
         }
 
         @media (min-width: 769px) {
-            body {
-                padding-top: 115px;
-            }
-
+            body { padding-top: 115px; }
             nav {
                 height: 72px;
                 padding: 0 1.5rem;
@@ -324,72 +320,41 @@
                 justify-content: space-between;
                 align-items: center;
             }
-
             nav.scrolled {
                 height: 56px;
                 padding: 0 1.25rem;
                 box-shadow: var(--shadow-lg);
             }
-
-            nav.scrolled .nav-disclaimer {
-                display: none;
-            }
-
-            .nav-left {
-                display: flex;
-                align-items: center;
-                gap: 1.5rem;
-            }
-
-            .nav-links {
-                display: flex !important;
-                gap: 0.5rem;
-                align-items: center;
-            }
-
-            .nav-right-actions {
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-            }
-
-            .nav-menu-toggle {
-                display: none !important;
-            }
-
-            .mobile-menu-dropdown {
-                display: none !important;
-            }
+            nav.scrolled .nav-disclaimer { display: none; }
+            .nav-left { display: flex; align-items: center; gap: 1.5rem; }
+            .nav-links { display: flex !important; gap: 0.5rem; align-items: center; }
+            .nav-right-actions { display: flex; align-items: center; gap: 0.75rem; }
+            .nav-menu-toggle { display: none !important; }
+            .mobile-menu-dropdown { display: none !important; }
         }
 
         @media (max-width: 768px) {
-            body {
-                padding-top: 145px;
-            }
-
+            body { padding-top: 135px; }
             nav {
                 display: flex;
                 flex-direction: column;
-                padding: 0.65rem 0.85rem;
-                gap: 0.5rem;
+                padding: 0.5rem 0.75rem;
+                gap: 0.35rem;
             }
-
             .nav-left {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 width: 100%;
             }
-
             .nav-links {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
                 gap: 3px;
                 width: 100%;
-                padding-top: 0.4rem;
+                padding-top: 0.35rem;
                 border-top: 1px dashed var(--border);
             }
-
             .nav-item {
                 font-size: 0.68rem;
                 padding: 0.35rem 0;
@@ -397,78 +362,33 @@
                 border: 1px solid var(--border);
                 background: var(--bg-card);
             }
-
             .nav-item.active {
                 border-color: var(--text-main);
                 box-shadow: 1px 1px 0px var(--text-main);
             }
-
-            .nav-right-actions {
-                display: flex;
-                align-items: center;
-                gap: 6px;
-            }
-
+            .nav-right-actions { display: flex; align-items: center; gap: 6px; }
             nav.scrolled {
                 flex-direction: row;
-                height: 52px;
-                padding: 0 0.85rem;
+                height: 50px;
+                padding: 0 0.75rem;
                 align-items: center;
                 justify-content: space-between;
             }
-
-            nav.scrolled .nav-left {
-                width: auto;
-                flex: 1;
-                margin-right: 8px;
-            }
-
-            nav.scrolled .nav-brand {
-                font-size: 0.85rem;
-            }
-
-            nav.scrolled .nav-disclaimer {
-                display: none;
-            }
-
-            nav.scrolled .nav-links {
-                display: none !important;
-            }
-
-            nav.scrolled .nav-profile-btn {
-                display: none !important;
-            }
-
-            nav.scrolled .nav-menu-toggle {
-                display: inline-flex;
-            }
+            nav.scrolled .nav-left { width: auto; flex: 1; margin-right: 8px; }
+            nav.scrolled .nav-brand { font-size: 0.85rem; }
+            nav.scrolled .nav-disclaimer { display: none; }
+            nav.scrolled .nav-links { display: none !important; }
+            nav.scrolled .nav-profile-btn { display: none !important; }
+            nav.scrolled .nav-menu-toggle { display: inline-flex; }
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .view {
-            display: none;
-            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .view.active {
-            display: block;
-        }
+        .container { max-width: 1200px; margin: 1.5rem auto; padding: 0 1rem; }
+        .view { display: none; animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+        .view.active { display: block; }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h2 {
@@ -504,18 +424,8 @@
             box-shadow: 6px 6px 0px var(--text-main);
         }
 
-        #events-list {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        @media (min-width: 769px) {
-            #events-list {
-                grid-template-columns: repeat(2, 1fr);
-                align-items: start;
-            }
-        }
+        #events-list { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media (min-width: 769px) { #events-list { grid-template-columns: repeat(2, 1fr); align-items: start; } }
 
         .badge {
             display: inline-flex;
@@ -528,34 +438,13 @@
             letter-spacing: 0.05em;
         }
 
-        .badge.R {
-            background: rgba(34, 197, 94, 0.15);
-            color: var(--up);
-        }
+        .badge.R { background: rgba(34, 197, 94, 0.15); color: var(--up); }
+        .badge.SR { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+        .badge.SSR { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+        .badge.SSSR { background: rgba(236, 72, 153, 0.15); color: #ec4899; }
+        .badge.N { background: var(--bg-subtle); color: var(--text-secondary); }
 
-        .badge.SR {
-            background: rgba(59, 130, 246, 0.15);
-            color: #3b82f6;
-        }
-
-        .badge.SSR {
-            background: rgba(168, 85, 247, 0.15);
-            color: #a855f7;
-        }
-
-        .badge.SSSR {
-            background: rgba(236, 72, 153, 0.15);
-            color: #ec4899;
-        }
-
-        .badge.N {
-            background: var(--bg-subtle);
-            color: var(--text-secondary);
-        }
-
-        input[type="text"],
-        input[type="password"],
-        input[type="number"] {
+        input[type="text"], input[type="password"], input[type="number"] {
             width: 100%;
             padding: 0.75rem 1rem;
             border: 2px solid var(--text-main);
@@ -584,7 +473,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
@@ -594,41 +483,16 @@
             background: var(--accent);
             border-color: var(--accent);
             color: #ffffff;
-            transform: translate(-2px, -2px);
-            box-shadow: 5px 5px 0px var(--text-main);
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0px var(--text-main);
         }
 
-        .btn-sm {
-            padding: 0.4rem 0.85rem;
-            font-size: 0.775rem;
-        }
+        .btn-sm { padding: 0.4rem 0.85rem; font-size: 0.775rem; }
+        .btn-outline { background: transparent; border: 2px solid var(--text-main); color: var(--text-main); box-shadow: none; }
+        .btn-outline:hover { background: var(--text-main); color: var(--bg-main); transform: none; }
+        .btn-ghost { background: transparent; border: 2px solid transparent; color: var(--text-secondary); box-shadow: none; }
+        .btn-ghost:hover { background: var(--bg-subtle); color: var(--text-main); }
 
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--text-main);
-            color: var(--text-main);
-            box-shadow: none;
-        }
-
-        .btn-outline:hover {
-            background: var(--text-main);
-            color: var(--bg-main);
-            transform: none;
-        }
-
-        .btn-ghost {
-            background: transparent;
-            border: 2px solid transparent;
-            color: var(--text-secondary);
-            box-shadow: none;
-        }
-
-        .btn-ghost:hover {
-            background: var(--bg-subtle);
-            color: var(--text-main);
-        }
-
-        /* 🌟 連續隨機播放開關按鈕樣式 */
         .btn-autoplay-toggle {
             background: var(--bg-card);
             border: 2px solid var(--text-main);
@@ -642,11 +506,100 @@
             box-shadow: 3px 3px 0px var(--text-main);
         }
 
-        .input-group {
-            position: relative;
-            margin-bottom: 1.25rem;
+        /* 🌟 隨機聆聽卡片專用樣式（極致緊湊體驗） */
+        .random-main-card {
+            max-width: 820px;
+            margin: 0 auto 2rem auto;
+            text-align: center;
+            padding: 1.75rem 1.25rem;
         }
 
+        .random-header-wrap {
+            margin-bottom: 0.75rem;
+        }
+
+        .random-title-row {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .random-title-row h2 {
+            margin-bottom: 0;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: color 0.15s;
+        }
+        .random-title-row h2:hover { color: var(--accent); }
+
+        .random-action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin: 0.75rem 0 1rem 0;
+        }
+
+        .platform-bar-scroll {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 0.25rem 0 0.75rem 0;
+            scrollbar-width: none;
+        }
+        .platform-bar-scroll::-webkit-scrollbar { display: none; }
+
+        .platform-mini-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 9px;
+            border: 1.5px solid var(--text-main);
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-decoration: none;
+            background: var(--bg-card);
+            color: var(--text-main);
+            box-shadow: 2px 2px 0px var(--text-main);
+            transition: var(--transition);
+        }
+        .platform-mini-btn:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0px var(--text-main); }
+        .platform-mini-btn.spotify:hover { background: #1db954; color: #fff; }
+        .platform-mini-btn.kkbox:hover { background: #00bcd4; color: #fff; }
+        .platform-mini-btn.apple:hover { background: #fa243c; color: #fff; }
+        .platform-mini-btn.youtube:hover { background: #ff0000; color: #fff; }
+
+        /* 手機端專屬微縮調整 */
+        @media (max-width: 600px) {
+            .random-main-card {
+                padding: 1.25rem 0.85rem;
+            }
+            .random-title-row h2 {
+                font-size: 1.35rem;
+            }
+            .random-action-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+                margin-bottom: 0.75rem;
+            }
+            .random-action-grid .btn {
+                padding: 0.65rem 0.5rem;
+                font-size: 0.8rem;
+            }
+            .random-action-grid .btn-full {
+                grid-column: span 2;
+            }
+            .platform-bar-scroll {
+                justify-content: flex-start;
+                padding-bottom: 0.5rem;
+            }
+        }
+
+        .input-group { position: relative; margin-bottom: 1.25rem; }
         .dropdown-results {
             position: absolute;
             top: 100%;
@@ -669,65 +622,25 @@
             font-size: 0.9rem;
             font-weight: 600;
         }
-
-        .dropdown-item:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-item:hover {
-            background: var(--accent);
-            color: #ffffff;
-        }
-
-        .platform-links-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 0.85rem 0;
-            align-items: center;
-        }
-
-        .platform-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 12px;
-            border: 1.5px solid var(--text-main);
-            font-size: 0.775rem;
-            font-weight: 800;
-            text-decoration: none;
-            background: var(--bg-card);
-            color: var(--text-main);
-            box-shadow: 2px 2px 0px var(--text-main);
-            transition: var(--transition);
-            white-space: nowrap;
-        }
-
-        .platform-btn:hover {
-            transform: translate(-1px, -1px);
-            box-shadow: 3px 3px 0px var(--text-main);
-        }
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover { background: var(--accent); color: #ffffff; }
 
         .lyrics-panel {
             display: none;
             background: var(--bg-subtle);
             border: 2px solid var(--text-main);
             padding: 1.25rem;
-            margin-top: 1rem;
+            margin-top: 0.85rem;
             box-shadow: 3px 3px 0px var(--text-main);
             white-space: pre-line;
             line-height: 1.8;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             max-height: 320px;
             overflow-y: auto;
             text-align: left;
         }
-
-        .lyrics-panel.show {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
+        .lyrics-panel.show { display: block; animation: fadeIn 0.3s ease; }
 
         .yt-player-wrap {
             position: relative;
@@ -738,9 +651,8 @@
             box-shadow: 4px 4px 0px var(--text-main);
             background: #000;
             overflow: hidden;
-            margin-top: 0.75rem;
+            margin-top: 0.5rem;
         }
-
         .yt-player-wrap iframe,
         .yt-player-wrap #random-yt-player {
             position: absolute;
@@ -758,11 +670,7 @@
             border-bottom: 1px solid var(--border);
             align-items: flex-start;
         }
-
-        .upc-row:last-child {
-            border-bottom: none;
-        }
-
+        .upc-row:last-child { border-bottom: none; }
         .upc-date-box {
             background: var(--accent);
             color: #ffffff;
@@ -775,30 +683,10 @@
             justify-content: center;
             box-shadow: 2px 2px 0px var(--text-main);
         }
-
-        .upc-date-m {
-            font-size: 0.65rem;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-
-        .upc-date-d {
-            font-size: 1.25rem;
-            font-weight: 900;
-            line-height: 1;
-        }
-
-        .upc-info {
-            flex: 1;
-        }
-
-        .upc-title {
-            font-weight: 800;
-            font-size: 1.05rem;
-            margin-bottom: 0.25rem;
-            color: var(--text-main);
-        }
-
+        .upc-date-m { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; }
+        .upc-date-d { font-size: 1.25rem; font-weight: 900; line-height: 1; }
+        .upc-info { flex: 1; }
+        .upc-title { font-weight: 800; font-size: 1.05rem; margin-bottom: 0.25rem; color: var(--text-main); }
         .upc-meta {
             font-size: 0.825rem;
             color: var(--text-secondary);
@@ -808,27 +696,10 @@
             flex-wrap: wrap;
             font-weight: 600;
         }
+        .upc-map-link { color: var(--accent); text-decoration: none; font-weight: 700; border-bottom: 1px solid var(--accent); }
 
-        .upc-map-link {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 700;
-            border-bottom: 1px solid var(--accent);
-        }
-
-        .prob-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-top: 1.25rem;
-        }
-
-        @media(min-width:600px) {
-            .prob-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
+        .prob-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.25rem; }
+        @media(min-width:600px) { .prob-grid { grid-template-columns: repeat(4, 1fr); } }
         .prob-box {
             background: var(--bg-subtle);
             border: 2px solid var(--text-main);
@@ -836,30 +707,10 @@
             text-align: center;
             box-shadow: 3px 3px 0px var(--text-main);
         }
+        .prob-box .label { font-size: 0.75rem; color: var(--text-secondary); font-weight: 800; text-transform: uppercase; }
+        .prob-box .value { font-size: 1.6rem; font-weight: 900; color: var(--accent); margin-top: 0.25rem; }
 
-        .prob-box .label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .prob-box .value {
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: var(--accent);
-            margin-top: 0.25rem;
-        }
-
-        .filter-bar {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-            align-items: center;
-        }
-
+        .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center; }
         .filter-btn {
             padding: 0.45rem 1rem;
             font-size: 0.825rem;
@@ -872,30 +723,11 @@
             text-transform: uppercase;
             box-shadow: 2px 2px 0px var(--text-main);
         }
+        .filter-btn.active { background: var(--text-main); color: var(--bg-main); }
+        .custom-input { width: 80px !important; padding: 0.35rem 0.5rem !important; font-size: 0.825rem !important; }
 
-        .filter-btn.active {
-            background: var(--text-main);
-            color: var(--bg-main);
-        }
-
-        .custom-input {
-            width: 80px !important;
-            padding: 0.35rem 0.5rem !important;
-            font-size: 0.825rem !important;
-        }
-
-        .rank-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        @media(min-width:768px) {
-            .rank-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
+        .rank-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media(min-width:768px) { .rank-grid { grid-template-columns: 1fr 1fr; } }
         .rank-row {
             display: flex;
             justify-content: space-between;
@@ -903,103 +735,21 @@
             padding: 0.85rem 0;
             border-bottom: 2px dashed var(--border);
         }
+        .rank-num { font-weight: 900; color: var(--accent); width: 32px; font-size: 0.9rem; }
+        .rank-name { font-weight: 700; margin-left: 0.4rem; flex: 1; cursor: pointer; color: var(--text-main); }
+        .rank-name:hover { color: var(--accent); text-decoration: underline; }
+        .rank-pct { font-weight: 900; color: var(--text-main); margin-left: 1rem; }
+        .rank-diff { font-size: 0.775rem; font-weight: 800; width: 50px; text-align: right; }
+        .diff-up { color: var(--up); } .diff-dn { color: var(--dn); } .diff-eq { color: var(--text-secondary); }
 
-        .rank-num {
-            font-weight: 900;
-            color: var(--accent);
-            width: 32px;
-            font-size: 0.9rem;
-        }
-
-        .rank-name {
-            font-weight: 700;
-            margin-left: 0.4rem;
-            flex: 1;
-            cursor: pointer;
-            color: var(--text-main);
-        }
-
-        .rank-name:hover {
-            color: var(--accent);
-            text-decoration: underline;
-        }
-
-        .rank-pct {
-            font-weight: 900;
-            color: var(--text-main);
-            margin-left: 1rem;
-        }
-
-        .rank-diff {
-            font-size: 0.775rem;
-            font-weight: 800;
-            width: 50px;
-            text-align: right;
-        }
-
-        .diff-up {
-            color: var(--up);
-        }
-
-        .diff-dn {
-            color: var(--dn);
-        }
-
-        .diff-eq {
-            color: var(--text-secondary);
-        }
-
-        .event-card {
-            cursor: pointer;
-            display: flex;
-            transition: var(--transition);
-            margin-bottom: 0 !important;
-        }
-
-        .event-card:hover {
-            border-color: var(--accent);
-            box-shadow: 6px 6px 0px var(--accent);
-        }
-
-        .chk-area {
-            padding-right: 1.25rem;
-            display: flex;
-            align-items: flex-start;
-            padding-top: 4px;
-        }
-
-        .ev-chk {
-            width: 22px;
-            height: 22px;
-            cursor: pointer;
-            accent-color: var(--accent);
-            border: 2px solid var(--text-main);
-        }
-
-        .ev-content {
-            flex: 1;
-        }
-
-        .ev-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .ev-date {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .ev-title {
-            font-size: 1.15rem;
-            font-weight: 800;
-            margin-top: 0.2rem;
-            color: var(--text-main);
-        }
-
+        .event-card { cursor: pointer; display: flex; transition: var(--transition); margin-bottom: 0 !important; }
+        .event-card:hover { border-color: var(--accent); box-shadow: 6px 6px 0px var(--accent); }
+        .chk-area { padding-right: 1.25rem; display: flex; align-items: flex-start; padding-top: 4px; }
+        .ev-chk { width: 22px; height: 22px; cursor: pointer; accent-color: var(--accent); border: 2px solid var(--text-main); }
+        .ev-content { flex: 1; }
+        .ev-header { display: flex; justify-content: space-between; align-items: flex-start; }
+        .ev-date { font-size: 0.8rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase; }
+        .ev-title { font-size: 1.15rem; font-weight: 800; margin-top: 0.2rem; color: var(--text-main); }
         .ev-note {
             font-size: 0.85rem;
             color: var(--text-secondary);
@@ -1012,58 +762,14 @@
             line-height: 1.5;
             font-weight: 500;
         }
+        .note-link { color: #3b82f6; font-weight: 700; text-decoration: underline; display: inline-flex; align-items: center; gap: 4px; }
+        .ev-body { margin-top: 1rem; padding-top: 1rem; border-top: 2px solid var(--border); display: none; }
+        .event-card.expanded .ev-body { display: block; }
+        .song-line { display: flex; justify-content: space-between; padding: 0.5rem 0; font-size: 0.95rem; border-bottom: 1px dashed var(--border); font-weight: 600; }
+        .encore-tag { color: #ffffff; font-size: 0.7rem; font-weight: 800; background: var(--accent); padding: 2px 8px; text-transform: uppercase; }
 
-        .note-link {
-            color: #3b82f6;
-            font-weight: 700;
-            text-decoration: underline;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .ev-body {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 2px solid var(--border);
-            display: none;
-        }
-
-        .event-card.expanded .ev-body {
-            display: block;
-        }
-
-        .song-line {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            font-size: 0.95rem;
-            border-bottom: 1px dashed var(--border);
-            font-weight: 600;
-        }
-
-        .encore-tag {
-            color: #ffffff;
-            font-size: 0.7rem;
-            font-weight: 800;
-            background: var(--accent);
-            padding: 2px 8px;
-            text-transform: uppercase;
-        }
-
-        .dg4 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        @media(min-width:600px) {
-            .dg4 {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
+        .dg4 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        @media(min-width:600px) { .dg4 { grid-template-columns: repeat(4, 1fr); } }
         .db-box {
             background: var(--bg-card);
             padding: 1.5rem 1rem;
@@ -1071,7 +777,6 @@
             text-align: center;
             box-shadow: 3px 3px 0px var(--text-main);
         }
-
         .title-badge {
             display: inline-block;
             padding: 0.4rem 1.25rem;
@@ -1083,7 +788,6 @@
             margin-bottom: 1.25rem;
             text-transform: uppercase;
         }
-
         .progress-wrap {
             background: var(--bg-subtle);
             border: 2px solid var(--text-main);
@@ -1092,18 +796,9 @@
             overflow: hidden;
             margin-top: 0.75rem;
         }
+        .progress-bar { background: var(--accent); height: 100%; transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
 
-        .progress-bar {
-            background: var(--accent);
-            height: 100%;
-            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .sort-bar {
-            display: flex;
-            gap: 0.4rem;
-        }
-
+        .sort-bar { display: flex; gap: 0.4rem; }
         .sort-btn {
             padding: 0.35rem 0.75rem;
             font-size: 0.775rem;
@@ -1114,27 +809,9 @@
             color: var(--text-secondary);
             text-transform: uppercase;
         }
-
-        .sort-btn.active {
-            background: var(--text-main);
-            color: var(--bg-main);
-        }
-
-        .heard-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px dashed var(--border);
-        }
-
-        .id-history {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-        }
-
+        .sort-btn.active { background: var(--text-main); color: var(--bg-main); }
+        .heard-row { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px dashed var(--border); }
+        .id-history { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
         .id-chip-btn {
             padding: 0.3rem 0.8rem;
             background: var(--bg-subtle);
@@ -1145,18 +822,8 @@
             border: 1.5px solid var(--text-main);
         }
 
-        .report-form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.25rem;
-        }
-
-        @media(max-width:600px) {
-            .report-form-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
+        .report-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        @media(max-width:600px) { .report-form-grid { grid-template-columns: 1fr; } }
         .form-label {
             font-size: 0.8rem;
             font-weight: 800;
@@ -1165,7 +832,6 @@
             display: block;
             text-transform: uppercase;
         }
-
         .setlist-area {
             border: 2px dashed var(--text-main);
             padding: 1rem;
@@ -1173,13 +839,7 @@
             margin-top: 0.85rem;
             background: var(--bg-subtle);
         }
-
-        .setlist-chips {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
+        .setlist-chips { display: flex; flex-direction: column; gap: 0.5rem; }
         .s-chip {
             display: flex;
             align-items: center;
@@ -1189,59 +849,18 @@
             padding: 0.5rem 1rem;
             box-shadow: 2px 2px 0px var(--text-main);
         }
+        .s-chip-num { min-width: 24px; font-weight: 900; color: var(--accent); font-size: 0.9rem; }
+        .s-chip-name { flex: 1; font-weight: 700; font-size: 0.95rem; }
+        .s-chip-encore { display: flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; color: var(--text-main); font-weight: 800; }
+        .s-chip-btns { display: flex; gap: 0.3rem; }
+        .s-chip-btn { background: var(--bg-subtle); border: 1.5px solid var(--text-main); cursor: pointer; padding: 2px 8px; font-size: 0.75rem; font-weight: 800; color: var(--text-main); }
+        .s-chip-del { color: var(--dn); border-color: var(--dn); }
 
-        .s-chip-num {
-            min-width: 24px;
-            font-weight: 900;
-            color: var(--accent);
-            font-size: 0.9rem;
-        }
-
-        .s-chip-name {
-            flex: 1;
-            font-weight: 700;
-            font-size: 0.95rem;
-        }
-
-        .s-chip-encore {
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-            font-size: 0.8rem;
-            color: var(--text-main);
-            font-weight: 800;
-        }
-
-        .s-chip-btns {
-            display: flex;
-            gap: 0.3rem;
-        }
-
-        .s-chip-btn {
-            background: var(--bg-subtle);
-            border: 1.5px solid var(--text-main);
-            cursor: pointer;
-            padding: 2px 8px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: var(--text-main);
-        }
-
-        .s-chip-del {
-            color: var(--dn);
-            border-color: var(--dn);
-        }
-
-        .pending-card {
-            border-left: 6px solid var(--accent);
-        }
+        .pending-card { border-left: 6px solid var(--accent); }
 
         #song-modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(4px);
             z-index: 2000;
@@ -1250,11 +869,7 @@
             align-items: center;
             padding: 1rem;
         }
-
-        #song-modal.show {
-            display: flex;
-        }
-
+        #song-modal.show { display: flex; }
         .modal-content {
             background: var(--bg-card);
             width: 100%;
@@ -1266,22 +881,16 @@
             overflow-y: auto;
             position: relative;
         }
-
         .modal-close {
             position: absolute;
-            top: 1.25rem;
-            right: 1.25rem;
+            top: 1.25rem; right: 1.25rem;
             cursor: pointer;
-            font-weight: 900;
-            font-size: 1rem;
+            font-weight: 900; font-size: 1rem;
             color: var(--text-main);
             background: var(--bg-subtle);
             border: 2px solid var(--text-main);
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center;
         }
 
         #toast {
@@ -1302,26 +911,16 @@
             box-shadow: 4px 4px 0px var(--accent);
             text-transform: uppercase;
         }
-
-        #toast.show {
-            opacity: 1;
-            transform: translate(-50%, -8px);
-        }
+        #toast.show { opacity: 1; transform: translate(-50%, -8px); }
 
         .spinner {
-            width: 38px;
-            height: 38px;
+            width: 38px; height: 38px;
             border: 4px solid var(--border);
             border-top-color: var(--accent);
             animation: spin 0.8s linear infinite;
             margin-bottom: 0.5rem;
         }
-
-        @keyframes spin {
-            100% {
-                transform: rotate(360deg);
-            }
-        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 
@@ -1341,16 +940,14 @@
                 <span id="modal-prob" style="font-weight:800;color:var(--text-main);font-size:0.9rem;"></span>
                 <span id="modal-cnt" style="color:var(--text-secondary);font-size:0.85rem;font-weight:600;"></span>
             </div>
-            <div id="modal-platform-links" class="platform-links-container"></div>
+            <div id="modal-platform-links" class="platform-bar-scroll" style="justify-content: flex-start;"></div>
             <div id="modal-lyrics-panel" class="lyrics-panel"></div>
             <div id="modal-chart-wrap" style="margin-top:1.25rem; margin-bottom:1.25rem;display:none;">
-                <h4
-                    style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.4rem;font-weight:800;text-transform:uppercase;">
+                <h4 style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.4rem;font-weight:800;text-transform:uppercase;">
                     現場陪伴成長曲線</h4>
                 <div style="position:relative;height:160px;"><canvas id="modal-chart"></canvas></div>
             </div>
-            <h4
-                style="margin-bottom:0.75rem;border-bottom:2px solid var(--border);padding-bottom:0.4rem;font-size:0.85rem;color:var(--text-secondary);font-weight:800;text-transform:uppercase;">
+            <h4 style="margin-bottom:0.75rem;border-bottom:2px solid var(--border);padding-bottom:0.4rem;font-size:0.85rem;color:var(--text-secondary);font-weight:800;text-transform:uppercase;">
                 出現場次紀錄</h4>
             <div id="modal-events" style="font-size:0.9rem;font-weight:600;"></div>
         </div>
@@ -1384,14 +981,10 @@
                 <span>登入 / 個人頁面</span>
                 <span style="font-weight:900;color:var(--accent);">▶</span>
             </div>
-            <div class="mobile-menu-item active" data-target="view-home" onclick="handleMobileMenuClick('view-home')">首頁
-            </div>
-            <div class="mobile-menu-item" data-target="view-events" onclick="handleMobileMenuClick('view-events')">詳細場次
-            </div>
-            <div class="mobile-menu-item" data-target="view-analysis" onclick="handleMobileMenuClick('view-analysis')">
-                歌單分析</div>
-            <div class="mobile-menu-item" data-target="view-random" onclick="handleMobileMenuClick('view-random')">隨機聆聽
-                🎲</div>
+            <div class="mobile-menu-item active" data-target="view-home" onclick="handleMobileMenuClick('view-home')">首頁</div>
+            <div class="mobile-menu-item" data-target="view-events" onclick="handleMobileMenuClick('view-events')">詳細場次</div>
+            <div class="mobile-menu-item" data-target="view-analysis" onclick="handleMobileMenuClick('view-analysis')">歌單分析</div>
+            <div class="mobile-menu-item" data-target="view-random" onclick="handleMobileMenuClick('view-random')">隨機聆聽 🎲</div>
         </div>
     </nav>
 
@@ -1399,28 +992,22 @@
         <!-- 1. 首頁 -->
         <div id="view-home" class="view active">
             <div class="card" id="upcoming-widget" style="display:none; background: var(--bg-subtle);">
-                <div
-                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                    <h3 style="color: var(--accent); margin-bottom:0; font-size:1rem; text-transform:uppercase;">
-                        Upcoming Events</h3>
-                    <span
-                        style="font-size:0.7rem; font-weight:800; color:#fff; background:var(--accent); padding:2px 8px; border: 1.5px solid var(--text-main);">近期活動</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                    <h3 style="color: var(--accent); margin-bottom:0; font-size:1rem; text-transform:uppercase;">Upcoming Events</h3>
+                    <span style="font-size:0.7rem; font-weight:800; color:#fff; background:var(--accent); padding:2px 8px; border: 1.5px solid var(--text-main);">近期活動</span>
                 </div>
                 <div id="upcoming-list"></div>
-                <button class="btn btn-outline btn-sm" id="btn-more-upcoming"
-                    style="width:100%; margin-top:1rem; display:none;">查看更多場次 ▼</button>
+                <button class="btn btn-outline btn-sm" id="btn-more-upcoming" style="width:100%; margin-top:1rem; display:none;">查看更多場次 ▼</button>
             </div>
 
             <div id="local-loader" style="text-align: center; padding: 2.5rem 0;">
                 <div class="spinner" style="margin: 0 auto;"></div>
-                <div style="color: var(--text-secondary); font-weight: 700; margin-top: 0.75rem; font-size: 0.9rem;">
-                    即時同步音樂數據中...</div>
+                <div style="color: var(--text-secondary); font-weight: 700; margin-top: 0.75rem; font-size: 0.9rem;">即時同步音樂數據中...</div>
             </div>
 
             <div class="card" style="text-align: center; padding: 3rem 2rem; margin-top: 1rem;">
                 <h2>歡迎來到 2026 芒果醬活動資訊站</h2>
-                <p style="color: var(--text-secondary); font-size: 1rem; font-weight: 600; margin-top: 0.75rem;">
-                    即時掌握最新演出行程、參與場次足跡與各項金曲歌單分析！</p>
+                <p style="color: var(--text-secondary); font-size: 1rem; font-weight: 600; margin-top: 0.75rem;">即時掌握最新演出行程、參與場次足跡與各項金曲歌單分析！</p>
                 <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                     <button class="btn" onclick="switchTab('view-random')">🎲 隨機聽一首</button>
                     <button class="btn btn-outline" onclick="switchTab('view-analysis')">查看歌單分析</button>
@@ -1431,25 +1018,20 @@
 
         <!-- 2. 詳細場次 -->
         <div id="view-events" class="view">
-            <div
-                style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
                 <div>
                     <h2>詳細場次紀錄</h2>
                     <p style="color:var(--text-secondary);font-size:0.9rem;font-weight:600;">勾選參與過的精彩演出，記錄專屬音樂足跡</p>
                 </div>
                 <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
                     <button class="btn btn-outline btn-sm" onclick="openReportView()">📝 場次補充</button>
-                    <div id="events-login-status"
-                        style="font-size:0.85rem;font-weight:800;color:var(--accent);text-transform:uppercase;">未登入
-                    </div>
+                    <div id="events-login-status" style="font-size:0.85rem;font-weight:800;color:var(--accent);text-transform:uppercase;">未登入</div>
                     <button class="btn btn-sm" id="btn-save-events">儲存場次紀錄</button>
                 </div>
             </div>
-            <div id="events-msg"
-                style="color:var(--dn);font-weight:700;font-size:0.875rem;margin-bottom:1rem;min-height:1.25rem;"></div>
+            <div id="events-msg" style="color:var(--dn);font-weight:700;font-size:0.875rem;margin-bottom:1rem;min-height:1.25rem;"></div>
             <div id="events-list">
-                <div id="events-loading-box"
-                    style="text-align:center;padding:3rem 0;color:var(--text-secondary);font-weight:700;grid-column: 1 / -1;">
+                <div id="events-loading-box" style="text-align:center;padding:3rem 0;color:var(--text-secondary);font-weight:700;grid-column: 1 / -1;">
                     <div class="spinner" style="margin:0 auto 0.75rem auto;"></div>詳細演出場次同步中...
                 </div>
             </div>
@@ -1467,28 +1049,13 @@
                     <input type="text" id="analysis-search" placeholder="輸入歌曲名稱 (例如: 我喜歡你)" autocomplete="off">
                     <div id="analysis-search-results" class="dropdown-results"></div>
                 </div>
-                <div id="prob-display"
-                    style="display:none;margin-top:1.25rem;border-top:2px solid var(--border);padding-top:1.25rem;">
-                    <h3 id="prob-song-title"
-                        style="color:var(--text-main);margin-bottom:1rem;cursor:pointer;font-size:1.15rem;"
-                        onclick="openSongModalFromSearch()"></h3>
+                <div id="prob-display" style="display:none;margin-top:1.25rem;border-top:2px solid var(--border);padding-top:1.25rem;">
+                    <h3 id="prob-song-title" style="color:var(--text-main);margin-bottom:1rem;cursor:pointer;font-size:1.15rem;" onclick="openSongModalFromSearch()"></h3>
                     <div class="prob-grid">
-                        <div class="prob-box">
-                            <div class="label">最近 4 場</div>
-                            <div class="value" id="prob-4">0%</div>
-                        </div>
-                        <div class="prob-box">
-                            <div class="label">最近 8 場</div>
-                            <div class="value" id="prob-8">0%</div>
-                        </div>
-                        <div class="prob-box">
-                            <div class="label">最近 12 場</div>
-                            <div class="value" id="prob-12">0%</div>
-                        </div>
-                        <div class="prob-box">
-                            <div class="label">總場次</div>
-                            <div class="value" id="prob-total">0%</div>
-                        </div>
+                        <div class="prob-box"><div class="label">最近 4 場</div><div class="value" id="prob-4">0%</div></div>
+                        <div class="prob-box"><div class="label">最近 8 場</div><div class="value" id="prob-8">0%</div></div>
+                        <div class="prob-box"><div class="label">最近 12 場</div><div class="value" id="prob-12">0%</div></div>
+                        <div class="prob-box"><div class="label">總場次</div><div class="value" id="prob-total">0%</div></div>
                     </div>
                 </div>
             </div>
@@ -1497,95 +1064,69 @@
                 <div class="filter-btn" data-val="8">最近 8 場</div>
                 <div class="filter-btn" data-val="12">最近 12 場</div>
                 <div style="display:flex;align-items:center;margin-left:0.5rem;">
-                    <span
-                        style="font-size:0.825rem;margin-right:0.5rem;color:var(--text-secondary);font-weight:700;">自訂:</span>
+                    <span style="font-size:0.825rem;margin-right:0.5rem;color:var(--text-secondary);font-weight:700;">自訂:</span>
                     <input type="number" id="custom-n" class="custom-input" min="1" placeholder="N場">
                 </div>
             </div>
             <div id="analysis-content">
-                <div id="analysis-loading-box"
-                    style="text-align:center;padding:3rem 0;color:var(--text-secondary);font-weight:700;">
+                <div id="analysis-loading-box" style="text-align:center;padding:3rem 0;color:var(--text-secondary);font-weight:700;">
                     <div class="spinner" style="margin:0 auto 0.75rem auto;"></div>計算金曲機率數據中...
                 </div>
             </div>
         </div>
 
-        <!-- 4. 隨機聆聽 (包含專屬分享、快速分享與連續隨機播放功能) -->
+        <!-- 4. 隨機聆聽 (極致緊湊優化版：消除過度浪費的板塊) -->
         <div id="view-random" class="view">
-            <div style="margin-bottom: 1.5rem;">
-                <h2>🎲 隨機聆聽</h2>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; font-weight: 600;">想聽芒果醬，卻不知道該聽哪首嗎？</p>
-            </div>
-            <div class="card"
-                style="max-width: 820px; margin: 0 auto 2rem auto; text-align: center; padding: 2.5rem 1.5rem;">
+            <div class="card random-main-card">
                 <div id="random-result-box">
-                    <div
-                        style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
-                        <h2 id="random-song-name" style="margin-bottom: 0; font-size: 1.7rem; cursor: pointer;"
-                            onclick="openSongModalFromRandom()">-</h2>
-                        <span id="random-song-badge" class="badge N">-</span>
-                    </div>
-                    <div id="random-song-stats"
-                        style="color: var(--text-secondary); font-size: 0.95rem; font-weight: 700; margin-top: 0.5rem;">
-                        總場次機率 0% (共 0 次)</div>
-                    <div id="random-platform-links" class="platform-links-container"
-                        style="justify-content: center; margin: 1.25rem 0 1.5rem 0;"></div>
-
-                    <!-- 操作按鈕群：抽歌、獨立連續隨機播放按鈕、分享連結按鈕 -->
-                    <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; align-items: center;">
-                        <button class="btn" id="btn-draw-song" onclick="triggerRandomDraw(true)"
-                            style="padding: 0.85rem 1.6rem; font-size: 0.92rem;">🎲 重新抽一首金曲</button>
-                        <!-- 🌟 獨立的連續隨機播放按鈕（套用洗牌袋機制） -->
-                        <button class="btn btn-autoplay-toggle" id="btn-continuous-play" onclick="toggleContinuousPlay()"
-                            style="padding: 0.85rem 1.6rem; font-size: 0.92rem;">🔁 連續隨機播放：關閉</button>
-                        <button class="btn btn-outline" id="btn-share-random" onclick="shareRandomLink()"
-                            style="padding: 0.85rem 1.6rem; font-size: 0.92rem;">🔗 分享隨機聆聽</button>
-                    </div>
-
-                    <!-- 快速分享連結展示與複製框 -->
-                    <div id="quick-share-box"
-                        style="margin-top: 1.5rem; background: var(--bg-subtle); border: 2px solid var(--text-main); padding: 1rem 1.25rem; text-align: left; box-shadow: 3px 3px 0px var(--text-main);">
-                        <div
-                            style="font-size: 0.8rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px;">
-                            <span>⚡ 快速分享連結（朋友點開即自動隨機抽歌）</span>                            
+                    <!-- 歌名與徽章 -->
+                    <div class="random-header-wrap">
+                        <div class="random-title-row">
+                            <h2 id="random-song-name" onclick="openSongModalFromRandom()">-</h2>
+                            <span id="random-song-badge" class="badge N">-</span>
                         </div>
-                        <div style="display: flex; gap: 0.5rem; align-items: center;">
-                            <input type="text" id="share-link-input" readonly value=""
-                                style="flex: 1; font-size: 0.85rem; font-weight: 700; padding: 0.55rem 0.85rem; margin-top: 0; background: var(--bg-card); cursor: pointer;"
-                                onclick="this.select(); copyShareInputUrl();" title="點擊選取或複製">
-                            <button class="btn btn-sm" onclick="copyShareInputUrl()"
-                                style="white-space: nowrap; padding: 0.55rem 1rem;">📋 複製</button>
+                        <div id="random-song-stats" style="color: var(--text-secondary); font-size: 0.85rem; font-weight: 700; margin-top: 0.2rem;">
+                            總場次機率 0% (共 0 次)
                         </div>
                     </div>
 
-                    <!-- YouTube 播放器區塊（使用 YouTube IFrame API 動態掛載與狀態監聽） -->
-                    <div id="random-yt-container" style="display: none; margin-top: 2rem; text-align: left;">
-                        <div
-                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 6px;">
-                            <span
-                                style="font-size: 0.85rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase;">📺
-                                YouTube MV / 現場影音</span>
-                            <div style="display: flex; gap: 6px; align-items: center;">
-                                <span id="continuous-status-tag" style="display: none; font-size: 0.75rem; font-weight: 800; color: var(--up); background: rgba(34, 197, 94, 0.15); padding: 2px 8px; border: 1px solid var(--up);">連續播放進行中</span>
-                                <button class="btn btn-outline btn-sm" id="btn-share-song" onclick="shareCurrentSongResult()"
-                                    style="font-size: 0.75rem; padding: 3px 10px;">
-                                    📤 分享這首《<span id="random-yt-song-tag"></span>》
+                    <!-- 微型串流按鈕橫排滑動列 -->
+                    <div id="random-platform-links" class="platform-bar-scroll"></div>
+
+                    <!-- 核心操作按鈕群（雙欄緊湊排列） -->
+                    <div class="random-action-grid">
+                        <button class="btn" id="btn-draw-song" onclick="triggerRandomDraw(true)">🎲 重新抽一首</button>
+                        <button class="btn btn-autoplay-toggle" id="btn-continuous-play" onclick="toggleContinuousPlay()">🔁 連續隨機：關閉</button>
+                        <button class="btn btn-outline btn-full" id="btn-share-random" onclick="shareRandomLink()" style="padding: 0.5rem;">
+                            🔗 分享此隨機聆聽頁面 (或長按複製連結)
+                        </button>
+                    </div>
+
+                    <!-- YouTube 播放器區塊（直接拉至上方，不再被推到底下） -->
+                    <div id="random-yt-container" style="display: none; margin-top: 1rem; text-align: left;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 4px;">
+                            <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase;">
+                                📺 YouTube MV 播放
+                            </span>
+                            <div style="display: flex; gap: 4px; align-items: center;">
+                                <span id="continuous-status-tag" style="display: none; font-size: 0.7rem; font-weight: 800; color: var(--up); background: rgba(34, 197, 94, 0.15); padding: 1px 6px; border: 1px solid var(--up);">自動連播中</span>
+                                <button class="btn btn-outline btn-sm" id="btn-share-song" onclick="shareCurrentSongResult()" style="font-size: 0.72rem; padding: 2px 7px;">
+                                    📤 分享《<span id="random-yt-song-tag"></span>》
                                 </button>
                             </div>
                         </div>
                         <div class="yt-player-wrap" id="random-yt-player-box">
                             <div id="random-yt-player"></div>
                         </div>
-                        <div id="random-yt-notice"
-                            style="display: none; padding: 1rem; background: var(--bg-subtle); border: 2px dashed var(--border); margin-top: 0.75rem; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); text-align: center; line-height: 1.6;">
-                        </div>
+                        <div id="random-yt-notice" style="display: none; padding: 0.75rem; background: var(--bg-subtle); border: 2px dashed var(--border); margin-top: 0.5rem; font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); text-align: center;"></div>
                     </div>
 
-                    <div id="random-lyrics-section" style="display: none; margin-top: 2rem; text-align: left;">
-                        <div
-                            style="font-size: 0.85rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 0.5rem;">
-                            📜 歌曲歌詞</div>
-                        <div id="random-lyrics-content" class="lyrics-panel show" style="max-height: 400px;"></div>
+                    <!-- 歌詞展開面板 -->
+                    <div id="random-lyrics-section" style="display: none; margin-top: 1.25rem; text-align: left;">
+                        <div style="font-size: 0.8rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 0.35rem;">
+                            📜 歌曲歌詞
+                        </div>
+                        <div id="random-lyrics-content" class="lyrics-panel show" style="max-height: 280px;"></div>
                     </div>
                 </div>
             </div>
@@ -1595,30 +1136,21 @@
         <div id="view-journey" class="view">
             <div id="journey-auth" style="text-align:center;max-width:420px;margin:3rem auto;padding-top:1rem;">
                 <h2>我去哪芒</h2>
-                <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:1.5rem;font-weight:600;">建立或輸入專屬
-                    ID，解鎖屬於您的音樂足跡</p>
+                <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:1.5rem;font-weight:600;">建立或輸入專屬 ID，解鎖屬於您的音樂足跡</p>
                 <div class="card" style="text-align:left;">
-                    <h3
-                        style="font-size:0.9rem;margin-bottom:0.75rem;text-transform:uppercase;color:var(--text-secondary);">
-                        已有專屬 ID</h3>
+                    <h3 style="font-size:0.9rem;margin-bottom:0.75rem;text-transform:uppercase;color:var(--text-secondary);">已有專屬 ID</h3>
                     <div style="display:flex;gap:0.5rem;">
-                        <input type="text" id="login-id" placeholder="輸入 ID (例: MG-A1B2)"
-                            style="flex:1;text-transform:uppercase;">
+                        <input type="text" id="login-id" placeholder="輸入 ID (例: MG-A1B2)" style="flex:1;text-transform:uppercase;">
                         <button class="btn btn-sm" id="btn-login" style="padding:0.6rem 1.25rem;">登入</button>
                     </div>
-
                     <div id="login-history-area" style="margin-top:1rem;display:none;">
-                        <div
-                            style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.4rem;font-weight:700;text-transform:uppercase;">
-                            快速登入：</div>
+                        <div style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.4rem;font-weight:700;text-transform:uppercase;">快速登入：</div>
                         <div class="id-history" id="login-history-chips"></div>
                     </div>
                 </div>
-                <div
-                    style="margin:1.5rem 0;color:var(--text-secondary);position:relative;text-align:center;font-size:0.85rem;font-weight:800;text-transform:uppercase;">
+                <div style="margin:1.5rem 0;color:var(--text-secondary);position:relative;text-align:center;font-size:0.85rem;font-weight:800;text-transform:uppercase;">
                     <span style="background:var(--bg-main);padding:0 12px;position:relative;z-index:1;">或</span>
-                    <div style="position:absolute;top:50%;left:0;right:0;border-top:2px solid var(--border);z-index:0;">
-                    </div>
+                    <div style="position:absolute;top:50%;left:0;right:0;border-top:2px solid var(--border);z-index:0;"></div>
                 </div>
                 <button class="btn btn-outline" id="btn-start-create" style="width:100%;">建立新的專屬 ID</button>
             </div>
@@ -1626,13 +1158,10 @@
             <div id="journey-dashboard" style="display:none;">
                 <div style="text-align: center; margin-bottom: 1.5rem;">
                     <div class="title-badge" id="journey-title">初階果汁機</div>
-                    <h2 style="margin-bottom:0.4rem;font-size:1.4rem;">專屬 ID: <span id="display-user-id"
-                            style="color:var(--accent);"></span></h2>
+                    <h2 style="margin-bottom:0.4rem;font-size:1.4rem;">專屬 ID: <span id="display-user-id" style="color:var(--accent);"></span></h2>
                 </div>
                 <div class="card" style="margin-bottom:1.25rem;padding:1.25rem 1.5rem;">
-                    <h3
-                        style="font-size:0.9rem;margin-bottom:0.5rem;text-transform:uppercase;color:var(--text-secondary);">
-                        設定個人暱稱</h3>
+                    <h3 style="font-size:0.9rem;margin-bottom:0.5rem;text-transform:uppercase;color:var(--text-secondary);">設定個人暱稱</h3>
                     <div style="display:flex;gap:0.75rem;">
                         <input type="text" id="user-nickname-input" placeholder="輸入您的暱稱 (留空則顯示 ID)" style="flex:1;">
                         <button class="btn btn-sm" id="btn-save-nickname">儲存</button>
@@ -1640,86 +1169,59 @@
                 </div>
                 <div class="card" style="margin-bottom:1.25rem;padding:1.25rem 1.5rem;">
                     <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0.5rem;">
-                        <div
-                            style="font-size:0.85rem;color:var(--text-secondary);font-weight:800;text-transform:uppercase;">
-                            現場解鎖進度</div>
-                        <div style="font-weight:900;color:var(--text-main);font-size:0.9rem;"><span
-                                id="dash-prog-cnt">0</span> / <span id="dash-total-cnt">0</span> 場</div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);font-weight:800;text-transform:uppercase;">現場解鎖進度</div>
+                        <div style="font-weight:900;color:var(--text-main);font-size:0.9rem;"><span id="dash-prog-cnt">0</span> / <span id="dash-total-cnt">0</span> 場</div>
                     </div>
-                    <div class="progress-wrap">
-                        <div class="progress-bar" id="dash-prog-bar" style="width:0%;"></div>
-                    </div>
+                    <div class="progress-wrap"><div class="progress-bar" id="dash-prog-bar" style="width:0%;"></div></div>
                 </div>
                 <div class="dg4">
                     <div class="db-box" style="cursor:pointer;" onclick="toggleAttendedEvents()" id="attended-box">
-                        <div
-                            style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.3rem;text-transform:uppercase;font-weight:800;">
-                            參與場次 <span id="attended-chevron">▲</span></div>
+                        <div style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.3rem;text-transform:uppercase;font-weight:800;">參與場次 <span id="attended-chevron">▲</span></div>
                         <div style="font-size:1.75rem;font-weight:900;line-height:1;" id="dash-events">0</div>
                     </div>
                     <div class="db-box">
-                        <div
-                            style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.3rem;text-transform:uppercase;font-weight:800;">
-                            共聽過</div>
-                        <div style="font-size:1.75rem;font-weight:900;line-height:1;" id="dash-heard-songs-total">0
-                        </div>
-                        <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:0.3rem;font-weight:700;">首金曲
-                        </div>
+                        <div style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.3rem;text-transform:uppercase;font-weight:800;">共聽過</div>
+                        <div style="font-size:1.75rem;font-weight:900;line-height:1;" id="dash-heard-songs-total">0</div>
+                        <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:0.3rem;font-weight:700;">首金曲</div>
                     </div>
                     <div class="db-box">
-                        <div
-                            style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.3rem;text-transform:uppercase;font-weight:800;">
-                            總時數</div>
-                        <div style="font-size:1.35rem;font-weight:900;line-height:1.2;color:#3b82f6;"
-                            id="dash-time-total">0 分鐘</div>
+                        <div style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.3rem;text-transform:uppercase;font-weight:800;">總時數</div>
+                        <div style="font-size:1.35rem;font-weight:900;line-height:1.2;color:#3b82f6;" id="dash-time-total">0 分鐘</div>
                     </div>
                     <div class="db-box">
-                        <div
-                            style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.3rem;text-transform:uppercase;font-weight:800;">
-                            待解鎖</div>
+                        <div style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.3rem;text-transform:uppercase;font-weight:800;">待解鎖</div>
                         <div style="font-size:1.75rem;font-weight:900;line-height:1;" id="dash-unlocked-cnt">0</div>
-                        <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:0.3rem;font-weight:700;">
-                            首期待相遇</div>
+                        <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:0.3rem;font-weight:700;">首期待相遇</div>
                     </div>
                 </div>
                 <div class="card" id="attended-detail-card" style="display:none; margin-bottom:1.25rem;">
-                    <h3
-                        style="margin-bottom:1rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
-                        我的參與場次紀錄</h3>
+                    <h3 style="margin-bottom:1rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">我的參與場次紀錄</h3>
                     <div id="dash-attended-events-list"></div>
                 </div>
                 <div class="card" style="margin-bottom:1.25rem;">
-                    <h3
-                        style="margin-bottom:1rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
-                        尚未相遇的歌</h3>
+                    <h3 style="margin-bottom:1rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">尚未相遇的歌</h3>
                     <div id="dash-unlocked-songs"></div>
                 </div>
                 <div class="card" style="margin-bottom:1.5rem;">
-                    <div
-                        style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;">
-                        <h3
-                            style="margin-bottom:0;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
-                            金曲收藏庫</h3>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;">
+                        <h3 style="margin-bottom:0;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">金曲收藏庫</h3>
                         <div class="sort-bar">
                             <button class="sort-btn" id="sort-pct-btn" onclick="setHeardSort('pct')">出現率 ↑</button>
-                            <button class="sort-btn active" id="sort-cnt-btn" onclick="setHeardSort('count')">聽過次數
-                                ↓</button>
+                            <button class="sort-btn active" id="sort-cnt-btn" onclick="setHeardSort('count')">聽過次數 ↓</button>
                         </div>
                     </div>
                     <div id="dash-heard-songs"></div>
                 </div>
                 <div style="display:flex;gap:1rem;justify-content:center;margin-bottom:2rem;">
                     <button class="btn btn-outline" id="btn-edit-events" style="flex:1;">編輯場次</button>
-                    <button class="btn btn-ghost" id="btn-logout"
-                        style="flex:1;color:var(--dn);font-weight:800;">登出</button>
+                    <button class="btn btn-ghost" id="btn-logout" style="flex:1;color:var(--dn);font-weight:800;">登出</button>
                 </div>
             </div>
         </div>
 
         <!-- 6. 場次回報 -->
         <div id="view-report" class="view">
-            <div
-                style="display:flex;justify-content:space-between;align-items:center;margin-bottom: 1.5rem;flex-wrap:wrap;gap:1rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom: 1.5rem;flex-wrap:wrap;gap:1rem;">
                 <div>
                     <h2>場次補充回報</h2>
                     <p style="color:var(--text-secondary);font-size:0.9rem;font-weight:600;">協助回報或補全芒果醬的演出歌單資料</p>
@@ -1727,24 +1229,17 @@
                 <button class="btn btn-outline btn-sm" onclick="switchTab('view-events')">⬅ 返回詳細場次</button>
             </div>
             <div class="card" style="margin-bottom: 1.5rem;">
-                <h3
-                    style="margin-bottom:1.25rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
-                    填寫場次資訊</h3>
+                <h3 style="margin-bottom:1.25rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">填寫場次資訊</h3>
                 <div class="report-form-grid">
-                    <div><label class="form-label">活動日期 *</label><input type="text" id="rpt-date"
-                            placeholder="例: 20260816" maxlength="8"></div>
-                    <div><label class="form-label">活動名稱 *</label><input type="text" id="rpt-name"
-                            placeholder="例: 台東 最美星空音樂會"></div>
+                    <div><label class="form-label">活動日期 *</label><input type="text" id="rpt-date" placeholder="例: 20260816" maxlength="8"></div>
+                    <div><label class="form-label">活動名稱 *</label><input type="text" id="rpt-name" placeholder="例: 台東 最美星空音樂會"></div>
                 </div>
                 <div class="report-form-grid" style="margin-top:1rem;">
-                    <div><label class="form-label">表演時間</label><input type="text" id="rpt-time"
-                            placeholder="例: 19:30-20:00"></div>
-                    <div><label class="form-label">其他備註</label><input type="text" id="rpt-note"
-                            placeholder="例: 售票場次、ft. 嘉賓"></div>
+                    <div><label class="form-label">表演時間</label><input type="text" id="rpt-time" placeholder="例: 19:30-20:00"></div>
+                    <div><label class="form-label">其他備註</label><input type="text" id="rpt-note" placeholder="例: 售票場次、ft. 嘉賓"></div>
                 </div>
                 <div class="report-form-grid" style="margin-top:1rem;">
-                    <div><label class="form-label">回報者名稱</label><input type="text" id="rpt-submitter"
-                            placeholder="預設為「熱心小果子」"></div>
+                    <div><label class="form-label">回報者名稱</label><input type="text" id="rpt-submitter" placeholder="預設為「熱心小果子」"></div>
                 </div>
                 <div style="margin-top:1.25rem;">
                     <label class="form-label">表演歌單</label>
@@ -1753,9 +1248,7 @@
                         <div id="rpt-song-results" class="dropdown-results"></div>
                     </div>
                     <div class="setlist-area" id="setlist-area">
-                        <div id="setlist-empty"
-                            style="color:var(--text-secondary);text-align:center;padding:1.5rem 0;font-size:0.9rem;font-weight:700;">
-                            尚未新增歌曲，請使用上方搜尋框加入</div>
+                        <div id="setlist-empty" style="color:var(--text-secondary);text-align:center;padding:1.5rem 0;font-size:0.9rem;font-weight:700;">尚未新增歌曲，請使用上方搜尋框加入</div>
                         <div class="setlist-chips" id="setlist-chips"></div>
                     </div>
                 </div>
@@ -1764,30 +1257,23 @@
                     <button class="btn btn-outline" onclick="clearReportForm()">清除重填</button>
                 </div>
             </div>
-            <h3 style="margin-bottom:0.85rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
-                待審核場次</h3>
+            <h3 style="margin-bottom:0.85rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">待審核場次</h3>
             <div id="pending-list">
-                <div
-                    style="color:var(--text-secondary);text-align:center;padding:2rem 0;font-size:0.9rem;font-weight:700;">
-                    目前沒有待審核的場次</div>
+                <div style="color:var(--text-secondary);text-align:center;padding:2rem 0;font-size:0.9rem;font-weight:700;">目前沒有待審核的場次</div>
             </div>
         </div>
     </div>
 
-    <footer
-        style="max-width: 1200px; margin: 3rem auto; padding: 2rem 1rem; text-align: center; font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); border-top: 2px solid var(--border); text-transform: uppercase;">
-        <div style="margin-bottom: 0.4rem; font-weight: 800; color: var(--text-main);">本站為芒果醬粉絲自製非官方資訊平台，相關公告請以活動官方為主。
-        </div>
+    <footer style="max-width: 1200px; margin: 3rem auto; padding: 2rem 1rem; text-align: center; font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); border-top: 2px solid var(--border); text-transform: uppercase;">
+        <div style="margin-bottom: 0.4rem; font-weight: 800; color: var(--text-main);">本站為芒果醬粉絲自製非官方資訊平台，相關公告請以活動官方為主。</div>
         <div style="margin-bottom: 0.3rem;">改版時間：20260905</div>
-        <div>Developer: <a href="https://www.threads.com/@blues_.g" target="_blank"
-                style="color: var(--accent); text-decoration: none;">blues</a></div>
+        <div>Developer: <a href="https://www.threads.com/@blues_.g" target="_blank" style="color: var(--accent); text-decoration: none;">blues</a></div>
     </footer>
 
     <script>
         const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbxy9TmlJK7YydDApuJYfbIgOT7QkuwRhoMQAO5UqLxS_6fY6wgEs3OytJ2Tk5P6c1Jf/exec';
         const isGAS = typeof google !== 'undefined' && Boolean(google.script) && Boolean(google.script.run);
 
-        // 防禦 XSS 核心函式
         function escapeHtml(str) {
             if (!str) return '';
             return String(str)
@@ -1846,11 +1332,11 @@
         let isEventsLoaded = false;
         let hasRoutedInitialTab = false;
 
-        // 🌟 連續播放與洗牌袋（不重複抽歌）核心狀態變數
-        let isContinuousPlay = false; // 是否開啟連續隨機播放
-        let shuffleBag = [];          // 洗牌袋池
-        let ytPlayer = null;          // YouTube API 播放器實例
-        let isYtApiReady = false;     // YouTube API 是否就緒
+        // 連續隨機播放與洗牌袋
+        let isContinuousPlay = false;
+        let shuffleBag = [];
+        let ytPlayer = null;
+        let isYtApiReady = false;
 
         let modalChartInst = null;
         let reportSetlist = [];
@@ -1860,7 +1346,6 @@
         const LS_THEME = 'mango_theme_mode';
         let showAllUpcoming = false;
 
-        // 🌟 YouTube IFrame API Ready Callback
         window.onYouTubeIframeAPIReady = function () {
             isYtApiReady = true;
         };
@@ -1922,12 +1407,12 @@
             const ymUrl = links.ytMusic || ('https://music.youtube.com/search?q=' + q);
             const yMv = links.ytMv || ('https://www.youtube.com/results?search_query=' + q);
 
-            let html = `<a href="${encodeURI(sUrl)}" target="_blank" rel="noopener noreferrer" class="platform-btn spotify">Spotify</a>` +
-                `<a href="${encodeURI(kUrl)}" target="_blank" rel="noopener noreferrer" class="platform-btn kkbox">KKBOX</a>` +
-                `<a href="${encodeURI(aUrl)}" target="_blank" rel="noopener noreferrer" class="platform-btn apple">Apple Music</a>` +
-                `<a href="${encodeURI(ymUrl)}" target="_blank" rel="noopener noreferrer" class="platform-btn ytmusic">YT Music</a>` +
-                `<a href="${encodeURI(yMv)}" target="_blank" rel="noopener noreferrer" class="platform-btn youtube">YouTube MV</a>`;
-            if (isModal) html += `<button onclick="toggleModalLyrics('${esc(songName)}')" class="platform-btn">📜 歌詞</button>`;
+            let html = `<a href="${encodeURI(sUrl)}" target="_blank" rel="noopener noreferrer" class="platform-mini-btn spotify">Spotify</a>` +
+                `<a href="${encodeURI(kUrl)}" target="_blank" rel="noopener noreferrer" class="platform-mini-btn kkbox">KKBOX</a>` +
+                `<a href="${encodeURI(aUrl)}" target="_blank" rel="noopener noreferrer" class="platform-mini-btn apple">Apple</a>` +
+                `<a href="${encodeURI(ymUrl)}" target="_blank" rel="noopener noreferrer" class="platform-mini-btn ytmusic">YT Music</a>` +
+                `<a href="${encodeURI(yMv)}" target="_blank" rel="noopener noreferrer" class="platform-mini-btn youtube">YouTube</a>`;
+            if (isModal) html += `<button onclick="toggleModalLyrics('${esc(songName)}')" class="platform-mini-btn">📜 歌詞</button>`;
             return html;
         }
 
@@ -2006,12 +1491,10 @@
 
             if (id === 'view-report') loadPendingEvents();
             if (id === 'view-random') {
-                updateShareInputUrl();
                 if (!currentRandomSong) {
                     triggerRandomDraw(false);
                 }
             } else {
-                // 離開隨機聆聽頁面時暫停播放
                 if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
                     try { ytPlayer.pauseVideo(); } catch (e) {}
                 }
@@ -2044,7 +1527,6 @@
                     setupAnalysisSearch();
                     setupReportSongSearch();
                     loadLoginHistory();
-                    updateShareInputUrl();
                     routeInitialTab();
                     loadBackgroundEvents();
                 })
@@ -2060,7 +1542,6 @@
                                 setupAnalysisSearch();
                                 setupReportSongSearch();
                                 loadLoginHistory();
-                                updateShareInputUrl();
                                 routeInitialTab();
                                 loadBackgroundEvents();
                             } else fallbackFullLoad();
@@ -2069,7 +1550,6 @@
                 });
         });
 
-        // 網址參數快速導向：開網址立刻進入指定頁籤，若有 tab=random 則自動抽歌
         function routeInitialTab() {
             if (hasRoutedInitialTab) return;
             hasRoutedInitialTab = true;
@@ -2100,7 +1580,6 @@
             }
         }
 
-        // 快速分享連結邏輯
         function getRandomShareUrl(includeSong = false) {
             const base = window.location.href.split('?')[0].split('#')[0];
             if (includeSong && currentRandomSong) {
@@ -2109,16 +1588,9 @@
             return `${base}?tab=random`;
         }
 
-        function updateShareInputUrl() {
-            const input = document.getElementById('share-link-input');
-            if (input) {
-                input.value = getRandomShareUrl(false);
-            }
-        }
-
         function shareRandomLink() {
             const url = getRandomShareUrl(false);
-            const text = `🥭 芒果醬隨機點唱機！點進來立刻為你隨機抽一首金曲：\n${url}`;
+            const text = `🥭 芒果醬隨機點唱機！點進來立刻為你抽一首金曲開唱：\n${url}`;
             if (navigator.share && /mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
                 navigator.share({
                     title: '2026 芒果醬活動資訊站 - 隨機聆聽 🎲',
@@ -2145,34 +1617,14 @@
             }
         }
 
-        function copyShareInputUrl() {
-            const input = document.getElementById('share-link-input');
-            const url = (input && input.value) ? input.value : getRandomShareUrl(false);
-            copyTextToClipboard(url, '✨ 已複製隨機聆聽專屬連結！快分享給朋友吧！');
-        }
-
         function copyTextToClipboard(text, successMsg) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text)
                     .then(() => showToast(successMsg))
-                    .catch(() => fallbackPromptCopy(text));
+                    .catch(() => prompt('請手動複製此連結分享給朋友：', text));
             } else {
-                fallbackPromptCopy(text);
+                prompt('請手動複製此連結分享給朋友：', text);
             }
-        }
-
-        function fallbackPromptCopy(text) {
-            const input = document.getElementById('share-link-input');
-            if (input) {
-                input.value = text;
-                input.select();
-                try {
-                    document.execCommand('copy');
-                    showToast('✨ 已複製連結！');
-                    return;
-                } catch (e) {}
-            }
-            prompt('請手動複製此連結分享給朋友：', text);
         }
 
         function sortEventsDescending_(list) {
@@ -2211,7 +1663,6 @@
                         renderAnalysis(4);
                         loadLoginHistory();
                         tryAutoLogin();
-                        updateShareInputUrl();
                         routeInitialTab();
                     }
                 })
@@ -2419,16 +1870,14 @@
             });
         }
 
-        // 🌟 洗牌袋機制：取得下一首不重複金曲（靜默無感重洗）
+        // 🌟 洗牌袋機制：取得下一首不重複金曲（靜默重洗）
         function getNextShuffleSong(excludeSong = null) {
             if (!appData.songs || !appData.songs.length) return null;
 
-            // 洗牌袋空了，在背景默默將所有歌曲重新洗牌加入袋中，不彈出任何提示
             if (!shuffleBag.length) {
                 shuffleBag = [...appData.songs].sort(() => Math.random() - 0.5);
             }
 
-            // 避免下一輪開頭剛好與剛播完的歌重複
             if (shuffleBag.length > 1 && excludeSong && shuffleBag[shuffleBag.length - 1] === excludeSong) {
                 const swapIdx = Math.floor(Math.random() * (shuffleBag.length - 1));
                 const temp = shuffleBag[shuffleBag.length - 1];
@@ -2439,7 +1888,7 @@
             return shuffleBag.pop();
         }
 
-        // 🌟 連續隨機播放開關切換
+        // 連續隨機播放開關切換
         function toggleContinuousPlay() {
             isContinuousPlay = !isContinuousPlay;
             const btn = document.getElementById('btn-continuous-play');
@@ -2447,11 +1896,10 @@
 
             if (isContinuousPlay) {
                 btn.classList.add('active');
-                btn.innerHTML = '🟢 連續隨機播放：開啟中';
+                btn.innerHTML = '🟢 連續隨機：開啟中';
                 if (statusTag) statusTag.style.display = 'inline-block';
-                showToast('🔁 已啟動連續隨機播放！歌曲播完將自動換歌 🎶');
-                
-                // 若當前播放器已暫停或已播完，直接播放下一首
+                showToast('🔁 已啟動連續隨機播放！');
+
                 if (ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
                     const state = ytPlayer.getPlayerState();
                     if (state === YT.PlayerState.ENDED || state === YT.PlayerState.PAUSED) {
@@ -2460,13 +1908,12 @@
                 }
             } else {
                 btn.classList.remove('active');
-                btn.innerHTML = '🔁 連續隨機播放：關閉';
+                btn.innerHTML = '🔁 連續隨機：關閉';
                 if (statusTag) statusTag.style.display = 'none';
-                showToast('⏹️ 已關閉連續隨機播放，當前歌曲播完後將停止。');
+                showToast('⏹️ 已關閉連續隨機播放。');
             }
         }
 
-        // 🌟 YouTube IFrame Player 載入與偵測播放狀態
         function playYouTubeVideoWithAPI(videoId) {
             const playerBox = document.getElementById('random-yt-player-box');
             playerBox.style.display = 'block';
@@ -2477,7 +1924,6 @@
             }
 
             if (!ytPlayer) {
-                // 初次建立播放器實例
                 ytPlayer = new YT.Player('random-yt-player', {
                     videoId: videoId,
                     playerVars: {
@@ -2494,7 +1940,6 @@
                     }
                 });
             } else {
-                // 已有實例：平順切換歌曲並直接播放
                 if (typeof ytPlayer.loadVideoById === 'function') {
                     ytPlayer.loadVideoById({
                         videoId: videoId,
@@ -2504,12 +1949,10 @@
             }
         }
 
-        // 🌟 核心播放進度與狀態偵測：歌曲播完自動隨機下一首
         function onYouTubePlayerStateChange(event) {
-            // YT.PlayerState.ENDED === 0 代表整首歌曲播放完畢
             if (event.data === YT.PlayerState.ENDED) {
                 if (isContinuousPlay) {
-                    showToast('🎉 歌曲播畢！即將為您隨機播放下一首金曲...');
+                    showToast('🎉 歌曲播畢！即將播放下一首金曲...');
                     setTimeout(() => {
                         triggerRandomDraw(true);
                     }, 1200);
@@ -2517,7 +1960,6 @@
             }
         }
 
-        // 🌟 隨機抽歌主程序（支援指定歌名、洗牌袋與 YouTube 自動播放）
         function triggerRandomDraw(isUserClick, forceSong = null) {
             if (!appData.songs || !appData.songs.length) return;
             if (rollInterval) clearInterval(rollInterval);
@@ -2546,7 +1988,6 @@
 
                     let finalSong = forceSong;
                     if (!finalSong || !appData.songs.includes(finalSong)) {
-                        // 🌟 若連續播放啟動，採用「洗牌袋機制」抽取不重複歌曲
                         if (isContinuousPlay) {
                             finalSong = getNextShuffleSong(currentRandomSong);
                         } else {
@@ -2578,7 +2019,6 @@
 
                     if (videoId) {
                         notice.style.display = 'none';
-                        // 🌟 透過 YouTube IFrame API 載入並開始播放
                         playYouTubeVideoWithAPI(videoId);
                     } else {
                         if (ytPlayer && typeof ytPlayer.stopVideo === 'function') {
@@ -2588,16 +2028,13 @@
                         notice.style.display = 'block';
                         notice.innerHTML = links.ytMv ? '⚠️ YouTube 官方限制無法直接內嵌播放，請點上方按鈕前往觀看。' : '尚未設定 YouTube 播放連結。';
 
-                        // 若開啟連續播放但此曲無法內嵌播放，3 秒後自動切換至下一首
                         if (isContinuousPlay) {
-                            showToast('此歌曲暫無可直接播放的影片，3 秒後為您跳轉下一首...');
+                            showToast('此歌曲暫無可直接播放的影片，3 秒後跳轉下一首...');
                             setTimeout(() => {
                                 triggerRandomDraw(true);
                             }, 3000);
                         }
                     }
-
-                    updateShareInputUrl();
                 }
             }, 80);
         }
