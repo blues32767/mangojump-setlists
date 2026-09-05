@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <!-- 引入 YouTube IFrame Player API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <style>
         :root {
             --bg-main: #f5f5f3;
@@ -624,6 +626,20 @@
             color: var(--text-main);
         }
 
+        /* 🌟 連續隨機播放開關按鈕樣式 */
+        .btn-autoplay-toggle {
+            background: var(--bg-card);
+            border: 2px solid var(--text-main);
+            color: var(--text-main);
+            transition: var(--transition);
+        }
+        .btn-autoplay-toggle.active {
+            background: var(--up);
+            color: #ffffff;
+            border-color: var(--text-main);
+            box-shadow: 3px 3px 0px var(--text-main);
+        }
+
         .input-group {
             position: relative;
             margin-bottom: 1.25rem;
@@ -723,7 +739,8 @@
             margin-top: 0.75rem;
         }
 
-        .yt-player-wrap iframe {
+        .yt-player-wrap iframe,
+        .yt-player-wrap #random-yt-player {
             position: absolute;
             top: 0;
             left: 0;
@@ -1491,7 +1508,7 @@
             </div>
         </div>
 
-        <!-- 4. 隨機聆聽 (包含專屬分享按鈕與快速分享連結區塊) -->
+        <!-- 4. 隨機聆聽 (包含專屬分享、快速分享與連續隨機播放功能) -->
         <div id="view-random" class="view">
             <div style="margin-bottom: 1.5rem;">
                 <h2>🎲 隨機聆聽</h2>
@@ -1512,21 +1529,23 @@
                     <div id="random-platform-links" class="platform-links-container"
                         style="justify-content: center; margin: 1.25rem 0 1.5rem 0;"></div>
 
-                    <!-- 抽歌與主要分享按鈕 -->
-                    <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+                    <!-- 操作按鈕群：抽歌、獨立連續隨機播放按鈕、分享連結按鈕 -->
+                    <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; align-items: center;">
                         <button class="btn" id="btn-draw-song" onclick="triggerRandomDraw(true)"
-                            style="padding: 0.85rem 1.8rem; font-size: 0.95rem;">🎲 重新抽一首金曲</button>
+                            style="padding: 0.85rem 1.6rem; font-size: 0.92rem;">🎲 重新抽一首金曲</button>
+                        <!-- 🌟 獨立的連續隨機播放按鈕（套用洗牌袋機制） -->
+                        <button class="btn btn-autoplay-toggle" id="btn-continuous-play" onclick="toggleContinuousPlay()"
+                            style="padding: 0.85rem 1.6rem; font-size: 0.92rem;">🔁 連續隨機播放：關閉</button>
                         <button class="btn btn-outline" id="btn-share-random" onclick="shareRandomLink()"
-                            style="padding: 0.85rem 1.8rem; font-size: 0.95rem;">🔗 分享隨機聆聽</button>
+                            style="padding: 0.85rem 1.6rem; font-size: 0.92rem;">🔗 分享隨機聆聽</button>
                     </div>
 
-                    <!-- 🌟 快速分享連結展示與複製框 -->
+                    <!-- 快速分享連結展示與複製框 -->
                     <div id="quick-share-box"
                         style="margin-top: 1.5rem; background: var(--bg-subtle); border: 2px solid var(--text-main); padding: 1rem 1.25rem; text-align: left; box-shadow: 3px 3px 0px var(--text-main);">
                         <div
                             style="font-size: 0.8rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px;">
-                            <span>⚡ 快速分享連結（朋友點開即自動隨機抽歌播放）</span>
-                            <span style="font-size: 0.75rem; color: var(--accent); font-weight: 800;">🎵 開啟直接播放</span>
+                            <span>⚡ 快速分享連結（朋友點開即自動隨機抽歌）</span>                            
                         </div>
                         <div style="display: flex; gap: 0.5rem; align-items: center;">
                             <input type="text" id="share-link-input" readonly value=""
@@ -1537,22 +1556,23 @@
                         </div>
                     </div>
 
-                    <!-- YouTube 播放器區塊 -->
+                    <!-- YouTube 播放器區塊（使用 YouTube IFrame API 動態掛載與狀態監聽） -->
                     <div id="random-yt-container" style="display: none; margin-top: 2rem; text-align: left;">
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 6px;">
                             <span
                                 style="font-size: 0.85rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase;">📺
                                 YouTube MV / 現場影音</span>
-                            <button class="btn btn-outline btn-sm" id="btn-share-song" onclick="shareCurrentSongResult()"
-                                style="font-size: 0.75rem; padding: 3px 10px;">
-                                📤 分享這首《<span id="random-yt-song-tag"></span>》
-                            </button>
+                            <div style="display: flex; gap: 6px; align-items: center;">
+                                <span id="continuous-status-tag" style="display: none; font-size: 0.75rem; font-weight: 800; color: var(--up); background: rgba(34, 197, 94, 0.15); padding: 2px 8px; border: 1px solid var(--up);">連續播放進行中</span>
+                                <button class="btn btn-outline btn-sm" id="btn-share-song" onclick="shareCurrentSongResult()"
+                                    style="font-size: 0.75rem; padding: 3px 10px;">
+                                    📤 分享這首《<span id="random-yt-song-tag"></span>》
+                                </button>
+                            </div>
                         </div>
                         <div class="yt-player-wrap" id="random-yt-player-box">
-                            <iframe id="random-yt-iframe" src="" referrerpolicy="strict-origin-when-cross-origin"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
+                            <div id="random-yt-player"></div>
                         </div>
                         <div id="random-yt-notice"
                             style="display: none; padding: 1rem; background: var(--bg-subtle); border: 2px dashed var(--border); margin-top: 0.75rem; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); text-align: center; line-height: 1.6;">
@@ -1822,7 +1842,13 @@
         let heardSongs = [];
         let globalSongStats = null;
         let isEventsLoaded = false;
-        let hasRoutedInitialTab = false; // 避免初始路由重複觸發
+        let hasRoutedInitialTab = false;
+
+        // 🌟 連續播放與洗牌袋（不重複抽歌）核心狀態變數
+        let isContinuousPlay = false; // 是否開啟連續隨機播放
+        let shuffleBag = [];          // 洗牌袋池
+        let ytPlayer = null;          // YouTube API 播放器實例
+        let isYtApiReady = false;     // YouTube API 是否就緒
 
         let modalChartInst = null;
         let reportSetlist = [];
@@ -1831,6 +1857,11 @@
         const LS_AUTO = 'mango_current_id';
         const LS_THEME = 'mango_theme_mode';
         let showAllUpcoming = false;
+
+        // 🌟 YouTube IFrame API Ready Callback
+        window.onYouTubeIframeAPIReady = function () {
+            isYtApiReady = true;
+        };
 
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('main-nav');
@@ -1978,8 +2009,10 @@
                     triggerRandomDraw(false);
                 }
             } else {
-                const iframe = document.getElementById('random-yt-iframe');
-                if (iframe && iframe.src) iframe.src = '';
+                // 離開隨機聆聽頁面時暫停播放
+                if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+                    try { ytPlayer.pauseVideo(); } catch (e) {}
+                }
             }
         }
 
@@ -2034,7 +2067,7 @@
                 });
         });
 
-        // 🌟 網址參數快速導向：開網址立刻進入指定頁籤，若是 random 則自動抽歌直接播放
+        // 網址參數快速導向：開網址立刻進入指定頁籤，若有 tab=random 則自動抽歌
         function routeInitialTab() {
             if (hasRoutedInitialTab) return;
             hasRoutedInitialTab = true;
@@ -2065,7 +2098,7 @@
             }
         }
 
-        // 🌟 快速分享連結邏輯
+        // 快速分享連結邏輯
         function getRandomShareUrl(includeSong = false) {
             const base = window.location.href.split('?')[0].split('#')[0];
             if (includeSong && currentRandomSong) {
@@ -2083,7 +2116,7 @@
 
         function shareRandomLink() {
             const url = getRandomShareUrl(false);
-            const text = `🥭 芒果醬隨機點唱機！點進來立刻為你隨機播放一首金曲：\n${url}`;
+            const text = `🥭 芒果醬隨機點唱機！點進來立刻為你隨機抽一首金曲：\n${url}`;
             if (navigator.share && /mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
                 navigator.share({
                     title: '2026 芒果醬活動資訊站 - 隨機聆聽 🎲',
@@ -2384,7 +2417,105 @@
             });
         }
 
-        // 🌟 核心抽歌函式：支援指定歌名或隨機挑選，並自動啟動 YouTube 直接播放
+        // 🌟 洗牌袋機制：取得下一首不重複金曲（靜默無感重洗）
+        function getNextShuffleSong(excludeSong = null) {
+            if (!appData.songs || !appData.songs.length) return null;
+
+            // 洗牌袋空了，在背景默默將所有歌曲重新洗牌加入袋中，不彈出任何提示
+            if (!shuffleBag.length) {
+                shuffleBag = [...appData.songs].sort(() => Math.random() - 0.5);
+            }
+
+            // 避免下一輪開頭剛好與剛播完的歌重複
+            if (shuffleBag.length > 1 && excludeSong && shuffleBag[shuffleBag.length - 1] === excludeSong) {
+                const swapIdx = Math.floor(Math.random() * (shuffleBag.length - 1));
+                const temp = shuffleBag[shuffleBag.length - 1];
+                shuffleBag[shuffleBag.length - 1] = shuffleBag[swapIdx];
+                shuffleBag[swapIdx] = temp;
+            }
+
+            return shuffleBag.pop();
+        }
+
+        // 🌟 連續隨機播放開關切換
+        function toggleContinuousPlay() {
+            isContinuousPlay = !isContinuousPlay;
+            const btn = document.getElementById('btn-continuous-play');
+            const statusTag = document.getElementById('continuous-status-tag');
+
+            if (isContinuousPlay) {
+                btn.classList.add('active');
+                btn.innerHTML = '🟢 連續隨機播放：開啟中';
+                if (statusTag) statusTag.style.display = 'inline-block';
+                showToast('🔁 已啟動連續隨機播放！歌曲播完將自動洗牌換歌 🎶');
+                
+                // 若當前播放器已暫停或已播完，直接播放下一首
+                if (ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
+                    const state = ytPlayer.getPlayerState();
+                    if (state === YT.PlayerState.ENDED || state === YT.PlayerState.PAUSED) {
+                        triggerRandomDraw(true);
+                    }
+                }
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '🔁 連續隨機播放：關閉';
+                if (statusTag) statusTag.style.display = 'none';
+                showToast('⏹️ 已關閉連續隨機播放，當前歌曲播完後將停止。');
+            }
+        }
+
+        // 🌟 YouTube IFrame Player 載入與偵測播放狀態
+        function playYouTubeVideoWithAPI(videoId) {
+            const playerBox = document.getElementById('random-yt-player-box');
+            playerBox.style.display = 'block';
+
+            let originParam = '';
+            if (window.location.origin && window.location.origin !== 'null' && !window.location.origin.includes('googleusercontent.com')) {
+                originParam = window.location.origin;
+            }
+
+            if (!ytPlayer) {
+                // 初次建立播放器實例
+                ytPlayer = new YT.Player('random-yt-player', {
+                    videoId: videoId,
+                    playerVars: {
+                        autoplay: 1,
+                        playsinline: 1,
+                        rel: 0,
+                        origin: originParam
+                    },
+                    events: {
+                        'onReady': function (event) {
+                            event.target.playVideo();
+                        },
+                        'onStateChange': onYouTubePlayerStateChange
+                    }
+                });
+            } else {
+                // 已有實例：平順切換歌曲並直接播放
+                if (typeof ytPlayer.loadVideoById === 'function') {
+                    ytPlayer.loadVideoById({
+                        videoId: videoId,
+                        startSeconds: 0
+                    });
+                }
+            }
+        }
+
+        // 🌟 核心播放進度與狀態偵測：歌曲播完自動隨機下一首
+        function onYouTubePlayerStateChange(event) {
+            // YT.PlayerState.ENDED === 0 代表整首歌曲播放完畢
+            if (event.data === YT.PlayerState.ENDED) {
+                if (isContinuousPlay) {
+                    showToast('🎉 歌曲播畢！即將為您隨機播放下一首金曲...');
+                    setTimeout(() => {
+                        triggerRandomDraw(true);
+                    }, 1200);
+                }
+            }
+        }
+
+        // 🌟 隨機抽歌主程序（支援指定歌名、洗牌袋與 YouTube 自動播放）
         function triggerRandomDraw(isUserClick, forceSong = null) {
             if (!appData.songs || !appData.songs.length) return;
             if (rollInterval) clearInterval(rollInterval);
@@ -2394,11 +2525,9 @@
             const statsEl = document.getElementById('random-song-stats');
             const platformLinks = document.getElementById('random-platform-links');
             const ytContainer = document.getElementById('random-yt-container');
-            const iframe = document.getElementById('random-yt-iframe');
             const randomLyricsSection = document.getElementById('random-lyrics-section');
             const randomLyricsContent = document.getElementById('random-lyrics-content');
 
-            if (iframe) iframe.src = '';
             if (ytContainer) ytContainer.style.display = 'none';
             if (randomLyricsSection) randomLyricsSection.style.display = 'none';
 
@@ -2415,7 +2544,12 @@
 
                     let finalSong = forceSong;
                     if (!finalSong || !appData.songs.includes(finalSong)) {
-                        finalSong = appData.songs[Math.floor(Math.random() * appData.songs.length)];
+                        // 🌟 若連續播放啟動，採用「洗牌袋機制」抽取不重複歌曲
+                        if (isContinuousPlay) {
+                            finalSong = getNextShuffleSong(currentRandomSong);
+                        } else {
+                            finalSong = appData.songs[Math.floor(Math.random() * appData.songs.length)];
+                        }
                     }
                     currentRandomSong = finalSong;
                     const st = getSongStats(finalSong);
@@ -2441,18 +2575,24 @@
                     ytContainer.style.display = 'block';
 
                     if (videoId) {
-                        playerBox.style.display = 'block';
                         notice.style.display = 'none';
-                        let originParam = '';
-                        if (window.location.origin && window.location.origin !== 'null' && !window.location.origin.includes('googleusercontent.com')) {
-                            originParam = '&origin=' + encodeURIComponent(window.location.origin);
-                        }
-                        // 🌟 加入 autoplay=1 & playsinline=1 實現開啟即直接播放
-                        iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&playsinline=1&enablejsapi=1&rel=0' + originParam;
+                        // 🌟 透過 YouTube IFrame API 載入並開始播放
+                        playYouTubeVideoWithAPI(videoId);
                     } else {
+                        if (ytPlayer && typeof ytPlayer.stopVideo === 'function') {
+                            ytPlayer.stopVideo();
+                        }
                         playerBox.style.display = 'none';
                         notice.style.display = 'block';
                         notice.innerHTML = links.ytMv ? '⚠️ YouTube 官方限制無法直接內嵌播放，請點上方按鈕前往觀看。' : '尚未設定 YouTube 播放連結。';
+
+                        // 若開啟連續播放但此曲無法內嵌播放，3 秒後自動切換至下一首
+                        if (isContinuousPlay) {
+                            showToast('此歌曲暫無可直接播放的影片，3 秒後為您跳轉下一首...');
+                            setTimeout(() => {
+                                triggerRandomDraw(true);
+                            }, 3000);
+                        }
                     }
 
                     updateShareInputUrl();
