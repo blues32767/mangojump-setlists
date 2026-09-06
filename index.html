@@ -1155,32 +1155,41 @@
                 <!-- 模式 A：條列清單 -->
                 <div id="upcoming-list"></div>
                 <button class="btn btn-outline btn-sm" id="btn-more-upcoming" style="width:100%; margin-top:1rem; display:none;">查看更多場次 ▼</button>
-
-                <!-- 模式 B：月曆視圖 (週一為第1天，顯示地名小膠囊) -->
-                <div id="upcoming-calendar-view" style="display: none; margin-top: 0.5rem;">
-                    <div class="cal-header-bar">
-                        <button class="btn btn-outline btn-sm" onclick="changeCalMonth(-1)">◀ 上個月</button>
-                        <span id="cal-month-title" style="font-weight: 900; font-size: 0.95rem; color: var(--text-main);"></span>
-                        <button class="btn btn-outline btn-sm" onclick="changeCalMonth(1)">下個月 ▶</button>
-                    </div>
-                    <!-- 表頭：週一至週日 -->
-                    <div class="cal-weekdays">
-                        <div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div style="color:var(--accent);">六</div><div style="color:var(--accent);">日</div>
-                    </div>
-                    <div class="cal-grid" id="calendar-grid"></div>
-                    <!-- 點選日期展開該日活動 -->
-                    <div id="cal-selected-detail" style="margin-top: 1rem; border-top: 2px dashed var(--border); padding-top: 0.75rem; display: none;"></div>
+<!-- 模式 B：月曆視圖 (週一為第1天，顯示地名小膠囊) -->
+            <div id="upcoming-calendar-view" style="display: none; margin-top: 0.5rem;">
+                <div class="cal-header-bar">
+                    <button class="btn btn-outline btn-sm" onclick="changeCalMonth(-1)">◀ 上個月</button>
+                    <span id="cal-month-title"
+                        style="font-weight: 900; font-size: 0.95rem; color: var(--text-main);"></span>
+                    <button class="btn btn-outline btn-sm" onclick="changeCalMonth(1)">下個月 ▶</button>
+                </div>
+                <!-- 表頭：週一至週日 -->
+                <div class="cal-weekdays">
+                    <div>一</div>
+                    <div>二</div>
+                    <div>三</div>
+                    <div>四</div>
+                    <div>五</div>
+                    <div style="color:var(--accent);">六</div>
+                    <div style="color:var(--accent);">日</div>
+                </div>
+                <div class="cal-grid" id="calendar-grid"></div>
+                <!-- 點選日期展開該日活動 -->
+                <div id="cal-selected-detail"
+                    style="margin-top: 1rem; border-top: 2px dashed var(--border); padding-top: 0.75rem; display: none;">
                 </div>
             </div>
 
             <div id="local-loader" style="text-align: center; padding: 2.5rem 0;">
                 <div class="spinner" style="margin: 0 auto;"></div>
-                <div style="color: var(--text-secondary); font-weight: 700; margin-top: 0.75rem; font-size: 0.9rem;">即時同步音樂數據中...</div>
+                <div style="color: var(--text-secondary); font-weight: 700; margin-top: 0.75rem; font-size: 0.9rem;">
+                    即時同步音樂數據中...</div>
             </div>
 
             <div class="card" style="text-align: center; padding: 3rem 2rem; margin-top: 1rem;">
                 <h2>歡迎來到 2026 芒果醬活動資訊站</h2>
-                <p style="color: var(--text-secondary); font-size: 1rem; font-weight: 600; margin-top: 0.75rem;">即時掌握最新演出行程、參與場次足跡與各項金曲歌單分析！</p>
+                <p style="color: var(--text-secondary); font-size: 1rem; font-weight: 600; margin-top: 0.75rem;">
+                    即時掌握最新演出行程、參與場次足跡與各項金曲歌單分析！</p>
                 <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                     <button class="btn" onclick="switchTab('view-random')">🎲 隨機聽一首</button>
                     <button class="btn btn-outline" onclick="switchTab('view-analysis')">查看歌單分析</button>
@@ -1188,6 +1197,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
         <!-- 2. 詳細場次 -->
         <div id="view-events" class="view">
