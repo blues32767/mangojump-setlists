@@ -2855,36 +2855,73 @@
         }
 
         function showEventsCalDateDetail(dateStr, evList) {
-            const detailBox = document.getElementById('events-cal-selected-detail');
-            if (!detailBox) return;
-            detailBox.style.display = 'block';
+    const detailBox = document.getElementById('events-cal-selected-detail');
+    if (!detailBox) return;
+    detailBox.style.display = 'block';
 
-            const currentCheckedIds = getCurrentlyCheckedEventIds();
+    const currentCheckedIds = getCurrentlyCheckedEventIds();
 
-            detailBox.innerHTML = `
-        <div style="font-size:0.8rem; font-weight:800; color:var(--text-secondary); margin-bottom:0.5rem; text-transform:uppercase;">
+    let html = `
+        <div style="font-size:0.8rem; font-weight:800; color:var(--text-secondary); margin-bottom:0.75rem; text-transform:uppercase;">
             📅 ${escapeHtml(formatEventDate(dateStr))} 場次與參與狀態（共 ${evList.length} 場）
         </div>
-    ` + evList.map(ev => {
-                const checked = isEventAttended(ev, currentCheckedIds) ? 'checked' : '';
-                return `
-        <div style="background: var(--bg-card); border: 2px solid var(--border); padding: 0.85rem 1rem; margin-bottom: 8px; box-shadow: 2px 2px 0px var(--text-main); display: flex; gap: 10px; align-items: flex-start;">
-            <input type="checkbox" class="cal-ev-chk" data-id="${escapeHtml(ev.id)}" ${checked} style="width: 20px; height: 20px; margin-top: 3px; cursor: pointer; accent-color: var(--accent);" onchange="toggleEventCheckedFromCal(this, '${escapeHtml(ev.id)}')">
-            <div style="flex: 1;">
-                <div style="font-weight: 800; font-size: 1rem; color: var(--text-main);">${escapeHtml(ev.name)}</div>
-                <div style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 3px;">
-                    <span>🕒 ${escapeHtml(ev.timeStr || '未公布')}</span>
-                    <span style="margin: 0 4px;">•</span>
-                    <span>📍 ${escapeHtml(ev.location || '現場與公開活動')}</span>
+    `;
+
+    evList.forEach(ev => {
+        const checked = isEventAttended(ev, currentCheckedIds) ? 'checked' : '';
+        const formattedNote = formatNoteWithLinks(ev.note);
+
+        // 歌單內容（同詳細列表樣式）
+        let bodyHtml = !ev.setlist.length 
+            ? `<div style="text-align:center;padding:1rem 0;color:var(--text-secondary);font-weight:700;font-size:0.85rem;">期待熱心歌迷回報歌單</div>` 
+            : ev.setlist.map(s => `
+                <div class="song-line">
+                  <div>${escapeHtml(s.orderStr)}. <span style="cursor:pointer;font-weight:700;" onclick="event.stopPropagation(); openSongModal('${esc(s.songName)}')">${escapeHtml(s.songName)}</span></div>
+                  ${s.isEncore ? '<div class="encore-tag">安可</div>' : ''}
+                </div>`).join('');
+
+        html += `
+        <div class="card event-card cal-detail-card" style="padding: 1rem; margin-bottom: 12px;">
+            <div class="chk-area">
+                <input type="checkbox" class="ev-chk cal-ev-chk" data-id="${escapeHtml(ev.id)}" ${checked} 
+                       onclick="event.stopPropagation()" 
+                       onchange="toggleEventCheckedFromCal(this, '${escapeHtml(ev.id)}')">
+            </div>
+            <div class="ev-content">
+                <div class="ev-header">
+                    <div style="flex: 1;">
+                        <div class="ev-title" style="font-size: 1rem;">${escapeHtml(ev.name)}</div>
+                        <div style="font-size: 0.825rem; color: var(--text-secondary); margin-top: 4px; font-weight: 700;">
+                            <span>時間: ${escapeHtml(ev.timeStr || '未公布')}</span>
+                            <span style="margin: 0 4px;">•</span>
+                            <span>地點: ${escapeHtml(ev.location || '現場與公開活動')}</span>
+                            ${ev.mapLink ? `<a href="${encodeURI(ev.mapLink)}" target="_blank" rel="noopener noreferrer" class="upc-map-link" style="margin-left:6px;" onclick="event.stopPropagation()">導航地圖</a>` : ''}
+                        </div>
+                        ${formattedNote ? `<div class="ev-note" style="margin-top:0.5rem;">備註：${formattedNote}</div>` : ''}
+                    </div>
+                    <div style="color:var(--text-secondary);font-weight:800;font-size:0.8rem;text-align:right;margin-left:8px;flex-shrink:0;">
+                        <div>${ev.setlist && ev.setlist.length ? `共 ${ev.setlist.length} 首` : '待解鎖'}</div>
+                        <div style="font-size:0.7rem;color:var(--accent);margin-top:2px;">▼ 點擊看歌單</div>
+                    </div>
                 </div>
-                <div style="font-size: 0.78rem; font-weight: 800; color: var(--accent); margin-top: 4px;">
-                    ${ev.setlist && ev.setlist.length ? `表演歌曲共 ${ev.setlist.length} 首` : '期待熱心歌迷回報歌單'}
-                </div>
+                <div class="ev-body">${bodyHtml}</div>
             </div>
         </div>
         `;
-            }).join('');
+    });
+
+    detailBox.innerHTML = html;
+
+    // 綁定點擊卡片展開 / 收合歌單事件
+    detailBox.querySelectorAll('.cal-detail-card').forEach(card => {
+        const content = card.querySelector('.ev-content');
+        if (content) {
+            content.addEventListener('click', () => {
+                card.classList.toggle('expanded');
+            });
         }
+    });
+}
 
         function toggleEventCheckedFromCal(chkEl, evId) {
             const mainChk = document.querySelector(`.ev-chk[data-id="${evId}"]`);
