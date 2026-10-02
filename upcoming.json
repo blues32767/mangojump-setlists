@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-02T14:42:26.804Z",
+  "updatedAt": "2026-10-02T14:46:06.617Z",
   "upcoming": [
     {
       "date": "20261004",
@@ -35,7 +35,7 @@
     },
     {
       "date": "20261031",
-      "time": "未公布",
+      "time": "17:30-18:10",
       "name": "台中 搖滾台中",
       "location": "臺中文心森林公園",
       "mapLink": "https://maps.app.goo.gl/pd3hmGdwuMrB9eheA",
@@ -74,22 +74,6 @@
       "note": ""
     },
     {
-      "date": "20261122",
-      "time": "未公布",
-      "name": "未公布",
-      "location": "",
-      "mapLink": "",
-      "note": ""
-    },
-    {
-      "date": "20261205",
-      "time": "未公布",
-      "name": "未公布",
-      "location": "",
-      "mapLink": "",
-      "note": ""
-    },
-    {
       "date": "20261211",
       "time": "未公布",
       "name": "未公布",
@@ -112,6 +96,30 @@
       "location": "",
       "mapLink": "",
       "note": "收費　苗栗 𝗖𝗥𝗔𝗕 𝗣𝗟𝗔𝗬 𝟮𝟬𝟮𝟲 蟹逅小聚場2026/12/12-12/13\n*芒果醬活動日期未定\n活動貼文：https://www.instagram.com/p/DdDWlcKiMnU/"
+    },
+    {
+      "date": "20261219",
+      "time": "",
+      "name": "未公佈",
+      "location": "",
+      "mapLink": "",
+      "note": ""
+    },
+    {
+      "date": "20261225",
+      "time": "",
+      "name": "未公佈",
+      "location": "",
+      "mapLink": "",
+      "note": ""
+    },
+    {
+      "date": "20261231",
+      "time": "",
+      "name": "未公佈",
+      "location": "",
+      "mapLink": "",
+      "note": ""
     }
   ],
   "songLinks": {
