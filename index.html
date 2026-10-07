@@ -1756,7 +1756,8 @@
                 <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
                     <button class="btn btn-outline btn-sm" onclick="openReportView()">📝 場次補充</button>
                     <div id="events-login-status"
-                        style="font-size:0.85rem;font-weight:800;color:var(--accent);text-transform:uppercase;">未登入</div>
+                        style="font-size:0.85rem;font-weight:800;color:var(--accent);text-transform:uppercase;">未登入
+                    </div>
                     <button class="btn btn-sm" id="btn-save-events">儲存場次紀錄</button>
                 </div>
             </div>
@@ -1765,14 +1766,17 @@
                 <div
                     style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 8px;">
                     <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                        <h3 style="color: var(--text-main); margin-bottom: 0; font-size: 1rem; text-transform: uppercase;">
+                        <h3
+                            style="color: var(--text-main); margin-bottom: 0; font-size: 1rem; text-transform: uppercase;">
                             📅 足跡
                         </h3>
                         <div style="display: flex; gap: 6px; align-items: center;">
                             <span class="badge"
-                                style="background: var(--accent); color: #ffffff; border-color: var(--text-main);">🟠 我去芒過</span>
+                                style="background: var(--accent); color: #ffffff; border-color: var(--text-main);">🟠
+                                我去芒過</span>
                             <span class="badge"
-                                style="background: var(--accent-light); color: var(--accent); border-color: var(--accent);">🟧 演出場次</span>
+                                style="background: var(--accent-light); color: var(--accent); border-color: var(--accent);">🟧
+                                演出場次</span>
                         </div>
                     </div>
 
@@ -1888,7 +1892,8 @@
 
                     <div class="random-action-grid">
                         <button class="btn" id="btn-draw-song" onclick="triggerRandomDraw(true)">🎲 重新抽一首</button>
-                        <button class="btn btn-autoplay-toggle" id="btn-continuous-play" onclick="toggleContinuousPlay()">🔁
+                        <button class="btn btn-autoplay-toggle" id="btn-continuous-play"
+                            onclick="toggleContinuousPlay()">🔁
                             連續隨機：關閉</button>
                         <button class="btn btn-outline btn-full" id="btn-share-random" onclick="shareRandomLink()"
                             style="padding: 0.5rem;">
@@ -1969,7 +1974,8 @@
                             style="color:var(--accent);"></span></h2>
                 </div>
                 <div class="card" style="margin-bottom:1.25rem;padding:1.25rem 1.5rem;">
-                    <h3 style="font-size:0.9rem;margin-bottom:0.5rem;text-transform:uppercase;color:var(--text-secondary);">
+                    <h3
+                        style="font-size:0.9rem;margin-bottom:0.5rem;text-transform:uppercase;color:var(--text-secondary);">
                         設定個人暱稱</h3>
                     <div style="display:flex;gap:0.75rem;">
                         <input type="text" id="user-nickname-input" placeholder="輸入您的暱稱 (留空則顯示 ID)" style="flex:1;">
@@ -1999,7 +2005,8 @@
                         <div
                             style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.3rem;text-transform:uppercase;font-weight:800;">
                             共聽過</div>
-                        <div style="font-size:1.75rem;font-weight:900;line-height:1;" id="dash-heard-songs-total">0</div>
+                        <div style="font-size:1.75rem;font-weight:900;line-height:1;" id="dash-heard-songs-total">0
+                        </div>
                         <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:0.3rem;font-weight:700;">首金曲
                         </div>
                     </div>
@@ -2007,7 +2014,8 @@
                         <div
                             style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.3rem;text-transform:uppercase;font-weight:800;">
                             總時數</div>
-                        <div style="font-size:1.35rem;font-weight:900;line-height:1.2;color:#3b82f6;" id="dash-time-total">0
+                        <div style="font-size:1.35rem;font-weight:900;line-height:1.2;color:#3b82f6;"
+                            id="dash-time-total">0
                             分鐘</div>
                     </div>
                     <div class="db-box">
@@ -2015,24 +2023,28 @@
                             style="font-size:0.775rem;color:var(--text-secondary);margin-bottom:0.3rem;text-transform:uppercase;font-weight:800;">
                             待解鎖</div>
                         <div style="font-size:1.75rem;font-weight:900;line-height:1;" id="dash-unlocked-cnt">0</div>
-                        <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:0.3rem;font-weight:700;">首期待相遇
+                        <div style="font-size:0.7rem;color:var(--text-secondary);margin-top:0.3rem;font-weight:700;">
+                            首期待相遇
                         </div>
                     </div>
                 </div>
                 <div class="card" id="attended-detail-card" style="display:none; margin-bottom:1.25rem;">
-                    <h3 style="margin-bottom:1rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
+                    <h3
+                        style="margin-bottom:1rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
                         我的參與場次紀錄</h3>
                     <div id="dash-attended-events-list"></div>
                 </div>
                 <div class="card" style="margin-bottom:1.25rem;">
-                    <h3 style="margin-bottom:1rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
+                    <h3
+                        style="margin-bottom:1rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
                         尚未相遇的歌</h3>
                     <div id="dash-unlocked-songs"></div>
                 </div>
                 <div class="card" style="margin-bottom:1.5rem;">
                     <div
                         style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;">
-                        <h3 style="margin-bottom:0;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
+                        <h3
+                            style="margin-bottom:0;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
                             金曲收藏庫</h3>
                         <div class="sort-bar">
                             <button class="sort-btn" id="sort-pct-btn" onclick="setHeardSort('pct')">出現率 ↑</button>
@@ -2061,11 +2073,12 @@
                 <button class="btn btn-outline btn-sm" onclick="switchTab('view-events')">⬅ 返回詳細場次</button>
             </div>
             <div class="card" style="margin-bottom: 1.5rem;">
-                <h3 style="margin-bottom:1.25rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
+                <h3
+                    style="margin-bottom:1.25rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
                     填寫場次資訊</h3>
                 <div class="report-form-grid">
-                    <div><label class="form-label">活動日期 *</label><input type="text" id="rpt-date" placeholder="例: 20260816"
-                            maxlength="8"></div>
+                    <div><label class="form-label">活動日期 *</label><input type="text" id="rpt-date"
+                            placeholder="例: 20260816" maxlength="8"></div>
                     <div><label class="form-label">活動名稱 *</label><input type="text" id="rpt-name"
                             placeholder="例: 台東 最美星空音樂會"></div>
                 </div>
@@ -2097,10 +2110,12 @@
                     <button class="btn btn-outline" onclick="clearReportForm()">清除重填</button>
                 </div>
             </div>
-            <h3 style="margin-bottom:0.85rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">待審核場次
+            <h3 style="margin-bottom:0.85rem;font-size:0.95rem;text-transform:uppercase;color:var(--text-secondary);">
+                待審核場次
             </h3>
             <div id="pending-list">
-                <div style="color:var(--text-secondary);text-align:center;padding:2rem 0;font-size:0.9rem;font-weight:700;">
+                <div
+                    style="color:var(--text-secondary);text-align:center;padding:2rem 0;font-size:0.9rem;font-weight:700;">
                     目前沒有待審核的場次</div>
             </div>
         </div>
@@ -2855,32 +2870,32 @@
         }
 
         function showEventsCalDateDetail(dateStr, evList) {
-    const detailBox = document.getElementById('events-cal-selected-detail');
-    if (!detailBox) return;
-    detailBox.style.display = 'block';
+            const detailBox = document.getElementById('events-cal-selected-detail');
+            if (!detailBox) return;
+            detailBox.style.display = 'block';
 
-    const currentCheckedIds = getCurrentlyCheckedEventIds();
+            const currentCheckedIds = getCurrentlyCheckedEventIds();
 
-    let html = `
+            let html = `
         <div style="font-size:0.8rem; font-weight:800; color:var(--text-secondary); margin-bottom:0.75rem; text-transform:uppercase;">
             📅 ${escapeHtml(formatEventDate(dateStr))} 場次與參與狀態（共 ${evList.length} 場）
         </div>
     `;
 
-    evList.forEach(ev => {
-        const checked = isEventAttended(ev, currentCheckedIds) ? 'checked' : '';
-        const formattedNote = formatNoteWithLinks(ev.note);
+            evList.forEach(ev => {
+                const checked = isEventAttended(ev, currentCheckedIds) ? 'checked' : '';
+                const formattedNote = formatNoteWithLinks(ev.note);
 
-        // 歌單內容（同詳細列表樣式）
-        let bodyHtml = !ev.setlist.length 
-            ? `<div style="text-align:center;padding:1rem 0;color:var(--text-secondary);font-weight:700;font-size:0.85rem;">期待熱心歌迷回報歌單</div>` 
-            : ev.setlist.map(s => `
+                // 歌單內容（同詳細列表樣式）
+                let bodyHtml = !ev.setlist.length
+                    ? `<div style="text-align:center;padding:1rem 0;color:var(--text-secondary);font-weight:700;font-size:0.85rem;">期待熱心歌迷回報歌單</div>`
+                    : ev.setlist.map(s => `
                 <div class="song-line">
                   <div>${escapeHtml(s.orderStr)}. <span style="cursor:pointer;font-weight:700;" onclick="event.stopPropagation(); openSongModal('${esc(s.songName)}')">${escapeHtml(s.songName)}</span></div>
                   ${s.isEncore ? '<div class="encore-tag">安可</div>' : ''}
                 </div>`).join('');
 
-        html += `
+                html += `
         <div class="card event-card cal-detail-card" style="padding: 1rem; margin-bottom: 12px;">
             <div class="chk-area">
                 <input type="checkbox" class="ev-chk cal-ev-chk" data-id="${escapeHtml(ev.id)}" ${checked} 
@@ -2908,20 +2923,20 @@
             </div>
         </div>
         `;
-    });
+            });
 
-    detailBox.innerHTML = html;
+            detailBox.innerHTML = html;
 
-    // 綁定點擊卡片展開 / 收合歌單事件
-    detailBox.querySelectorAll('.cal-detail-card').forEach(card => {
-        const content = card.querySelector('.ev-content');
-        if (content) {
-            content.addEventListener('click', () => {
-                card.classList.toggle('expanded');
+            // 綁定點擊卡片展開 / 收合歌單事件
+            detailBox.querySelectorAll('.cal-detail-card').forEach(card => {
+                const content = card.querySelector('.ev-content');
+                if (content) {
+                    content.addEventListener('click', () => {
+                        card.classList.toggle('expanded');
+                    });
+                }
             });
         }
-    });
-}
 
         function toggleEventCheckedFromCal(chkEl, evId) {
             const mainChk = document.querySelector(`.ev-chk[data-id="${evId}"]`);
@@ -3270,36 +3285,84 @@
             }, 80);
         }
 
-        function renderAnalysis(n) {
-            if (!isEventsLoaded) return;
-            const probsN = calcProbs(n);
-            const probsAll = calcProbs(getValidEvents().length);
-            const rankMapN = {};
-            probsN.forEach(p => rankMapN[p.name] = p.rank);
+       function renderAnalysis(n) {
+    if (!isEventsLoaded) return;
+    const probsN = calcProbs(n);
+    const probsAll = calcProbs(getValidEvents().length);
+    
+    // 將近期的完整數據存入 Map，方便後續比對機率與名次
+    const recentDataMap = {};
+    probsN.forEach(p => recentDataMap[p.name] = p);
 
-            const leftHtml = probsN.map(p => `
-                <div class="rank-row">
-                  <div style="display:flex;align-items:center;flex:1;"><span class="rank-num">#${p.rank}</span><span class="rank-name" onclick="openSongModal('${esc(p.name)}')">${escapeHtml(p.name)}</span></div>
-                  <div class="rank-pct">${p.pctVal}%</div>
-                </div>`).join('');
+    const leftHtml = probsN.map(p => `
+        <div class="rank-row">
+          <div style="display:flex;align-items:center;flex:1;">
+            <span class="rank-num">#${p.rank}</span>
+            <span class="rank-name" onclick="openSongModal('${esc(p.name)}')">${escapeHtml(p.name)}</span>
+          </div>
+          <div class="rank-pct">${p.pctVal}%</div>
+        </div>`).join('');
 
-            const rightHtml = probsAll.map(p => {
-                const old = rankMapN[p.name];
-                let diff = old ? old - p.rank : null;
-                let diffHtml = diff === null ? `<span class="rank-diff diff-eq">NEW</span>` : diff > 0 ? `<span class="rank-diff diff-up">▲ ${diff}</span>` : diff < 0 ? `<span class="rank-diff diff-dn">▼ ${Math.abs(diff)}</span>` : `<span class="rank-diff diff-eq">-</span>`;
-                return `
-                <div class="rank-row">
-                  <div style="display:flex;align-items:center;flex:1;"><span class="rank-num">#${p.rank}</span><span class="rank-name" onclick="openSongModal('${esc(p.name)}')">${escapeHtml(p.name)}</span></div>
-                  <div style="display:flex;align-items:center;"><div class="rank-pct" style="margin-right:0.5rem;">${p.pctVal}%</div>${diffHtml}</div>
-                </div>`;
-            }).join('');
+    const rightHtml = probsAll.map(p => {
+        const recentData = recentDataMap[p.name];
+        const recentRank = recentData ? recentData.rank : null;
+        const recentPct = recentData ? recentData.pctVal : 0;
 
-            document.getElementById('analysis-content').innerHTML = `
-                <div class="rank-grid">
-                  <div class="card"><h3 style="margin-bottom:1rem;text-align:center;color:var(--text-secondary);">最近 ${n} 場機率排行</h3>${leftHtml}</div>
-                  <div class="card"><h3 style="margin-bottom:1rem;text-align:center;color:var(--text-secondary);">總場次機率排行</h3>${rightHtml}</div>
-                </div>`;
+        // 1. 修正名次升降邏輯 (總名次 - 近期名次)
+        // 例如：總名次 25，近期名次 5 => 25 - 5 = 20 (正數，代表上升 20 名)
+        let diffHtml = '';
+        if (recentRank === null) {
+            diffHtml = `<span class="rank-diff diff-dn" style="color:var(--text-secondary);">未進榜</span>`;
+        } else {
+            let diff = p.rank - recentRank;
+            if (diff > 0) {
+                diffHtml = `<span class="rank-diff diff-up">▲ ${diff}</span>`;
+            } else if (diff < 0) {
+                diffHtml = `<span class="rank-diff diff-dn">▼ ${Math.abs(diff)}</span>`;
+            } else {
+                diffHtml = `<span class="rank-diff diff-eq">-</span>`;
+            }
         }
+
+        // 2. 狀態徽章系統 (依照數據特徵賦予視覺標籤)
+        let badgeHtml = '';
+        if (p.rank <= 15 && recentPct === 0) {
+            // 狀態 A：歷史排名前 15 的金曲，但近期完全沒唱
+            badgeHtml = `<span style="font-size: 0.75rem; background: #e0f7fa; color: #00838f; padding: 2px 6px; border-radius: 4px; margin-right: 8px; font-weight: bold; white-space: nowrap;">❄️ 冬眠中</span>`;
+        } else if (p.pctVal <= 20 && recentPct > 0) {
+            // 狀態 B：歷史機率低於 20% (罕見歌)，但近期竟然唱了
+            badgeHtml = `<span style="font-size: 0.75rem; background: #fff3e0; color: #e65100; padding: 2px 6px; border-radius: 4px; margin-right: 8px; font-weight: bold; white-space: nowrap;">💎 中樂透啦</span>`;
+        } else if (recentPct > p.pctVal + 15) {
+            // 狀態 C：近期的演唱機率，比歷史平均機率高出 15% 以上
+            badgeHtml = `<span style="font-size: 0.75rem; background: #ffebee; color: #c62828; padding: 2px 6px; border-radius: 4px; margin-right: 8px; font-weight: bold; white-space: nowrap;">🔥 發燒中</span>`;
+        }
+
+        return `
+        <div class="rank-row">
+          <div style="display:flex;align-items:center;flex:1;min-width:0;">
+            <span class="rank-num">#${p.rank}</span>
+            <span class="rank-name" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" onclick="openSongModal('${esc(p.name)}')">${escapeHtml(p.name)}</span>
+          </div>
+          <div style="display:flex;align-items:center; flex-shrink: 0;">
+            ${badgeHtml}
+            <div class="rank-pct" style="margin-right:0.5rem; width: 45px; text-align: right;">${p.pctVal}%</div>
+            <div style="width: 55px; text-align: right;">${diffHtml}</div>
+          </div>
+        </div>`;
+    }).join('');
+
+    document.getElementById('analysis-content').innerHTML = `
+        <div class="rank-grid">
+          <div class="card">
+            <h3 style="margin-bottom:1rem;text-align:center;color:var(--text-secondary);">最近 ${n} 場機率排行</h3>
+            ${leftHtml}
+          </div>
+          <div class="card">
+            <h3 style="margin-bottom:1rem;text-align:center;color:var(--text-secondary);">總場次機率排行 (對比近期表現)</h3>
+            ${rightHtml}
+          </div>
+        </div>`;
+}
 
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', e => {
