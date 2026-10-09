@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-08T13:01:22.386Z",
+  "updatedAt": "2026-10-09T10:17:32.614Z",
   "upcoming": [
     {
       "date": "20261009",
@@ -20,10 +20,10 @@
     {
       "date": "20261017",
       "time": "",
-      "name": "未公佈",
+      "name": "台北 第61屆廣播金鐘獎頒獎典禮",
       "location": "",
       "mapLink": "",
-      "note": "可能為 ［ 第61屆廣播金鐘獎頒獎典禮 ］\n資訊來源：https://www.facebook.com/share/p/1DQhY2HKhL/"
+      "note": "［ 第61屆廣播金鐘獎頒獎典禮 ］演出嘉賓\n資訊來源：https://www.facebook.com/share/p/1DQhY2HKhL/"
     },
     {
       "date": "20261021",
@@ -32,6 +32,14 @@
       "location": "",
       "mapLink": "",
       "note": ""
+    },
+    {
+      "date": "20261024",
+      "time": "16:00-16:40",
+      "name": "台南 火神祭",
+      "location": "台南魚光島",
+      "mapLink": "https://maps.app.goo.gl/dpfhMooVzoP8zzyMA?g_st=ac",
+      "note": "全區免費入場，另有推出「星火計畫」藝文贊助席位（票價 2,000 元及 3,600 元，可至年代售票選購）"
     },
     {
       "date": "20261029",
