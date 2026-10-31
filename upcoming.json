@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-31T11:18:50.527Z",
+  "updatedAt": "2026-10-31T11:27:05.950Z",
   "upcoming": [
     {
       "date": "20261031",
@@ -124,10 +124,10 @@
     {
       "date": "20261231",
       "time": "未公布",
-      "name": "未公佈",
-      "location": "",
-      "mapLink": "",
-      "note": ""
+      "name": "芒果醬2026跨年專場",
+      "location": "台北Legacy",
+      "mapLink": "https://maps.app.goo.gl/bv8mdpgRLXoJ3SqU6",
+      "note": "「售票」"
     }
   ],
   "songLinks": {
