@@ -1637,6 +1637,65 @@
         body { margin-top:var(--ann-h, 0px); }
         nav { top:calc(12px + var(--ann-h, 0px)) !important; }
         .upc-secret-box { margin-top:6px; padding:6px 10px; background:rgba(255,85,0,0.08); border:1.5px dashed var(--accent); font-size:0.8rem; font-weight:700; color:var(--accent); line-height:1.5; }
+    
+        /* ===== v3 PATCH：日期配色（方案 C）與今天標示 ===== */
+        .upc-date-box { background: var(--accent) !important; color: #fff !important; }
+        .upc-date-box.past { background: var(--text-tertiary) !important; }
+        .upc-date-box > div { color: #fff !important; }
+
+        .cal-day-cell.cal-up { background: var(--accent-light); color: var(--accent-ink); font-weight: 800; }
+        .cal-day-cell.cal-past { background: var(--bg-subtle); color: var(--text-tertiary); font-weight: 700; }
+        .cal-day-cell.attended { background: var(--accent) !important; color: #fff !important; }
+        .cal-day-cell.is-today { box-shadow: inset 0 0 0 2px var(--text-main); }
+        .cal-day-cell.selected { box-shadow: inset 0 0 0 2px var(--text-main), 0 0 0 2px var(--bg-card), 0 0 0 4px var(--text-main); }
+
+        .cal-today-tag {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            font-family: var(--font-ui);
+            font-size: 0.5rem;
+            font-weight: 800;
+            line-height: 1.5;
+            padding: 0 4px;
+            border-radius: 999px;
+            background: var(--text-main);
+            color: var(--bg-main);
+        }
+
+        .mj-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 4px 0 12px; font-size: 0.74rem; font-weight: 700; color: var(--text-secondary); }
+        .mj-legend span { display: inline-flex; align-items: center; gap: 5px; }
+        .mj-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 4px; }
+
+        .st-chip { display: inline-flex; align-items: center; font-size: 0.66rem; font-weight: 800; padding: 2px 8px; border-radius: 999px; white-space: nowrap; margin-left: 6px; vertical-align: middle; }
+        .st-chip.up { background: var(--accent); color: #fff; }
+        .st-chip.past { background: var(--bg-subtle); color: var(--text-secondary); }
+
+        .mj-detail-head { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 10px; }
+        .mj-empty { text-align: center; padding: 24px 0; color: var(--text-tertiary); font-weight: 600; }
+        .mj-meta { font-size: 0.82rem; color: var(--text-secondary); font-weight: 600; margin-top: 4px; line-height: 1.6; }
+        .mj-upc-only { cursor: default; }
+        .mj-upc-only:hover { border-color: var(--border); box-shadow: var(--shadow); }
+        #cal-selected-detail .mj-ev-card, #events-cal-selected-detail .mj-ev-card { margin-bottom: 10px; }
+    
+
+        /* ===== v5：自動儲存狀態列 ===== */
+        .autosave-status {
+            margin: 10px 0 14px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            border-left: 3px solid currentColor;
+            background: var(--bg-subtle);
+            word-break: break-word;
+        }
+        .autosave-status.is-ok { color: var(--ok, #2F6B4F); }
+        .autosave-status.is-saving { color: var(--accent); }
+        .autosave-status.is-error { color: var(--dn, #B42318); }
+        .autosave-status.is-idle { color: var(--text-secondary); }
+    
     </style>
 </head>
 
@@ -1741,6 +1800,7 @@
                                     style="font-weight: 900; font-size: 0.95rem; color: var(--text-main);"></span>
                                 <button class="btn btn-outline btn-sm" onclick="changeCalMonth(1)">下個月 ▶</button>
                             </div>
+                            <div class="mj-legend" aria-label="日期配色說明"><span><i style="background:var(--accent-light);border:1.5px solid var(--accent)"></i>即將舉行</span><span><i style="background:var(--bg-subtle);border:1px solid var(--border)"></i>已舉辦</span><span><i style="background:var(--accent)"></i>我去芒過</span><span><i style="border:2px solid var(--text-main)"></i>今天</span></div>
                             <div class="cal-weekdays">
                                 <div>一</div>
                                 <div>二</div>
@@ -1822,6 +1882,7 @@
                                     style="font-weight: 900; font-size: 0.95rem; color: var(--text-main);"></span>
                                 <button class="btn btn-outline btn-sm" onclick="changeEventsCalMonth(1)">下個月 ▶</button>
                             </div>
+                            <div class="mj-legend" aria-label="日期配色說明"><span><i style="background:var(--accent-light);border:1.5px solid var(--accent)"></i>即將舉行</span><span><i style="background:var(--bg-subtle);border:1px solid var(--border)"></i>已舉辦</span><span><i style="background:var(--accent)"></i>我去芒過</span><span><i style="border:2px solid var(--text-main)"></i>今天</span></div>
                             <div class="cal-weekdays">
                                 <div>一</div>
                                 <div>二</div>
@@ -2157,7 +2218,7 @@
         style="max-width: 1200px; margin: 3rem auto; padding: 2rem 1rem; text-align: center; font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); border-top: 2px solid var(--border); text-transform: uppercase;">
         <div style="margin-bottom: 0.4rem; font-weight: 800; color: var(--text-main);">本站為芒果醬粉絲自製非官方資訊平台，相關公告請以活動官方為主。
         </div>
-        <div style="margin-bottom: 0.3rem;">改版時間：20261007</div>
+        <div style="margin-bottom: 0.3rem;">改版時間：20261119</div>
         <div>Developer: <a href="https://www.threads.com/@blues_.g" target="_blank"
                 style="color: var(--accent); text-decoration: none;">blues</a></div>
     </footer>
@@ -3830,6 +3891,464 @@
                 })
                 .catch(() => { el.innerHTML = '<div style="color:var(--dn);font-size:0.9rem;font-weight:800;">讀取失敗</div>'; });
         }
+    
+        /* =====================================================================
+           v3 PATCH：近期活動與詳細場次月曆合併為同一份資料
+           - 月份共用（calCurrentDate），可自由往前往後翻，不受年度篩選影響
+           - 點選日期 → 下方列出「當天所有場次」（即將舉行 + 已舉辦）
+           - 日期配色（方案 C）：即將舉行＝橘、已舉辦＝灰、我去芒過＝實心橘
+           - 今天：獨立黑框 + 「今天」標籤
+           ===================================================================== */
+
+        let mjSelectedDate = null;
+
+        function mjTodayStr() {
+            const t = new Date();
+            return t.getFullYear() + String(t.getMonth() + 1).padStart(2, '0') + String(t.getDate()).padStart(2, '0');
+        }
+
+        // 合併未來（upcoming.json）與歷史（GAS 場次）資料，依日期分組
+        function mjBuildDayMap() {
+            const map = {};
+            const today = mjTodayStr();
+            const evKeys = new Set();
+
+            (appData.events || []).forEach(ev => {
+                if (!ev.date || ev.date.length !== 8) return;
+                evKeys.add(ev.date + '|' + ev.name);
+                (map[ev.date] = map[ev.date] || []).push({
+                    kind: 'event', ev: ev, status: ev.date >= today ? 'upcoming' : 'past'
+                });
+            });
+
+            (appData.upcoming || []).forEach(u => {
+                if (!u.date || u.date.length !== 8) return;
+                if (evKeys.has(u.date + '|' + u.name)) return; // 已有完整場次資料，避免重複
+                (map[u.date] = map[u.date] || []).push({
+                    kind: 'upcoming', u: u, status: u.date >= today ? 'upcoming' : 'past'
+                });
+            });
+            return map;
+        }
+
+        function mjStatusChip(status) {
+            return status === 'upcoming'
+                ? '<span class="st-chip up">即將舉行</span>'
+                : '<span class="st-chip past">已舉辦</span>';
+        }
+
+        function mjRenderGrid(gridId, titleId) {
+            const grid = document.getElementById(gridId);
+            const titleEl = document.getElementById(titleId);
+            if (!grid) return;
+
+            const y = calCurrentDate.getFullYear();
+            const m = calCurrentDate.getMonth();
+            if (titleEl) titleEl.innerText = `${y} 年 ${m + 1} 月`;
+
+            const map = mjBuildDayMap();
+            const today = mjTodayStr();
+            const checkedIds = getCurrentlyCheckedEventIds();
+
+            const firstDay = new Date(y, m, 1).getDay();
+            const start = firstDay === 0 ? 6 : firstDay - 1; // 週一為第一天
+            const last = new Date(y, m + 1, 0).getDate();
+            const prevLast = new Date(y, m, 0).getDate();
+
+            grid.innerHTML = '';
+
+            for (let i = start - 1; i >= 0; i--) {
+                const c = document.createElement('div');
+                c.className = 'cal-day-cell other-month';
+                c.innerText = prevLast - i;
+                grid.appendChild(c);
+            }
+
+            for (let day = 1; day <= last; day++) {
+                const dStr = `${y}${String(m + 1).padStart(2, '0')}${String(day).padStart(2, '0')}`;
+                const items = map[dStr] || [];
+                const hasUp = items.some(it => it.status === 'upcoming');
+                const attended = items.some(it => it.kind === 'event' && isEventAttended(it.ev, checkedIds));
+
+                let cls = 'cal-day-cell';
+                if (items.length) cls += hasUp ? ' cal-up' : ' cal-past';
+                if (attended) cls += ' attended';
+                if (dStr === today) cls += ' is-today';
+                if (mjSelectedDate === dStr) cls += ' selected';
+
+                const cell = document.createElement('div');
+                cell.className = cls;
+                const label = items.length
+                    ? getEventCityBadge(items.map(it => it.kind === 'event' ? it.ev : it.u))
+                    : '';
+                cell.innerHTML =
+                    (dStr === today ? '<span class="cal-today-tag">今天</span>' : '') +
+                    `<span>${day}</span>` +
+                    (attended ? '<span class="cal-check-icon">✓</span>' : '') +
+                    (label ? `<span class="cal-city-badge">${escapeHtml(label)}</span>` : '');
+                cell.onclick = () => mjSelectDate(dStr);
+                grid.appendChild(cell);
+            }
+
+            const total = start + last;
+            const remain = (7 - (total % 7)) % 7;
+            for (let d = 1; d <= remain; d++) {
+                const c = document.createElement('div');
+                c.className = 'cal-day-cell other-month';
+                c.innerText = d;
+                grid.appendChild(c);
+            }
+        }
+
+        function mjEventCard(it, checkedIds) {
+            const ev = it.ev;
+            const checked = isEventAttended(ev, checkedIds) ? 'checked' : '';
+            const note = formatNoteWithLinks(ev.note);
+            const setlist = Array.isArray(ev.setlist) ? ev.setlist : [];
+            const body = !setlist.length
+                ? `<div class="mj-empty" style="padding:12px 0;">期待熱心歌迷回報歌單</div>`
+                : setlist.map(s => `
+                    <div class="song-line">
+                      <div>${escapeHtml(s.orderStr)}. <span onclick="event.stopPropagation(); openSongModal('${esc(s.songName)}')">${escapeHtml(s.songName)}</span></div>
+                      ${s.isEncore ? '<div class="encore-tag">安可</div>' : ''}
+                    </div>`).join('');
+            return `
+                <div class="card event-card cal-detail-card mj-ev-card">
+                  <div class="chk-area">
+                    <input type="checkbox" class="ev-chk cal-ev-chk" data-id="${escapeHtml(ev.id)}" ${checked}
+                           onclick="event.stopPropagation()"
+                           onchange="toggleEventCheckedFromCal(this, '${escapeHtml(ev.id)}')">
+                  </div>
+                  <div class="ev-content">
+                    <div class="ev-date">${escapeHtml(formatEventDate(ev.date))} ${mjStatusChip(it.status)}</div>
+                    <div class="ev-title">${escapeHtml(ev.name)}</div>
+                    <div class="mj-meta">時間: ${escapeHtml(ev.timeStr || '未公布')} • 地點: ${escapeHtml(ev.location || '現場與公開活動')}
+                      ${ev.mapLink ? `<a href="${encodeURI(ev.mapLink)}" target="_blank" rel="noopener noreferrer" class="upc-map-link" onclick="event.stopPropagation()">導航地圖</a>` : ''}
+                    </div>
+                    ${note ? `<div class="ev-note">備註：${note}</div>` : ''}
+                    <div class="ev-body">${body}</div>
+                  </div>
+                </div>`;
+        }
+
+        function mjUpcomingCard(it) {
+            const u = it.u;
+            const note = u.note ? `<div class="ev-note">${formatNoteWithLinks(u.note)}</div>` : '';
+            return `
+                <div class="card mj-ev-card mj-upc-only">
+                  <div class="ev-content">
+                    <div class="ev-date">${escapeHtml(formatEventDate(u.date))} ${mjStatusChip(it.status)}</div>
+                    <div class="ev-title">${escapeHtml(u.name)}</div>
+                    <div class="mj-meta">時間: ${escapeHtml(u.time || '未公布')} • 地點: ${escapeHtml(u.location || '')}
+                      ${u.mapLink ? `<a href="${encodeURI(u.mapLink)}" target="_blank" rel="noopener noreferrer" class="upc-map-link">導航地圖</a>` : ''}
+                    </div>
+                    ${secretBoxFor(u)}
+                    ${note}
+                  </div>
+                </div>`;
+        }
+
+        function mjRenderDetail(boxId, dateStr) {
+            const box = document.getElementById(boxId);
+            if (!box) return;
+            if (!dateStr) {
+                box.style.display = 'none';
+                box.innerHTML = '';
+                return;
+            }
+            const items = mjBuildDayMap()[dateStr] || [];
+            const checkedIds = getCurrentlyCheckedEventIds();
+            let html = `<div class="mj-detail-head">📅 ${escapeHtml(formatEventDate(dateStr))}｜${items.length ? '當日共 ' + items.length + ' 場' : '當日無演出'}</div>`;
+            items.forEach(it => {
+                html += it.kind === 'event' ? mjEventCard(it, checkedIds) : mjUpcomingCard(it);
+            });
+            box.innerHTML = html;
+            box.style.display = 'block';
+            box.querySelectorAll('.mj-ev-card .ev-content').forEach(el => {
+                el.addEventListener('click', () => el.closest('.mj-ev-card').classList.toggle('expanded'));
+            });
+        }
+
+        function mjRenderAll() {
+            mjRenderGrid('calendar-grid', 'cal-month-title');
+            mjRenderGrid('events-calendar-grid', 'events-cal-month-title');
+            mjRenderDetail('cal-selected-detail', mjSelectedDate);
+            mjRenderDetail('events-cal-selected-detail', mjSelectedDate);
+        }
+
+        function mjSelectDate(dateStr) {
+            mjSelectedDate = dateStr;
+            mjRenderAll();
+        }
+
+        // ----- 覆寫舊函式：兩個月曆共用同一個月份與資料 -----
+        function changeCalMonth(step) {
+            calCurrentDate = new Date(calCurrentDate.getFullYear(), calCurrentDate.getMonth() + step, 1);
+            mjRenderAll();
+        }
+        function changeEventsCalMonth(step) {
+            calCurrentDate = new Date(calCurrentDate.getFullYear(), calCurrentDate.getMonth() + step, 1);
+            mjRenderAll();
+        }
+        function renderUpcomingCalendar() { mjRenderAll(); }
+        function renderEventsCalendar() { mjRenderAll(); }
+        function showCalDateDetail(dateStr) { mjSelectDate(dateStr); }
+        function showEventsCalDateDetail(dateStr) { mjSelectDate(dateStr); }
+        function refreshSecretViews_() { renderUpcomingEvents(); mjRenderAll(); }
+
+        function setUpcomingView(mode) {
+            const listView = document.getElementById('upcoming-list');
+            const moreBtn = document.getElementById('btn-more-upcoming');
+            const calView = document.getElementById('upcoming-calendar-view');
+            const btnList = document.getElementById('btn-view-list');
+            const btnCal = document.getElementById('btn-view-cal');
+            if (mode === 'cal') {
+                listView.style.display = 'none';
+                if (moreBtn) moreBtn.style.display = 'none';
+                calView.style.display = 'block';
+                btnList.classList.remove('active');
+                btnCal.classList.add('active');
+                mjRenderAll();
+            } else {
+                listView.style.display = 'block';
+                if (moreBtn && appData.upcoming.length > 3) moreBtn.style.display = 'block';
+                calView.style.display = 'none';
+                btnList.classList.add('active');
+                btnCal.classList.remove('active');
+            }
+        }
+
+        // ----- 日期配色（方案 C）：近期活動日期框依是否已舉辦上色 -----
+        const mjOrigRenderUpcoming = renderUpcomingEvents;
+        renderUpcomingEvents = function () {
+            mjOrigRenderUpcoming();
+            const today = mjTodayStr();
+            const list = appData.upcoming || [];
+            document.querySelectorAll('#upcoming-list .upc-row').forEach((row, i) => {
+                const u = list[i];
+                const box = row.querySelector('.upc-date-box');
+                if (box && u) box.classList.toggle('past', u.date < today);
+            });
+        };
+
+        // ----- 詳細場次列表：加上狀態標籤（即將舉行 / 已舉辦） -----
+        function renderEventsCards(eventsArray, container) {
+            container.innerHTML = '';
+            const today = mjTodayStr();
+            eventsArray.forEach(ev => {
+                const card = document.createElement('div');
+                card.className = 'card event-card';
+                const checked = currentUser && isEventAttended(ev, currentUser.attendedIds) ? 'checked' : '';
+                const setlist = Array.isArray(ev.setlist) ? ev.setlist : [];
+                const status = ev.date >= today ? 'upcoming' : 'past';
+
+                const bodyHtml = !setlist.length
+                    ? `<div style="text-align:center;padding:1.25rem 0;color:var(--text-secondary);font-weight:700;">期待熱心歌迷回報歌單</div>`
+                    : setlist.map(s => `
+                    <div class="song-line">
+                      <div>${escapeHtml(s.orderStr)}. <span onclick="openSongModal('${esc(s.songName)}')">${escapeHtml(s.songName)}</span></div>
+                      ${s.isEncore ? '<div class="encore-tag">安可</div>' : ''}
+                    </div>`).join('');
+
+                const formattedNote = formatNoteWithLinks(ev.note);
+                card.innerHTML = `
+                  <div class="chk-area"><input type="checkbox" class="ev-chk" data-id="${escapeHtml(ev.id)}" ${checked}></div>
+                  <div class="ev-content">
+                    <div class="ev-header">
+                      <div>
+                        <div class="ev-date">${escapeHtml(formatEventDate(ev.date))} ${mjStatusChip(status)}</div>
+                        <div class="ev-title">${escapeHtml(ev.name)}</div>
+                        ${ev.timeStr ? `<div class="mj-meta">時間: ${escapeHtml(ev.timeStr)}</div>` : ''}
+                        ${ev.location ? `<div class="mj-meta">地點: ${escapeHtml(ev.location)} ${ev.mapLink ? `<a href="${encodeURI(ev.mapLink)}" target="_blank" rel="noopener noreferrer" class="upc-map-link" onclick="event.stopPropagation()">導航地圖</a>` : ''}</div>` : ''}
+                        ${formattedNote ? `<div class="ev-note">備註：${formattedNote}</div>` : ''}
+                      </div>
+                      <div class="mj-meta" style="text-align:right;white-space:nowrap;">${setlist.length ? `共 ${setlist.length} 首` : '待解鎖'}</div>
+                    </div>
+                    <div class="ev-body">${bodyHtml}</div>
+                  </div>`;
+
+                card.querySelector('.ev-content').addEventListener('click', () => card.classList.toggle('expanded'));
+
+                const chkBox = card.querySelector('.ev-chk');
+                chkBox.addEventListener('click', e => {
+                    e.stopPropagation();
+                    const evId = chkBox.getAttribute('data-id');
+                    if (currentUser) {
+                        if (chkBox.checked) {
+                            if (!currentUser.attendedIds.includes(evId)) currentUser.attendedIds.push(evId);
+                        } else {
+                            currentUser.attendedIds = currentUser.attendedIds.filter(id => id !== evId);
+                        }
+                    }
+                    mjRenderAll();
+                });
+                container.appendChild(card);
+            });
+        }
+    
+
+        /* =====================================================================
+           v5 原版 UI：近期活動清單只顯示「未來」活動（保留原版卡片結構）
+           過往活動仍可在月曆中點選查看。
+           ===================================================================== */
+        function renderUpcomingEvents() { renderAnnouncement();
+            const widget = document.getElementById('upcoming-widget');
+            const listEl = document.getElementById('upcoming-list');
+            const btnMore = document.getElementById('btn-more-upcoming');
+            if (!widget || !listEl) return;
+
+            if (!appData.upcoming || appData.upcoming.length === 0) {
+                widget.style.display = 'none';
+                return;
+            }
+            widget.style.display = 'block';
+
+            const today = mjTodayStr();
+            const future = appData.upcoming.filter(u => String(u.date || '') >= today);
+
+            if (!future.length) {
+                listEl.innerHTML = '<div class="mj-empty">目前沒有近期活動；過往場次可在下方月曆點選查看</div>';
+                if (btnMore) btnMore.style.display = 'none';
+                return;
+            }
+
+            const itemsToShow = showAllUpcoming ? future : future.slice(0, 3);
+            listEl.innerHTML = itemsToShow.map(u => {
+                const dFormat = formatUpcDate(u.date);
+                const formattedNote = formatNoteWithLinks(u.note);
+                return `
+                  <div class="upc-row">
+                    <div class="upc-date-box">
+                      <div class="upc-date-m">${escapeHtml(dFormat.m)}月</div>
+                      <div class="upc-date-d">${escapeHtml(dFormat.d)}</div>
+                      <div style="font-size:0.6rem; font-weight:800; line-height:1; margin-top:2px;">(${escapeHtml(dFormat.w)})</div>
+                    </div>
+                    <div class="upc-info">
+                      <div class="upc-title">${escapeHtml(u.name)}</div>
+                      <div class="upc-meta">
+                        <span>時間: ${escapeHtml(u.time)}</span><span>•</span><span>地點: ${escapeHtml(u.location)}</span>
+                        ${u.mapLink ? `<a href="${encodeURI(u.mapLink)}" target="_blank" rel="noopener noreferrer" class="upc-map-link">導航地圖</a>` : ''}
+                      </div>
+                      ${secretBoxFor(u)}${formattedNote ? `<div style="font-size:0.8rem; color:var(--accent); margin-top:6px; background:var(--bg-card); padding:6px 10px; border:1.5px solid var(--border); line-height:1.5; font-weight:700;">${formattedNote}</div>` : ''}
+                    </div>
+                  </div>`;
+            }).join('');
+
+            if (future.length > 3) {
+                btnMore.style.display = 'block';
+                btnMore.innerText = showAllUpcoming ? '收起列表 ▲' : `查看更多 (${future.length} 場) ▼`;
+                btnMore.onclick = () => { showAllUpcoming = !showAllUpcoming; renderUpcomingEvents(); };
+            } else {
+                btnMore.style.display = 'none';
+            }
+        }
+    
+
+        /* =====================================================================
+           v5 AUTOSAVE：詳細場次勾選即自動儲存，並顯示上次儲存時間
+           - 以事件委派監聽 .ev-chk 的 change，不改動既有卡片與月曆程式
+           - 400ms 防抖；儲存中若又有變動，會排隊再存一次
+           - 上次儲存時間依使用者記錄於 localStorage（以伺服器回應成功的時間為準）
+           ===================================================================== */
+        let asTimer = null, asBusy = false, asPending = false;
+        const AS_LS_LAST = 'mango_last_saved_';
+
+        function asFmt(iso) {
+            try {
+                return new Date(iso).toLocaleString('zh-TW', {
+                    timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit', hour12: false
+                });
+            } catch (e) { return iso; }
+        }
+
+        function asEnsureBar() {
+            let el = document.getElementById('autosave-status');
+            const anchor = document.getElementById('events-login-status');
+            if (!el && anchor) {
+                const headerRow = anchor.parentElement && anchor.parentElement.parentElement;
+                el = document.createElement('div');
+                el.id = 'autosave-status';
+                el.className = 'autosave-status is-idle';
+                el.setAttribute('role', 'status');
+                el.setAttribute('aria-live', 'polite');
+                if (headerRow) headerRow.insertAdjacentElement('afterend', el);
+            }
+            const oldBtn = document.getElementById('btn-save-events');
+            if (oldBtn) oldBtn.style.display = 'none';
+            return el;
+        }
+
+        function asRender(state, msg) {
+            const el = asEnsureBar();
+            if (!el) return;
+            let text, cls;
+            if (state === 'saving') {
+                text = '⏳ 儲存中…';
+                cls = 'is-saving';
+            } else if (state === 'error') {
+                text = '⚠ 儲存失敗：' + (msg || '未知錯誤') + '（請稍後再勾選一次）';
+                cls = 'is-error';
+            } else if (!currentUser) {
+                text = '未登入：勾選僅暫存在本頁，請先到「我去哪芒」建立或登入 ID，即可自動儲存';
+                cls = 'is-idle';
+            } else {
+                const last = localStorage.getItem(AS_LS_LAST + currentUser.userId);
+                text = '✓ 勾選即自動儲存　上次儲存：' + (last ? asFmt(last) : '本裝置尚無紀錄');
+                cls = 'is-ok';
+            }
+            el.className = 'autosave-status ' + cls;
+            el.innerText = text;
+        }
+
+        function asDoSave() {
+            if (!currentUser) { asRender(); return; }
+            if (asBusy) { asPending = true; return; }
+            asBusy = true;
+            const uid = currentUser.userId;
+            const ids = (currentUser.attendedIds || []).slice();
+            apiCall('saveUserData', {
+                userId: uid,
+                attendedEvents: ids.join(','),
+                nickname: currentUser.nickname || ''
+            })
+                .then(res => {
+                    if (!res || res.success === false) throw new Error((res && res.error) || '伺服器未回應成功');
+                    localStorage.setItem(AS_LS_LAST + uid, new Date().toISOString());
+                    asRender('saved');
+                })
+                .catch(err => asRender('error', err.message || String(err)))
+                .finally(() => {
+                    asBusy = false;
+                    if (asPending) { asPending = false; asDoSave(); }
+                });
+        }
+
+        function asScheduleSave() {
+            asRender('saving');
+            clearTimeout(asTimer);
+            asTimer = setTimeout(asDoSave, 400);
+        }
+
+        // 勾選變動 → 自動儲存（change 事件在既有 click / onchange 處理完成後才觸發）
+        document.addEventListener('change', function (e) {
+            const t = e.target;
+            if (!t || !t.classList || !t.classList.contains('ev-chk')) return;
+            if (!currentUser) {
+                asRender();
+                showToast('請先到「我去哪芒」建立或登入 ID，勾選才會自動儲存');
+                return;
+            }
+            asScheduleSave();
+        });
+
+        // 登入 / 登出時更新狀態列
+        const __asOrigOnLogin = onLoginSuccess;
+        onLoginSuccess = function (silent) { __asOrigOnLogin(silent); asRender(); };
+        const __asLogoutBtn = document.getElementById('btn-logout');
+        if (__asLogoutBtn) __asLogoutBtn.addEventListener('click', () => setTimeout(asRender, 0));
+        asRender();
+    
     </script>
 </body>
 
