@@ -1,11 +1,4 @@
-# 🥭 MANGO JUMP 芒果醬活動資訊站
-
-🔗 **網站連結：** [https://blues32767.github.io/mangojump-setlists/](https://blues32767.github.io/mangojump-setlists/)
-
-粉絲自製的非官方資訊平台，整理芒果醬的近期演出、歷史場次、歌單統計與隨機聆聽，讓大家更方便查詢與回味每一場現場。
-
-> 相關公告請以活動官方為主。
-# 🥭 MANGO JUMP 芒果醬活動資訊站
+# 🥭 MANGOJUMP 芒果醬活動資訊站
 
 🔗 **網站連結：** [https://blues32767.github.io/mangojump-setlists/](https://blues32767.github.io/mangojump-setlists/)
 
